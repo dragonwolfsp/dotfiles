@@ -3,7 +3,7 @@
 * ensure [chezmoi](https://github.com/twpayne/chezmoi) is installed.
 
 <details>
-<summery>Installing on windows:</summery>
+<summary>Installing on windows:</summary>
 1. scoop:
 ```console
 $ scoop install chezmoi
@@ -19,7 +19,7 @@ $ winget install twpayne.chezmoi
 </details>
 
 <details>
-<summery>Installing on Mac Os:</summery>
+<summary>Installing on Mac Os:</summary>
 1. homebrew:
 ```console
 $ brew install chezmoi
@@ -31,7 +31,7 @@ $ port install chezmoi
 </details>
 
 <details>
-<summery>Installing on linux:</summery>
+<summary>Installing on linux:</summary>
 1. alpine:
 ```console
 $ apk add chezmoi
@@ -63,7 +63,7 @@ $ snap install chezmoi --classic
 </details>
 
 <details>
-<summery>Installing on FreeBSD</summery>
+<summary>Installing on FreeBSD</summary>
 1. pkg:
 ```
 $ pkg install chezmoi
