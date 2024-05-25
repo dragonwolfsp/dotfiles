@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10" IgnorableNamespaces="uap uap3 uap10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
+  <Identity Name="MicrosoftWindows.Voice.pt-BR.Francisca.1" Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="1.0.2.0" ProcessorArchitecture="x64" />
+  <Properties>
+    <DisplayName>Microsoft Francisca (Natural) - Portuguese (Brazil)</DisplayName>
+    <PublisherDisplayName>Microsoft Windows</PublisherDisplayName>
+    <Description>Microsoft Francisca (Natural) - Portuguese (Brazil)</Description>
+    <Logo>Assets\StoreLogo.png</Logo>
+    <uap10:PackageIntegrity>
+      <uap10:Content Enforcement="on" />
+    </uap10:PackageIntegrity>
+  </Properties>
+  <Resources>
+    <Resource Language="pt-BR" />
+  </Resources>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.25290.1" />
+  </Dependencies>
+  <Applications>
+    <Application Id="VoiceFranciscaPtBR">
+      <uap:VisualElements DisplayName="Microsoft Francisca (Natural) - Portuguese (Brazil)" Description="Microsoft Francisca (Natural) - Portuguese (Brazil)" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" AppListEntry="none"></uap:VisualElements>
+      <Extensions>
+        <uap3:Extension Category="windows.appExtension">
+          <uap3:AppExtension Name="com.microsoft.voice.model.1" Id="VoiceFranciscaPtBR" DisplayName="Microsoft Francisca (Natural) - Portuguese (Brazil)" PublicFolder="Public">
+            <uap3:Properties>
+              <LocaleId>pt-BR</LocaleId>
+            </uap3:Properties>
+          </uap3:AppExtension>
+        </uap3:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+  <mp:PhoneIdentity PhoneProductId="a2d09f39-6b8e-431d-bc3c-820bb855dd85" PhonePublisherId="6145b212-a274-4517-8abe-1e015f21ff03" />
+</Package>

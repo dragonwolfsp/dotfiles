@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="../style.css" media="screen">
+<title>Nao 2023.1.1</title>
+</head>
+<body>
+<h1>Nao - NVDA napredni OCR</h1>
+<ul>
+<li>Autori: Alessandro Albano, Davide De Carne, Simone Dal Maso</li>
+<li>Preuzmi <a href="https://nvda-nao.org/download">stabilnu verziju</a></li>
+<li>NVDA kompatibilnost: 2019.3  i noviji</li>
+</ul>
+<p>Nao (NVDA napredni OCR) je dodatak koji poboljšava standardne OCR sposobnosti koje NVDA pruža na modernim Windows verzijama.
+Iako NVDA standardna komanda za OCR prepoznaje ekran, NAO može da izvrši OCR na datotekama koje su sačuvane na vašem disku ili USB uređajima. 
+Koristite NVDA-šift-R da biste prepoznali bilo koju sliku i pdf! 
+Jednostavno se fokusirajte ili stanite kursorom na željenu datoteku, ne otvarajte je, već pritisnite NVDA-šift-r. 
+Dokument će biti prepoznat i pojaviće se jednostavan prozor sa tekstom, koji vam dozvoljava da pročitate sadržaj, sačuvate ga, pretražite tekst ili kopirate sadržaj u privremenu memoriju.
+Nao takođe može da obradi PDF dokumente sa više stranica, pa ako imate dokument koji nije pristupačan, ne brinite, Windows OCR će odraditi posao.</p>
+<h2>Sistemski zahtevi</h2>
+<p>Dodatak radi na sistemima Windows 10 i Windows 11, budući da oni imaju ugrađene OCR mogućnosti. 
+Nao je kompatibilan od NVDA verzije 2019.3, pa nemojte koristiti starije verzije čitača ekrana.
+Imajte na umu da Nao radi sa Windows istraživačem datoteka, na radnoj površini, sa Total Commanderom ili xplorerom² upravljačem datoteka; ne koristite druge programe kao što su 7zip ili Winrar, budući da oni nisu podržani.</p>
+<h2>Karakteristike i komande</h2>
+<ul>
+<li>NVDA + šift + R: Prepoznaje bilo koje slike i pdf datoteke u sistemu;</li>
+<li>PageUp / PageDown: Pomera kursor između pravih stranica u dokumentu sa više stranica.</li>
+<li>Ctrl + S: Čuva dokument u nao-document formatu. Možete ga ponovo otvoriti prečicom NVDA + šift + R.</li>
+<li>P: Prijavljuje broj stranice na poziciji kursora, u dokumentu sa više stranica.</li>
+<li>L: Prijavljuje broj reda na poziciji kursora, na trenutnoj stranici.</li>
+<li>Šift + L: Prijavljuje broj reda na poziciji kursora, u celom dokumentu.</li>
+<li>G: Direktno prelazi na određenu stranicu.</li>
+<li>C: Kopira ceo tekst u privremenu memoriju.</li>
+<li>S: Čuva kopiju dokumenta u tekstualnom formatu.</li>
+<li>F: Pronalazi tekst i čita nekoliko reči pre i nakon pojma za pretragu.</li>
+<li>NVDA + šift + Ctrl + R: Slika ceo ekran i prepoznaje sliku.</li>
+<li>Molimo imajte na umu da možete koristiti standardne NVDA komande da istražite prozor i da se fokusirate na neki element. Na primer možete se kretati strelicama i pritisnuti enter na dugmetu da biste ga aktivirali. Možete takođe prebaciti miš na vašu poziciju komandom NVDA-numerički taster podeljeno a zatim izvršiti levi ili desni klik.</li>
+<li>NVDA + šift + Ctrl + W: Slika trenutni prozor i prepoznaje sliku (iste funkcije za navigaciju kao i sa funkcijom slikanja celog ekrana).</li>
+</ul>
+<p>Imajte na umu da možete da prilagodite Nao prečice jednostavno iz dijaloga ulaznih komandi programa NVDA. Otvorite NVDA meni, uđite u opcije, i iz tog podmenija izaberite ulazne komande. Zapamtite da ove funkcije nisu globalne, već rade samo tamo gde NAO može da izvrši OCR. To znači da će se komande pojaviti samo ako ste na radnoj površini, ili u istraživaču datoteka, Total Commanderu ili Xploreru.</p>
+<p>Možete takođe otkazati dugotrajni OCR proces tako što ćete pritisnuti dugme "Otkaži" u prozoru sa trakom napredovanja; Ovaj prozor vam takođe daje informacije o stanju za OCR, a te informacije se ažuriraju svakih 5 sekundi. Možete da podesite kako ćete primati informacije o traci napredovanja standardnom komandom NVDA-u.</p>
+<p>Možete pronaći podmeni koji se zove Nao, u NVDA meniju alati. Trenutno on sadrži samo opciju koja će vam dozvoliti da donirate, ali ćemo ovo poboljšati sa novim funkcijama!</p>
+<h2>Podrška i donacije</h2>
+<p>Nao je u potpunosti besplatan. U svakom slučaju, imajte na umu da se dodatak razvija u slobodno vreme programera. 
+Zahvalni smo na svakoj saradnji!
+Ako mislite da radimo dobar posao i poboljšavamo vaš život, a <a href="https://nvda-nao.org/donate">razmotrite mogućnost doniranja.</a></p>
+<p>Da li želite da prijavite grešku, predložite nove funkcije, prevedete dodatak na vaš jezik? Imamo  e-mail za vas! Pišite nam na support@nvda-nao.org i biće nam zadovoljstvo da vam pomognemo.</p>
+<h2>Istorija</h2>
+<h3>2023.1.1</h3>
+<ul>
+<li>Vraćena kompatibilnost sa NVDA verzijom 2023.3</li>
+<li>Nova prečica NVDA + Ctrl + šift + W slika ceo trenutni prozor i prepoznaje ga</li>
+<li>Dodat prevod na Portugalski (Brazil)</li>
+<li>Bezbednosna ispravka na bezbednim ekranima</li>
+<li>NAO meni sa alatima uklonjen na bezbednim ekranima</li>
+<li>Keš dokumenata uklonjen na bezbednim ekranima</li>
+<li>NAO websajt i link za Git repozitorijum dodati u meni sa NAO alatima</li>
+</ul>
+<h3>2023.1</h3>
+<ul>
+<li>Kompatibilnost za NVDA verziju 2023.1</li>
+</ul>
+<h3>2022.1.3</h3>
+<ul>
+<li>Kompatibilnost za NVDA verziju 2022.1</li>
+<li>Ažurirani prevodi za pojednostavljeni kineski i francuski</li>
+<li>Španska dokumentacija ažurirana</li>
+</ul>
+<h3>2022.1.2</h3>
+<ul>
+<li>Mogućnost čuvanja i učitavanja nao-document formata datoteka.</li>
+<li>Keš dokumenata može da čuva prepoznavanja kako bi ubrzao otvaranje sledeći put. Ako je datoteka pronađena u kešu ne prepoznaje se ponovo već se umesto toga otvara keširana verzija (podešavanja prepoznavanja se moraju podudarati).</li>
+<li>Čuvanje poslednje pozicije čitanja dokumenta u podacima keša.</li>
+<li>Automatsko brisanje za keš dokumenata.</li>
+<li>Ručno brisanje keša u meniju sa alatima.</li>
+<li>Datoteka se sada može direktno prepoznati iz komprimovanog foldera u Windows istraživaču datoteka.</li>
+<li>Bolja provera neispravnih datoteka.</li>
+<li>Bolja kompatibilnost sa Windows istraživačem datoteka korišćenjem različitih alternativa za izbor datoteka: Prvo se pokušava uz Shell.Application u programu NVDA, zatim se pokušava Shell.Application u PowerShellu a zatim se vraća na ručno istraživanje.</li>
+<li>OCR mogućnost čuva podešavanje jezika u toku celog procesa prepoznavanja čak i ako se promeni u toku prepoznavanja dokumenta sa više stranica.</li>
+<li>OCR u isto vreme može prepoznavati iz više izvora.</li>
+<li>Prečica PageDown na poslednjoj stranici dokumenta ide na kraj dokumenta i prijavljuje broj reda.</li>
+<li>Windows privremeni folder se koristi za alate za pretvaranje datoteka umesto foldera dodatka  (poboljšanja u brzini za prenosni NVDA).</li>
+<li>Rumunski prevod i ažuriran prevod za pojednostavljeni kineski.</li>
+</ul>
+<h3>2022.1.1</h3>
+<ul>
+<li>Podrška za DjVu format datoteka.</li>
+<li>Podrška za tiff datoteke sa više stranica.</li>
+<li>PDF ispravka za kodiranje datoteka na operativnim sistemima na kineskom.</li>
+<li>Ručno ažuriranje dodatka u NVDA meniju alati.</li>
+<li>Kompatibilnost od NVDA verzije 2019.3.</li>
+</ul>
+<h3>2022.1</h3>
+<ul>
+<li>Automatsko ažuriranje dodatka.</li>
+<li>Španski i Francuski prevodi ažurirani.</li>
+</ul>
+<h3>2021.2</h3>
+<ul>
+<li>OCR pdf datoteka i slika se prikazuje u novom tekstualnom prozoru, sa nekim prečicama za jednostavne radnje.</li>
+<li>Podrška za Xplorer upravljač datotekama.</li>
+<li>Nao prečice se mogu prilagoditi iz NVDA dijaloga ulaznih komandi.</li>
+<li>Nao radi samo kada je moguće, pa ako ste u prozoru koji nije podržan, dodatak će ignorisati prečice; ovo je rešilo bitan problem koji je izazivao da Excel i Word korisnici ne  mogu da pritisnu  prečicu NVDA-šift-r, budući da ju je dodatak neispravno preuzimao.</li>
+<li>Dugotrajan Ocr proces se može otkazati jednostavnim pritiskom na dugme "Otkaži" u prozoru trake napredovanja.</li>
+<li>Dodati turski, ruski, španski, kineski i francuski prevodi.</li>
+<li>Korisnici mogu donirati za razvoj projekta.</li>
+<li>Ispravljena greška sa nekim znakovima u imenu datoteke koji su sprečavali da OCR ispravno radi.</li>
+</ul>
+<h3>2021.1</h3>
+<ul>
+<li>Prva javna verzija! </li>
+</ul>
+</body>
+</html>

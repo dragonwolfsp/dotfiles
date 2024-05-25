@@ -1,0 +1,169 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the SentenceNav package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: SentenceNav 2.0\n"
+"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
+"POT-Creation-Date: 2018-11-23 19:02+1000\n"
+"PO-Revision-Date: 2023-05-07 09:59+0200\n"
+"Last-Translator: Bernd Dorer <mail@bdorer.de>\n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#. Translators: Title for the settings dialog
+msgid "SentenceNav settings"
+msgstr "Satznavigation Einstellungen"
+
+#. Translators: choices inside reconstruct mode combo box
+msgid "Always"
+msgstr "Immer"
+
+msgid "Only across paragraphs with same indentation and same style level"
+msgstr ""
+"Nur über Absätze mit gleicher Einrückung und gleicher Überschriftenebene"
+
+msgid "Never"
+msgstr "Nie"
+
+#. paragraphChimeVolumeSlider
+#. Translators: Paragraph crossing chime volume
+msgid "Volume of chime when crossing paragraph border"
+msgstr "Lautstärke des Glockentons wenn man eine Absatzgrenze überschreitet"
+
+#. noNextSentenceChimeVolumeSlider
+#. Translators: End of document chime volume
+msgid "Volume of chime when no more sentences available"
+msgstr "Lautstärke des Glockentons wenn kein weiterer Satz vorhanden ist"
+
+#. Checkboxes
+#. Translators: Checkbox that controls spoken message when no next or previous sentence is available in the document
+msgid "Speak message when no next sentence available in the document"
+msgstr "Meldung sprechen wenn kein nächster Satz im Dokument vorhanden ist"
+
+#. Translators: speak formatted text checkbox
+msgid "Speak formatted text"
+msgstr "Formatierten Text sprechen"
+
+#. Reconstruct mode Combo box
+#. Translators: Label for reconstruct mode combo box
+msgid "Reconstruct sentences across multiple paragraphs when"
+msgstr "Sätze über mehrere Absätze rekonstruieren wenn"
+
+#. Regex-related checkbox
+#. Translators: Checkbox that controls whether we should take wiki references into account when parsing sentences
+msgid "Take Wikipedia-style references into account"
+msgstr "Ziehe Wikipedia-style Referenzen in Betracht"
+
+#. Regex-related edit boxes
+#. Translators: Label for sentence breakers edit box
+msgid "Sentence breakers"
+msgstr "Satz-Stopps"
+
+#. Translators: Label for skippable punctuation marks edit box
+msgid "Skippable punctuation marks"
+msgstr "Zu überspringende Satzzeichen"
+
+#. Translators: Label for full width sentence breakers edit box
+msgid "Full width sentence breakers"
+msgstr "Satz-Pause in voller Breite"
+
+#. Translators: Label for exceptional abbreviations edit box
+#, python-format
+msgid "Exceptional abbreviations, space separated, in language %s"
+msgstr ""
+"Ausgenommene Abkürzungen ohne Satz-stopps. Listeneinträge durch leer "
+"getrennt %s"
+
+#. Translators: Label for capital letters edit box
+#, python-format
+msgid "Capital letters with no spaces in language %s"
+msgstr "Großbuchstaben ohne Pause in der Sprache %s"
+
+#. Translators: Label for lower case letters edit box
+#, python-format
+msgid "Lower case letters with no spaces in language %s"
+msgstr "Kleinbuchstaben ohne Pause in der Sprache %s"
+
+#. Phrase regex-related edit boxes
+#. Translators: Label for phrase breakers edit box
+msgid "Phrase breakers"
+msgstr "Phrasen-Stopps"
+
+#. Translators: Label for full width phrase breakers edit box
+msgid "Full width phrase breakers"
+msgstr "Satz-Pause in voller Breite"
+
+#. applicationsBlacklist edit
+#. Translators: Label for blacklisted applications edit box
+msgid "Disable SentenceNav in applications (comma-separated list)"
+msgstr ""
+"Satznavigation in Anwendungen abschalten (Listeneinträge durch Komma "
+"getrennt)"
+
+#. Enable in MS Word
+#. Translators: Checkbox that enables support for MS Word
+msgid ""
+"Enable experimental support for Microsoft Word and WordPad (overrides "
+"default NVDA functionality)"
+msgstr ""
+"Experimentelle Unterstützung für Microsoft Word und WordPad einschalten "
+"(überschreibt die Funktionalität von NVDA)"
+
+#. Add-on summary, usually the user visible name of the addon.
+#. Translators: Summary for this add-on to be shown on installation and add-on information.
+msgid "SentenceNav"
+msgstr "Satznavigation"
+
+msgid "SentenceNav..."
+msgstr "Satznavigation..."
+
+msgid "Move to next sentence."
+msgstr "Zum nächsten Satz springen."
+
+#. Translators: message when no next sentence available in the document
+msgid "No next sentence"
+msgstr "Kein nächster Satz"
+
+msgid "Move to previous sentence."
+msgstr "Zum vorherigen Satz springen."
+
+#. Translators: message when no previous sentence available in the document
+msgid "No previous sentence"
+msgstr "Kein vorheriger Satz"
+
+msgid "Speak current sentence."
+msgstr "Aktuellen Satz ansagen."
+
+msgid "Move to next phrase."
+msgstr "Zur nächsten Phrase springen."
+
+#. Translators: message when no next phrase available in the document
+msgid "No next phrase"
+msgstr "Keine nächste Phrase"
+
+msgid "Move to previous phrase."
+msgstr "Zur vorherigen Phrase springen."
+
+#. Translators: message when no previous phrase available in the document
+msgid "No previous phrase"
+msgstr "Keine vorherige Phrase"
+
+msgid "Speak current phrase."
+msgstr "Aktuelle Phrase ansagen."
+
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+msgid ""
+"Sentence Navigation addon.\n"
+"SentenceNav is an NVDA add-on that allows you to read text by sentences, as "
+"opposed to by paragraphs or words."
+msgstr ""
+"Erweiterung Satznavigation\n"
+"Die Erweiterung Satznavigation erlaubt das Lesen von Texten Satz für Satz."

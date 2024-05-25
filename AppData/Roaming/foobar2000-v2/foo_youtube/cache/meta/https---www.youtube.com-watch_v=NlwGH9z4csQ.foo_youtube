@@ -1,0 +1,12 @@
+{
+	"url": "https:\/\/www.youtube.com\/watch?v=NlwGH9z4csQ",
+	"length": 81.18117,
+	"title": "Using ReaStream with Reaper and OBS\/Streamlabs OBS",
+	"description": "Send Audio Output from your DAW easily to OBS\r\n\r\nYou'll need the \"ReaPlugs\" package from the Reaper website for the Standalone VST Plugin version of ReaStream.\r\n\r\nhttps:\/\/www.youtube.com\/redirect?event=video_description&redir_token=QUFFLUhqbkk3TEdkVmc4LXgtTTU2OVBaelc2RzFZQy1qd3xBQ3Jtc0ttU1l4eXZXMy1GOGR3MFAtM1Z4TVRtQlN4STFQbmVjQWxZZVY5SDY5bGdYZk5FT2JiOFlMWmRaX2Z6LXh5ZUktOG8tTDZfRklYa0p3UGxhM0hQZjdVRUUzRnlCSS1TWFBhcER4bTQ0NEt5NDM4NWFZQQ&q=https%3A%2F%2Fwww.reaper.fm%2Freaplugs%2F&v=NlwGH9z4csQ\r\n\r\nInstalling it at the default directory and restarting OBS\/SLOBS should result in these plugins being usable from the application.",
+	"channel_title": "David Reichert",
+	"channel_url": "https:\/\/www.youtube.com\/channel\/UCzS2B7nK4PWi6FHF-NdBpeA",
+	"upload_date": "2018-10-11",
+	"view_count": "16517",
+	"like_count": "46",
+	"thumbnail_url": "https:\/\/i.ytimg.com\/vi\/NlwGH9z4csQ\/maxresdefault.jpg",
+}

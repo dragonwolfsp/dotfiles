@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tokens>
+  <Category name="Voices" categoryBase="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech Server\v11.0">
+    <Token name="TTS_MS_ko-KR_SunHiNeural_11.0">
+      <String name="" value="Microsoft SunHi (Natural) - Korean (Korea)" />
+      <String name="412" value="Microsoft SunHi (Natural) - Korean (Korea)" />
+      <String name="CLSID" value="{a12bdfa1-c3a1-48ea-8e3f-27945e16cf7e}" />
+      <String name="LangDataPath" value="[INSTALLDIR]MSTTSLocKoKR.dat" />
+      <String name="VoicePath" value="[INSTALLDIR]1042" />
+      <Attribute name="Age" value="Adult" />
+      <Attribute name="AudioFormats" value="18" />
+      <Attribute name="Gender" value="Female" />
+      <Attribute name="Language" value="412" />
+      <Attribute name="Name" value="Microsoft SunHi (Natural) - Korean (Korea)" />
+      <Attribute name="Vendor" value="Microsoft" />
+      <Attribute name="Version" value="11.0" />
+    </Token>
+  </Category>
+</Tokens>

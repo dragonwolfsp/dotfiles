@@ -1,0 +1,9 @@
+{
+  "last_update": "2024-05-25T06:04:23.3586972-05:00",
+  "aria2": "disabled",
+  "aria2-split": "6",
+  "aria2-max-connection-per-server": "6",
+  "aria2-warning-enabled": false,
+  "scoop_repo": "https://github.com/lukesampson/scoop",
+  "scoop_branch": "master"
+}

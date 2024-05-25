@@ -1,0 +1,538 @@
+﻿Illegal operation:
+Code: 6F8E1DC8h, flags: 00000001h, address: 761C9542h
+Additional parameters: 00000016h
+
+Call path:
+playback_process entry
+
+Code bytes (761C9542h):
+761C9502h:  04 24 8B 45 0C 83 E0 01 C7 44 24 0C E0 94 1C 76
+761C9512h:  89 44 24 04 85 C9 74 3E 8B 45 10 83 F8 0F 77 31
+761C9522h:  89 44 24 10 C1 E0 02 50 51 8D 44 24 1C 50 E8 E9
+761C9532h:  F4 04 00 83 C4 0C 8D 04 24 50 FF 15 4C 34 2B 76
+761C9542h:  8B 4C 24 54 33 CC E8 85 6C 00 00 8B E5 5D C2 10
+761C9552h:  00 6A 0F 58 EB CA 83 64 24 10 00 EB D9 CC CC CC
+761C9562h:  CC CC CC CC CC CC CC CC CC CC CC CC CC CC 8B FF
+761C9572h:  55 8B EC 51 8B 45 08 83 F8 F4 0F 84 33 9D 05 00
+
+Stack (016DF638h):
+016DF618h:  00000000 00000016 5FB35AA0 016DF690
+016DF628h:  761C9535 016DF690 761C9542 016DF638
+016DF638h:  6F8E1DC8 00000001 00000000 761C9542
+016DF648h:  00000001 00000016 00000000 00000000
+016DF658h:  04BE3067 04BE3068 00000000 04BE0000
+016DF668h:  00000000 016DF688 7774F036 77790504
+016DF678h:  0874C2F0 77790504 08754048 5FB35AA0
+016DF688h:  00000016 54264861 016DF6A8 5FB35ABC
+016DF698h:  6F8E1DC8 00000001 00000001 016DF6B0
+016DF6A8h:  016DF6F8 5FB57876 00000016 C1AF912C
+016DF6B8h:  08754048 00000000 0874DD80 016DF6B0
+016DF6C8h:  00000000 00000000 5FB35AA0 5FB88BCC
+016DF6D8h:  00000000 01007535 016DF6B4 016DF060
+016DF6E8h:  016DF720 5FB53570 9F7A49FC FFFFFFFE
+016DF6F8h:  016DF730 5FB57A9B 00000016 5FB5553F
+016DF708h:  C1AF90E4 08754048 08753AF8 0874DD80
+016DF718h:  016DF708 016DF060 016DF748 5FB53570
+016DF728h:  9F7A4A3C FFFFFFFE 016DF754 5FB25DBA
+016DF738h:  C1AF9080 08753AF8 00000000 5FB85CAC
+016DF748h:  016DF780 5FB68F80 00000002 016DF78C
+
+Registers:
+EAX: 016DF638, EBX: 00000008, ECX: 00000001, EDX: 00000000
+ESI: 00000016, EDI: 5FB35AA0, EBP: 016DF690, ESP: 016DF638
+
+Timestamp:
+132797ms
+
+Crash location:
+Module: KERNELBASE
+Offset: 149542h
+Symbol: "RaiseException" (+62h)
+
+Loaded modules:
+foobar2000                       loaded at 00490000h - 0080E000h
+ntdll                            loaded at 77700000h - 778B1000h
+KERNEL32                         loaded at 768A0000h - 76990000h
+KERNELBASE                       loaded at 76080000h - 762F4000h
+SHLWAPI                          loaded at 75FC0000h - 7600B000h
+msvcrt                           loaded at 76D30000h - 76DF4000h
+COMCTL32                         loaded at 74460000h - 74688000h
+WINMM                            loaded at 6C520000h - 6C551000h
+GDI32                            loaded at 77410000h - 77433000h
+USER32                           loaded at 76460000h - 76608000h
+ucrtbase                         loaded at 75A70000h - 75B82000h
+win32u                           loaded at 75CC0000h - 75CDA000h
+gdi32full                        loaded at 76E20000h - 76F02000h
+ADVAPI32                         loaded at 75F40000h - 75FBF000h
+msvcp_win                        loaded at 75C40000h - 75CB9000h
+UxTheme                          loaded at 748A0000h - 7491F000h
+sechost                          loaded at 775F0000h - 77675000h
+combase                          loaded at 76620000h - 7689D000h
+bcrypt                           loaded at 76E00000h - 76E1A000h
+RPCRT4                           loaded at 763A0000h - 7645A000h
+SHELL32                          loaded at 75370000h - 75A08000h
+ole32                            loaded at 76990000h - 76AE0000h
+OLEAUT32                         loaded at 77440000h - 774DC000h
+CRYPT32                          loaded at 75E30000h - 75F33000h
+shared                           loaded at 664B0000h - 664D2000h
+sqlite3                          loaded at 664E0000h - 665AC000h
+zlib1                            loaded at 66600000h - 66619000h
+MSVCP140                         loaded at 65C70000h - 65CDD000h
+OLEACC                           loaded at 6A420000h - 6A474000h
+MSIMG32                          loaded at 69810000h - 69816000h
+WINHTTP                          loaded at 69260000h - 6933D000h
+gdiplus                          loaded at 6D260000h - 6D3CE000h
+Secur32                          loaded at 69340000h - 6934A000h
+VCRUNTIME140                     loaded at 665E0000h - 665F5000h
+SSPICLI                          loaded at 69D90000h - 69DB6000h
+imagehlp                         loaded at 75B90000h - 75BAB000h
+COMDLG32                         loaded at 75CE0000h - 75D91000h
+shcore                           loaded at 76C60000h - 76D21000h
+dbghelp                          loaded at 73A80000h - 73C56000h
+dbgcore                          loaded at 73A30000h - 73A59000h
+IMM32                            loaded at 75C10000h - 75C35000h
+kernel.appcore                   loaded at 73A60000h - 73A73000h
+bcryptPrimitives                 loaded at 77680000h - 776E2000h
+windows.storage                  loaded at 74C80000h - 7536C000h
+wintypes                         loaded at 74BB0000h - 74C77000h
+MSCTF                            loaded at 774F0000h - 775EE000h
+foo_dsp_eq                       loaded at 65AB0000h - 65B1E000h
+dwmapi                           loaded at 74800000h - 74824000h
+foo_input_std                    loaded at 65870000h - 65A3A000h
+MSACM32                          loaded at 599D0000h - 599E9000h
+avcodec-fb2k-60                  loaded at 65660000h - 6586C000h
+avutil-fb2k-58                   loaded at 65260000h - 65424000h
+avformat-fb2k-60                 loaded at 65C40000h - 65C6C000h
+foo_dsp_std                      loaded at 65620000h - 6565C000h
+foo_ui_std                       loaded at 650B0000h - 65260000h
+foo_dsp_effect                   loaded at 10000000h - 10066000h
+foo_dsp_dolbyhp                  loaded at 655F0000h - 65614000h
+VERSION                          loaded at 74960000h - 74968000h
+foo_bpm                          loaded at 65060000h - 650A1000h
+foo_input_caf                    loaded at 65000000h - 6505B000h
+foo_input_dts                    loaded at 64FD0000h - 64FFC000h
+avformat-foodts-58               loaded at 64F60000h - 64FCE000h
+avutil-foodts-56                 loaded at 64EB0000h - 64F5F000h
+avcodec-foodts-58                loaded at 60A20000h - 60BE1000h
+foo_dsp_vst3                     loaded at 609C0000h - 60A20000h
+WS2_32                           loaded at 773B0000h - 7740F000h
+foo_unpack                       loaded at 60930000h - 609B4000h
+foo_midi                         loaded at 60670000h - 60924000h
+bassmidi                         loaded at 60590000h - 60611000h
+bass                             loaded at 60620000h - 6066B000h
+foo_youtube                      loaded at 03830000h - 03FC4000h
+QUARTZ                           loaded at 603E0000h - 60582000h
+foo_input_ffmpeg                 loaded at 603A0000h - 603D3000h
+foo_out_asio2                    loaded at 5FB20000h - 60392000h
+MFPlat                           loaded at 5F980000h - 5FB16000h
+cfgmgr32                         loaded at 6D3D0000h - 6D40D000h
+RTWorkQ                          loaded at 5F950000h - 5F97D000h
+foo_fileops                      loaded at 5F8F0000h - 5F94E000h
+foo_converter                    loaded at 5F850000h - 5F8EA000h
+foo_freedb2                      loaded at 5F810000h - 5F844000h
+foo_out_ks                       loaded at 04220000h - 0424A000h
+SETUPAPI                         loaded at 76F10000h - 7734D000h
+foo_beefweb                      loaded at 5F280000h - 5F39A000h
+MSWSOCK                          loaded at 69D30000h - 69D81000h
+foo_convolve                     loaded at 04270000h - 042A8000h
+foo_dsp_utility                  loaded at 5F7E0000h - 5F802000h
+foo_dsp_vocal_exciter            loaded at 5F7B0000h - 5F7D3000h
+atlthunk                         loaded at 6A950000h - 6A95E000h
+clbcatq                          loaded at 75DA0000h - 75E22000h
+dataexchange                     loaded at 6A8F0000h - 6A93C000h
+twinapi.appcore                  loaded at 6CDD0000h - 6CFBC000h
+TextShaping                      loaded at 6AA50000h - 6AAE5000h
+nvdaHelperRemote                 loaded at 684D0000h - 6858C000h
+USP10                            loaded at 60CE0000h - 60CF7000h
+IAccessible2Proxy                loaded at 69350000h - 6936D000h
+ISimpleDOM                       loaded at 684B0000h - 684CA000h
+textinputframework               loaded at 6A7F0000h - 6A8E9000h
+CoreMessaging                    loaded at 6A720000h - 6A7EE000h
+CoreUIComponents                 loaded at 6A480000h - 6A711000h
+CRYPTBASE                        loaded at 73CF0000h - 73CFB000h
+PP-UWP-Interop                   loaded at 664A0000h - 664AA000h
+vccorlib140                      loaded at 5F760000h - 5F7A3000h
+Windows.Media.Playback.Backgrou  loaded at 5F1C0000h - 5F27E000h
+Windows.Media.MediaControl       loaded at 5F140000h - 5F1B5000h
+MMDevAPI                         loaded at 6D410000h - 6D48C000h
+MFMediaEngine                    loaded at 5EDB0000h - 5F13E000h
+powrprof                         loaded at 6AC40000h - 6AC85000h
+XmlLite                          loaded at 5ED80000h - 5EDAB000h
+UMPDC                            loaded at 74950000h - 7495E000h
+SarAsio                          loaded at 69670000h - 69745000h
+DEVOBJ                           loaded at 749B0000h - 749D4000h
+AUDIOSES                         loaded at 6D0D0000h - 6D25A000h
+Windows.UI                       loaded at 65B20000h - 65C2A000h
+Windows.Media.Devices            loaded at 5ED00000h - 5ED75000h
+Windows.Media.Playback.ProxyStu  loaded at 66490000h - 6649D000h
+iphlpapi                         loaded at 74690000h - 746B4000h
+uiautomationcore                 loaded at 6A0D0000h - 6A41C000h
+OneCoreUAPCommonProxyStub        loaded at 68C60000h - 68EDD000h
+explorerframe                    loaded at 5EB10000h - 5ECF7000h
+OneCoreCommonProxyStub           loaded at 68170000h - 681B6000h
+sxs                              loaded at 6A9A0000h - 6AA25000h
+WINTRUST                         loaded at 75A10000h - 75A68000h
+MSASN1                           loaded at 73D00000h - 73D0E000h
+tiptsf                           loaded at 5EA90000h - 5EB0B000h
+avrt                             loaded at 5DCA0000h - 5DCA9000h
+PROPSYS                          loaded at 5F680000h - 5F747000h
+rearoute32                       loaded at 01820000h - 01844000h
+
+Stack dump analysis:
+Address: 761C9542h (KERNELBASE+149542h), symbol: "RaiseException" (+62h)
+Address: 7774F036h (ntdll+4F036h), symbol: "RtlFreeHeap" (+46h)
+Address: 77790504h (ntdll+90504h), symbol: "RtlRemovePropertyStore" (+8C4h)
+Address: 77790504h (ntdll+90504h), symbol: "RtlRemovePropertyStore" (+8C4h)
+Address: 5FB35AA0h (foo_out_asio2+15AA0h)
+Address: 5FB35ABCh (foo_out_asio2+15ABCh)
+Address: 5FB57876h (foo_out_asio2+37876h), symbol: "foobar2000_get_interface" (+21B86h)
+Address: 5FB35AA0h (foo_out_asio2+15AA0h)
+Address: 5FB88BCCh (foo_out_asio2+68BCCh), symbol: "foobar2000_get_interface" (+52EDCh)
+Address: 5FB53570h (foo_out_asio2+33570h), symbol: "foobar2000_get_interface" (+1D880h)
+Address: 5FB57A9Bh (foo_out_asio2+37A9Bh), symbol: "foobar2000_get_interface" (+21DABh)
+Address: 5FB5553Fh (foo_out_asio2+3553Fh), symbol: "foobar2000_get_interface" (+1F84Fh)
+Address: 5FB53570h (foo_out_asio2+33570h), symbol: "foobar2000_get_interface" (+1D880h)
+Address: 5FB25DBAh (foo_out_asio2+5DBAh)
+Address: 5FB85CACh (foo_out_asio2+65CACh), symbol: "foobar2000_get_interface" (+4FFBCh)
+Address: 5FB68F80h (foo_out_asio2+48F80h), symbol: "foobar2000_get_interface" (+33290h)
+Address: 5FB2B3BBh (foo_out_asio2+B3BBh)
+Address: 5FB2B020h (foo_out_asio2+B020h)
+Address: 5FB85CACh (foo_out_asio2+65CACh), symbol: "foobar2000_get_interface" (+4FFBCh)
+Address: 5FB69612h (foo_out_asio2+49612h), symbol: "foobar2000_get_interface" (+33922h)
+Address: 005AADA5h (foobar2000+11ADA5h)
+Address: 5FB85CACh (foo_out_asio2+65CACh), symbol: "foobar2000_get_interface" (+4FFBCh)
+Address: 5FB85CACh (foo_out_asio2+65CACh), symbol: "foobar2000_get_interface" (+4FFBCh)
+Address: 006EE30Eh (foobar2000+25E30Eh)
+Address: 005B9B8Fh (foobar2000+129B8Fh)
+Address: 5FB85CACh (foo_out_asio2+65CACh), symbol: "foobar2000_get_interface" (+4FFBCh)
+Address: 00750000h (foobar2000+2C0000h)
+Address: 00690064h (foobar2000+200064h)
+Address: 00728B68h (foobar2000+298B68h)
+Address: 77706754h (ntdll+6754h), symbol: "fltused" (+D17h)
+Address: 7774813Dh (ntdll+4813Dh), symbol: "LdrGetDllHandleEx" (+42Dh)
+Address: 00728B20h (foobar2000+298B20h)
+Address: 00728B38h (foobar2000+298B38h)
+Address: 76080000h (KERNELBASE+0h)
+Address: 7777EE00h (ntdll+7EE00h), symbol: "wcstoul" (+20h)
+Address: 77751E50h (ntdll+51E50h), symbol: "RtlImageDirectoryEntryToData" (+700h)
+Address: 76080000h (KERNELBASE+0h)
+Address: 76080000h (KERNELBASE+0h)
+Address: 007361B8h (foobar2000+2A61B8h)
+Address: 76080000h (KERNELBASE+0h)
+Address: 007361B8h (foobar2000+2A61B8h)
+Address: 77725513h (ntdll+25513h), symbol: "LdrQueryImageFileKeyOption" (+1B3h)
+Address: 76080000h (KERNELBASE+0h)
+Address: 762A1238h (KERNELBASE+221238h), symbol: "lstrcpynW" (+DD58h)
+Address: 77752FD4h (ntdll+52FD4h), symbol: "RtlAcquireSRWLockShared" (+EE4h)
+Address: 76080000h (KERNELBASE+0h)
+Address: 7778BDD8h (ntdll+8BDD8h), symbol: "LdrHotPatchNotify" (+6F8h)
+Address: 7778BE94h (ntdll+8BE94h), symbol: "LdrHotPatchNotify" (+7B4h)
+Address: 7778BEAEh (ntdll+8BEAEh), symbol: "LdrHotPatchNotify" (+7CEh)
+Address: 006DF9ECh (foobar2000+24F9ECh)
+Address: 7782E2BCh (ntdll+12E2BCh), symbol: "NlsMbCodePageTag" (+E3h)
+Address: 77745500h (ntdll+45500h), symbol: "LdrGetProcedureAddressForCaller" (+510h)
+Address: 007153D0h (foobar2000+2853D0h)
+Address: 006EF382h (foobar2000+25F382h)
+Address: 761D0500h (KERNELBASE+150500h), symbol: "invalid_parameter" (+110h)
+Address: 761C1C72h (KERNELBASE+141C72h), symbol: "WaitForSingleObject" (+12h)
+Address: 005B6F4Ch (foobar2000+126F4Ch)
+Address: 75AA21BBh (ucrtbase+321BBh), symbol: "free_base" (+1Bh)
+Address: 005B6F03h (foobar2000+126F03h)
+Address: 006DC4DEh (foobar2000+24C4DEh)
+Address: 005B9866h (foobar2000+129866h)
+Address: 00728B50h (foobar2000+298B50h)
+Address: 76289E99h (KERNELBASE+209E99h), symbol: "SetThreadDescription" (+29h)
+Address: 004B70AEh (foobar2000+270AEh)
+Address: 004A1575h (foobar2000+11575h)
+Address: 006EF2A8h (foobar2000+25F2A8h)
+Address: 005B9809h (foobar2000+129809h)
+Address: 006CF760h (foobar2000+23F760h)
+Address: 006EF277h (foobar2000+25F277h)
+Address: 006CF6DAh (foobar2000+23F6DAh)
+Address: 006CF760h (foobar2000+23F760h)
+Address: 00702420h (foobar2000+272420h)
+Address: 006CF769h (foobar2000+23F769h)
+Address: 75AB59E3h (ucrtbase+459E3h), symbol: "time32" (+83h)
+Address: 75AB59A0h (ucrtbase+459A0h), symbol: "time32" (+40h)
+Address: 75AB59A0h (ucrtbase+459A0h), symbol: "time32" (+40h)
+Address: 75AD8D70h (ucrtbase+68D70h), symbol: "crt_debugger_hook" (+D0h)
+Address: 768B7BA9h (KERNEL32+17BA9h), symbol: "BaseThreadInitThunk" (+19h)
+Address: 768B7B90h (KERNEL32+17B90h), symbol: "BaseThreadInitThunk" (+0h)
+Address: 7776BD2Bh (ntdll+6BD2Bh), symbol: "RtlInitializeExceptionChain" (+6Bh)
+Address: 76292C20h (KERNELBASE+212C20h), symbol: "UnhandledExceptionFilter" (+0h)
+Address: 7777EE80h (ntdll+7EE80h), symbol: "wcstombs" (+70h)
+Address: 7776BCAFh (ntdll+6BCAFh), symbol: "RtlClearBits" (+BFh)
+Address: 777992CBh (ntdll+992CBh), symbol: "RtlCaptureContext" (+EBh)
+Address: 75AB59A0h (ucrtbase+459A0h), symbol: "time32" (+40h)
+
+Environment:
+App: foobar2000 v2.1.1
+Arch: x86
+UI: Default User Interface 2.1.1
+
+Components:
+Core (2024-01-15 17:22:56 UTC)
+    foobar2000 core 2.1.1
+foo_beefweb (2023-09-03 14:10:40 UTC)
+    Beefweb Remote Control 0.8
+foo_bpm (2014-06-25 02:36:50 UTC)
+    BPM Analyser 0.2.4.6
+foo_converter (2024-01-15 17:23:28 UTC)
+    Converter 2.1.1
+foo_convolve (2019-12-16 15:18:58 UTC)
+    Impulse Response Convolver 0.3.3
+foo_dsp_dolbyhp (2010-01-22 18:40:28 UTC)
+    Dolby Headphone Wrapper 1.4.1
+foo_dsp_effect (2022-12-25 00:56:28 UTC)
+    Effect DSP 0.50 beta 7
+foo_dsp_eq (2024-01-15 17:23:32 UTC)
+    Equalizer 1.2.3
+foo_dsp_std (2024-01-15 17:23:36 UTC)
+    Standard DSP Array 2.1.1
+foo_dsp_utility (2023-02-24 01:27:44 UTC)
+    Utility DSP Array 1.3.2
+foo_dsp_vocal_exciter (2023-03-16 20:06:02 UTC)
+    Vocal Exciter 1.0.3
+foo_dsp_vst3 (2023-05-30 14:59:36 UTC)
+    VST 2.x/3.x Adapter 0.11.10
+foo_fileops (2024-01-15 17:23:40 UTC)
+    File Operations 2.1.1
+foo_freedb2 (2024-01-15 17:23:44 UTC)
+    Online Tagger 0.9
+foo_input_caf (2018-07-30 05:22:06 UTC)
+    CAF Decoder 0.3.0
+foo_input_dts (2020-04-14 01:01:18 UTC)
+    DTS decoder 0.6.8
+foo_input_ffmpeg (2022-08-29 22:25:28 UTC)
+    FFmpeg Decoder Wrapper 0.8
+foo_input_std (2024-01-15 17:23:24 UTC)
+    CD Audio Decoder 2.1.1
+    FFmpeg Decoders 6.0
+    FLAC Decoder 1.4.3
+    Monkey's Audio Decoder 10.30
+    Opus Decoder 1.4
+    Standard Input Array 2.1.1
+foo_midi (2022-02-18 22:19:08 UTC)
+    MIDI Player 2.7.3
+foo_out_asio2 (2022-05-07 17:15:46 UTC)
+    foo_out_asio2 2.0.2
+foo_out_ks (2006-08-05 02:54:58 UTC)
+    Kernel Streaming Output 1.2.2
+foo_ui_std (2024-01-15 17:23:10 UTC)
+    Album List 2.1.1
+    Decoding Speed Test 2.1.1
+    Default User Interface 2.1.1
+    File Integrity Verifier 2.1.1
+foo_unpack (2024-01-15 17:23:54 UTC)
+    ZIP/GZIP/RAR/7-Zip Reader 2.1.1
+foo_youtube (2023-10-28 02:53:06 UTC)
+    Youtube Source 3.9
+
+Recent events:
+[765ms] Component : foo_dsp_utility API 80
+[765ms] Added 15 services
+[765ms] Loading DLL: C:\Users\ethan\AppData\Roaming\foobar2000-v2\user-components\foo_dsp_vocal_exciter\foo_dsp_vocal_exciter.dll
+[765ms] Component : foo_dsp_vocal_exciter API 80
+[765ms] Added 2 services
+[765ms] Total: 1083 services, 183 classes
+[765ms] Components loaded in: 0:00.048590
+[765ms] Pre config read
+[781ms] Configuration read in: 0:00.001843
+[781ms] foobar2000 v2.1.1 x86 [standard]
+[781ms] foo_youtube: ffmpeg (internal): lavf 58.29.100, lavc 58.54.100, lavu 56.31.100
+[781ms] foo_youtube: JavaScript (bundled.node): 5.12
+[781ms] foo_youtube: libcurl (internal): libcurl/7.68.0 Schannel zlib/1.2.11 brotli/1.0.7 nghttp2/1.40.0
+[781ms] foo_youtube: [error] youtube-dl (external): The system cannot find the file specified.
+[781ms] foo_youtube: [error] youtube-dl: C:\Users\Ethan Jones\scoop\apps\yt-dlp\current\yt-dlp.exe
+[781ms] foo_youtube: [error] LAV Filters (system): Splitter: not found
+[781ms] foo_youtube: [error] LAV Filters (system): Video: not found
+[781ms] Library scanning problem: "C:\Users\Ethan Jones\Music", reason: file not found
+[781ms] Folder watching failure: file not found
+[859ms] Playlist #0 loaded in 0:00.000089
+[968ms] User Interface initialized in: 0:00.188719
+[968ms] Processing commandline
+[968ms] initquit::init entry
+[968ms] FFmpeg version: 6.0
+[968ms] beefweb: listening on [0.0.0.0]:8880
+[968ms] beefweb: listening on [::]:8880
+[984ms] initquit::init exit
+[984ms] Startup time : 0:00.988349
+[1031ms] Library initialized after 0:01.037513
+[11078ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=Ableton Push
+[11078ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=ASIO4ALL v2
+[11078ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=Realtek ASIO
+[11078ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=ReaRoute ASIO
+[11078ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=Synchronous Audio Router
+[13750ms] setConfigBlob(cfg_var.6635C6B6-4DDC-4DCE-A175-BE1D55FFB524,724 bytes)
+[15250ms] setConfigInt(preferences.branch.A9038870-DC08-431D-8C91-3B4E41D2436D.open,1)
+[15547ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=Ableton Push
+[15547ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=ASIO4ALL v2
+[15547ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=Realtek ASIO
+[15547ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=ReaRoute ASIO
+[15547ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=Synchronous Audio Router
+[38718ms] setConfigInt(core.output.EEEB07DE-C2C8-44C2-985C-C85856D96DA1.5243F9AD-C84F-4723-8194-0788FC021BCC.visible,0)
+[38718ms] deleteConfigString(core.output.EEEB07DE-C2C8-44C2-985C-C85856D96DA1.5243F9AD-C84F-4723-8194-0788FC021BCC.dsp)
+[38718ms] setConfigInt(core.output.5DC2447C-140A-498C-A2A4-60EFFED25415.E42E3576-B7B4-4FDE-AE6C-E5FD34F7AD40.visible,0)
+[38718ms] deleteConfigString(core.output.5DC2447C-140A-498C-A2A4-60EFFED25415.E42E3576-B7B4-4FDE-AE6C-E5FD34F7AD40.dsp)
+[38718ms] setConfigInt(core.output.5DC2447C-140A-498C-A2A4-60EFFED25415.232685C6-6548-49D8-846D-4141A3EF7560.visible,1)
+[38718ms] deleteConfigString(core.output.5DC2447C-140A-498C-A2A4-60EFFED25415.232685C6-6548-49D8-846D-4141A3EF7560.dsp)
+[38718ms] setConfigInt(core.output.5DC2447C-140A-498C-A2A4-60EFFED25415.A80362FF-CE76-4DD9-874A-704C57BF0D6A.visible,1)
+[38718ms] deleteConfigString(core.output.5DC2447C-140A-498C-A2A4-60EFFED25415.A80362FF-CE76-4DD9-874A-704C57BF0D6A.dsp)
+[38718ms] setConfigInt(core.output.5DC2447C-140A-498C-A2A4-60EFFED25415.9761988D-FB5D-4258-9AE4-0B99B5D5F842.visible,1)
+[38718ms] deleteConfigString(core.output.5DC2447C-140A-498C-A2A4-60EFFED25415.9761988D-FB5D-4258-9AE4-0B99B5D5F842.dsp)
+[38718ms] setConfigInt(core.output.5DC2447C-140A-498C-A2A4-60EFFED25415.0569D852-1F6A-44A7-B7B5-EFB78B66BE21.visible,1)
+[38718ms] deleteConfigString(core.output.5DC2447C-140A-498C-A2A4-60EFFED25415.0569D852-1F6A-44A7-B7B5-EFB78B66BE21.dsp)
+[38718ms] setConfigInt(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.00000000-0000-0000-0000-000000000000.visible,1)
+[38718ms] deleteConfigString(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.00000000-0000-0000-0000-000000000000.dsp)
+[38718ms] setConfigInt(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.09C1CFFA-FAF9-4DB3-ADDE-5F12F593DFC0.visible,1)
+[38718ms] deleteConfigString(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.09C1CFFA-FAF9-4DB3-ADDE-5F12F593DFC0.dsp)
+[38718ms] setConfigInt(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.1B96C5BC-423A-4E32-9E4B-288E380BE5BD.visible,1)
+[38718ms] deleteConfigString(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.1B96C5BC-423A-4E32-9E4B-288E380BE5BD.dsp)
+[38718ms] setConfigInt(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.1C7BBC65-4052-4868-B54A-07AB74CD5541.visible,1)
+[38718ms] deleteConfigString(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.1C7BBC65-4052-4868-B54A-07AB74CD5541.dsp)
+[38718ms] setConfigInt(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.493A6F9D-B233-4108-BC19-8181217384EC.visible,1)
+[38718ms] deleteConfigString(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.493A6F9D-B233-4108-BC19-8181217384EC.dsp)
+[38718ms] setConfigInt(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.7F82DD76-D97E-4535-BA24-AA4395E22EB4.visible,1)
+[38718ms] deleteConfigString(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.7F82DD76-D97E-4535-BA24-AA4395E22EB4.dsp)
+[38718ms] setConfigInt(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.ABA4D8BB-DF86-41A4-9002-26250EAFE4BC.visible,1)
+[38718ms] deleteConfigString(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.ABA4D8BB-DF86-41A4-9002-26250EAFE4BC.dsp)
+[38718ms] setConfigInt(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.B6A71108-6171-4EBD-BCFD-EAF03E33EB2B.visible,1)
+[38718ms] deleteConfigString(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.B6A71108-6171-4EBD-BCFD-EAF03E33EB2B.dsp)
+[38718ms] setConfigInt(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.B905C814-CCC6-4E99-B7BB-8987A3FF78C4.visible,1)
+[38718ms] deleteConfigString(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.B905C814-CCC6-4E99-B7BB-8987A3FF78C4.dsp)
+[38718ms] setConfigInt(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.BA395C10-C39F-46A3-9877-AEF33974EA33.visible,1)
+[38718ms] deleteConfigString(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.BA395C10-C39F-46A3-9877-AEF33974EA33.dsp)
+[38718ms] setConfigInt(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.F72052CC-94E1-4FA2-B01A-7C317B6A8543.visible,1)
+[38718ms] deleteConfigString(core.output.D41D2423-FBB0-4635-B233-7054F79814AB.F72052CC-94E1-4FA2-B01A-7C317B6A8543.dsp)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.00000000-0000-0000-0000-000000000000.visible,1)
+[38718ms] deleteConfigString(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.00000000-0000-0000-0000-000000000000.dsp)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.00000000-0000-0000-0000-000000000000.bits,32)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.00000000-0000-0000-0000-000000000000.dither,0)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.09C1CFFA-FAF9-4DB3-ADDE-5F12F593DFC0.visible,1)
+[38718ms] deleteConfigString(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.09C1CFFA-FAF9-4DB3-ADDE-5F12F593DFC0.dsp)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.09C1CFFA-FAF9-4DB3-ADDE-5F12F593DFC0.bits,16)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.09C1CFFA-FAF9-4DB3-ADDE-5F12F593DFC0.dither,0)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.1B96C5BC-423A-4E32-9E4B-288E380BE5BD.visible,1)
+[38718ms] deleteConfigString(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.1B96C5BC-423A-4E32-9E4B-288E380BE5BD.dsp)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.1B96C5BC-423A-4E32-9E4B-288E380BE5BD.bits,32)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.1B96C5BC-423A-4E32-9E4B-288E380BE5BD.dither,0)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.1C7BBC65-4052-4868-B54A-07AB74CD5541.visible,1)
+[38718ms] deleteConfigString(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.1C7BBC65-4052-4868-B54A-07AB74CD5541.dsp)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.1C7BBC65-4052-4868-B54A-07AB74CD5541.bits,24)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.1C7BBC65-4052-4868-B54A-07AB74CD5541.dither,0)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.493A6F9D-B233-4108-BC19-8181217384EC.visible,1)
+[38718ms] deleteConfigString(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.493A6F9D-B233-4108-BC19-8181217384EC.dsp)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.493A6F9D-B233-4108-BC19-8181217384EC.bits,16)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.493A6F9D-B233-4108-BC19-8181217384EC.dither,0)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.7F82DD76-D97E-4535-BA24-AA4395E22EB4.visible,1)
+[38718ms] deleteConfigString(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.7F82DD76-D97E-4535-BA24-AA4395E22EB4.dsp)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.7F82DD76-D97E-4535-BA24-AA4395E22EB4.bits,16)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.7F82DD76-D97E-4535-BA24-AA4395E22EB4.dither,0)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.ABA4D8BB-DF86-41A4-9002-26250EAFE4BC.visible,1)
+[38718ms] deleteConfigString(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.ABA4D8BB-DF86-41A4-9002-26250EAFE4BC.dsp)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.ABA4D8BB-DF86-41A4-9002-26250EAFE4BC.bits,16)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.ABA4D8BB-DF86-41A4-9002-26250EAFE4BC.dither,0)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.B6A71108-6171-4EBD-BCFD-EAF03E33EB2B.visible,1)
+[38718ms] deleteConfigString(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.B6A71108-6171-4EBD-BCFD-EAF03E33EB2B.dsp)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.B6A71108-6171-4EBD-BCFD-EAF03E33EB2B.bits,16)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.B6A71108-6171-4EBD-BCFD-EAF03E33EB2B.dither,0)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.B905C814-CCC6-4E99-B7BB-8987A3FF78C4.visible,1)
+[38718ms] deleteConfigString(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.B905C814-CCC6-4E99-B7BB-8987A3FF78C4.dsp)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.B905C814-CCC6-4E99-B7BB-8987A3FF78C4.bits,24)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.B905C814-CCC6-4E99-B7BB-8987A3FF78C4.dither,0)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.BA395C10-C39F-46A3-9877-AEF33974EA33.visible,1)
+[38718ms] deleteConfigString(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.BA395C10-C39F-46A3-9877-AEF33974EA33.dsp)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.BA395C10-C39F-46A3-9877-AEF33974EA33.bits,16)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.BA395C10-C39F-46A3-9877-AEF33974EA33.dither,0)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.F72052CC-94E1-4FA2-B01A-7C317B6A8543.visible,1)
+[38718ms] deleteConfigString(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.F72052CC-94E1-4FA2-B01A-7C317B6A8543.dsp)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.F72052CC-94E1-4FA2-B01A-7C317B6A8543.bits,32)
+[38718ms] setConfigInt(core.output.0DD9B977-765B-4804-BF2D-B28EBF0C510D.F72052CC-94E1-4FA2-B01A-7C317B6A8543.dither,0)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.532539B5-C492-4EE1-ABE4-A7634C46340C.visible,1)
+[38718ms] deleteConfigString(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.532539B5-C492-4EE1-ABE4-A7634C46340C.dsp)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.532539B5-C492-4EE1-ABE4-A7634C46340C.bits,16)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.532539B5-C492-4EE1-ABE4-A7634C46340C.dither,0)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.1C4B9437-F689-2C04-D9E0-97E41624D4E7.visible,1)
+[38718ms] deleteConfigString(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.1C4B9437-F689-2C04-D9E0-97E41624D4E7.dsp)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.1C4B9437-F689-2C04-D9E0-97E41624D4E7.bits,16)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.1C4B9437-F689-2C04-D9E0-97E41624D4E7.dither,0)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.8F448B1E-6695-5B41-75F4-B26476CB727B.visible,1)
+[38718ms] deleteConfigString(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.8F448B1E-6695-5B41-75F4-B26476CB727B.dsp)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.8F448B1E-6695-5B41-75F4-B26476CB727B.bits,16)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.8F448B1E-6695-5B41-75F4-B26476CB727B.dither,0)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.AAB1DC56-31B3-9810-3142-8A01E423CA57.visible,1)
+[38718ms] deleteConfigString(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.AAB1DC56-31B3-9810-3142-8A01E423CA57.dsp)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.AAB1DC56-31B3-9810-3142-8A01E423CA57.bits,16)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.AAB1DC56-31B3-9810-3142-8A01E423CA57.dither,0)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.4F067922-A568-0317-974E-6AE73651447F.visible,1)
+[38718ms] deleteConfigString(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.4F067922-A568-0317-974E-6AE73651447F.dsp)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.4F067922-A568-0317-974E-6AE73651447F.bits,16)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.4F067922-A568-0317-974E-6AE73651447F.dither,0)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.3C208724-2537-73DF-3F4D-696756FAA49A.visible,1)
+[38718ms] deleteConfigString(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.3C208724-2537-73DF-3F4D-696756FAA49A.dsp)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.3C208724-2537-73DF-3F4D-696756FAA49A.bits,16)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.3C208724-2537-73DF-3F4D-696756FAA49A.dither,0)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.E57944CE-7CFF-B6C2-1DE8-7A47273E0808.visible,1)
+[38718ms] deleteConfigString(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.E57944CE-7CFF-B6C2-1DE8-7A47273E0808.dsp)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.E57944CE-7CFF-B6C2-1DE8-7A47273E0808.bits,16)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.E57944CE-7CFF-B6C2-1DE8-7A47273E0808.dither,0)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.542792B1-071C-AA55-E370-1203A5D3F965.visible,1)
+[38718ms] deleteConfigString(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.542792B1-071C-AA55-E370-1203A5D3F965.dsp)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.542792B1-071C-AA55-E370-1203A5D3F965.bits,16)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.542792B1-071C-AA55-E370-1203A5D3F965.dither,0)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.F4BC3627-8F99-D58B-7E7C-90CD6B510614.visible,1)
+[38718ms] deleteConfigString(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.F4BC3627-8F99-D58B-7E7C-90CD6B510614.dsp)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.F4BC3627-8F99-D58B-7E7C-90CD6B510614.bits,16)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.F4BC3627-8F99-D58B-7E7C-90CD6B510614.dither,0)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.724E3DA9-D1C6-41C7-340F-4C03B39A3500.visible,1)
+[38718ms] deleteConfigString(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.724E3DA9-D1C6-41C7-340F-4C03B39A3500.dsp)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.724E3DA9-D1C6-41C7-340F-4C03B39A3500.bits,16)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.724E3DA9-D1C6-41C7-340F-4C03B39A3500.dither,0)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.34C94FF7-3559-8B89-EC35-8E372208A76D.visible,1)
+[38718ms] deleteConfigString(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.34C94FF7-3559-8B89-EC35-8E372208A76D.dsp)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.34C94FF7-3559-8B89-EC35-8E372208A76D.bits,16)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.34C94FF7-3559-8B89-EC35-8E372208A76D.dither,0)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.6B8385B6-3FA5-98D2-F8A4-14BA2F8D950B.visible,1)
+[38718ms] deleteConfigString(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.6B8385B6-3FA5-98D2-F8A4-14BA2F8D950B.dsp)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.6B8385B6-3FA5-98D2-F8A4-14BA2F8D950B.bits,16)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.6B8385B6-3FA5-98D2-F8A4-14BA2F8D950B.dither,0)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.39CF8FFF-72CC-B2D4-5443-0F8C97469E23.visible,1)
+[38718ms] deleteConfigString(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.39CF8FFF-72CC-B2D4-5443-0F8C97469E23.dsp)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.39CF8FFF-72CC-B2D4-5443-0F8C97469E23.bits,16)
+[38718ms] setConfigInt(core.output.2C1B1FDD-3595-4DA1-BC2A-F77334D36EFE.39CF8FFF-72CC-B2D4-5443-0F8C97469E23.dither,0)
+[50734ms] setConfigString(core.output.mode,5DC2447C-140A-498C-A2A4-60EFFED25415)
+[50734ms] setConfigString(core.output.device,9761988D-FB5D-4258-9AE4-0B99B5D5F842)
+[50734ms] setConfigInt(core.output.buffer.ms,1120)
+[67047ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=Ableton Push
+[67047ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=ASIO4ALL v2
+[67047ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=Realtek ASIO
+[67047ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=ReaRoute ASIO
+[67047ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=Synchronous Audio Router
+[67172ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=Ableton Push
+[67172ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=ASIO4ALL v2
+[67172ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=Realtek ASIO
+[67172ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=ReaRoute ASIO
+[67172ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=Synchronous Audio Router
+[90578ms] setConfigInt(core.output.buffer.ms,1120)
+[90578ms] setConfigInt(cfg_var.D8FCE529-B863-4BA4-920F-01B5384AF8E4,1)
+[93015ms] Opening track for playback: "N:\dissonance\are you ready to know.flac"
+[93093ms] setConfigFloat(core.totalTimePlayed,1413657.4794337)
+[104281ms] setConfigFloat(core.totalTimePlayed,1413657.4794563)
+[104281ms] setConfigBlob(config_object.B572C86F-4206-40A0-8476-C7B27E74DB2D,1 bytes)
+[104281ms] Opening track for playback: "N:\dissonance\are you ready to know.flac"
+[104297ms] setConfigFloat(core.totalTimePlayed,1413657.4794563)
+[104687ms] Playback interrupted, source is stalling...
+[124203ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=Ableton Push
+[124203ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=ASIO4ALL v2
+[124203ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=Realtek ASIO
+[124203ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=ReaRoute ASIO
+[124203ms] output_asio2_impl::g_enum_devices - output_asio2_impl::g_enum_devices - name=Synchronous Audio Router
+[132203ms] setConfigInt(core.output.buffer.ms,1120)
+[132218ms] setConfigInt(cfg_var.D8FCE529-B863-4BA4-920F-01B5384AF8E4,0)
+
+
+Machine specifications:
+OS: Windows 10.0.22621 x64
+CPU: AMD Ryzen 7 5700U with Radeon Graphics, features: MMX SSE SSE2 SSE3 SSE4.1 SSE4.2 AVX LZCNT
+CPU threads: 16
+Audio: Line 1 (Virtual Audio Cable); comunication (Synchronous Audio Router); CABLE Input (VB-Audio Virtual Cable); rooting (Synchronous Audio Router); Headphones (SteelSeries Arctis 9 Game); Headset  (SteelSeries Arctis 9 Chat); Line 3 (Virtual Audio Cable); Speakers (Realtek(R) Audio); Line 2 (Virtual Audio Cable); headset (Synchronous Audio Router)
