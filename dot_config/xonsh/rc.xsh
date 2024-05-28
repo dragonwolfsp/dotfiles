@@ -1,5 +1,6 @@
 #pythonic imports
 import json
+import threading
 
 #Show full python tracebacks.
 $XONSH_SHOW_TRACEBACK = True
@@ -51,6 +52,12 @@ if not !(which carapace):
 else:
 	exec($(carapace _carapace))
 
+# Start the fastfetch
+def ffthread():
+	print($(fastfetch))
+fastThread=threading.Thread(target = ffthread)
+fastThread.start()
+
 #custom ls functions to use prefered settings and replace ls with eza
 def _ls(args):
 	if ezaIsHere:
@@ -95,6 +102,10 @@ def _gpip():
 #we print because starship likes to eat the curl output on some systems.
 	print($(curl -s http://ifconfig.me/ip))
 
+# unlock bitwarden and set BW_SESSION in one command.
+def _pitwarden():
+	$BW_SESSION = $(bw unlock --raw)
+
 #define aliases
 aliases['ls'] = _ls
 aliases['ll'] = _lsLong
@@ -103,6 +114,7 @@ aliases['gpush'] = _gpush
 aliases['glog'] = _glog
 aliases['cd'] = _superCd
 aliases['gpip'] = _gpip
+aliases['pitwarden'] = _pitwarden
 if zoxideIsHere:
 	aliases['cdi'] = 'zi'
 
