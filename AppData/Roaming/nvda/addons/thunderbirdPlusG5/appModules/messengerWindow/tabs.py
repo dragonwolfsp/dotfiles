@@ -309,6 +309,6 @@ def activateDoc(oCurTab) :
 			callLater(20, KeyboardInputGesture.fromName("tab").send) 
 		else :
 			# callLater(20, utils.getFolderTreeFromFG, True)
-			if sharedVars.oSettings.getOption("messengerWindow","firstTabActivation") : k = "n"
+			if sharedVars.oSettings.getOption("mainWindow","firstTabActivation") : k = "n"
 			else : k = "end"
 			callLater(20, utils.getThreadTreeFromFG, True, k)

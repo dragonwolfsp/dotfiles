@@ -4,19 +4,16 @@ gTimer = None
 lastKey = ""
 oCurFrame = None
 groupingIdx = 25 # index of child object of role grouping in the foregroundObject children  
-curFrame = curSubject = ""
+curFrame = curWinTitle = ""
 curTab = "init2"
 curTTRow = ""  # current thread tree row
 oQuoteNav = None
-curSubject = "init"
 oEditing = None
 msgOpened = False
 prevObj = ""
 chichi = None
 menuCommands = {} # parallel to some menu items
-FTnoNavLetter =FTnoSpace = TTnoSpace = TTnoFilterBar = False
-useKeyNav = True
-directKeyNav = True
+# FTnoNavLetter =FTnoSpace = TTnoSpace = TTnoFilterBar = False
 lockEditMenu = None
 scriptCategory = "Thunderbird+G5"
 virtualSpellChk = False
@@ -77,7 +74,7 @@ def log(o, msg="Objet", withStep=False):
 	if hasattr(o, "IA2Attributes") :
 		ID = str(o.IA2Attributes.get("id"))
 	else : ID = ""
-	t =  states + " : {}, ID : {}, hWnd : {}, childCount : {}{}".format(o.role.name, ID, o.windowHandle, o.childCount, nm + val)
+	t =  states + " : {}, ID : {}, class : {}, childCount : {}{}".format(o.role.name, ID, str(o.windowClassName), o.childCount, nm + val)
 	debugLog = debugLog + step + lastFunction + msg +  t + "\n"
 
 def debugMess(o, msg="Objet") :

@@ -1,4 +1,3 @@
- #-*- coding:utf-8 -*
 #-*- coding:utf-8 -*
 import addonHandler
 addonHandler.initTranslation()
@@ -8,7 +7,8 @@ from ui import message
 from tones import beep
 from wx  import  CallLater, CallAfter
 import sharedVars
-from utis import findParentByID, inputBox, wordsMatchWord, getSpeechMode
+import utis
+# from utis import utis.findParentByID, utis.inputBox, utis.wordsMatchWord, utis.getSpeechMode
 import re
 gRegFTI = re.compile("all-|unread-|smart-|favorite-|recent-|tags-")
 prevSpeechMode = ""
@@ -142,7 +142,7 @@ def getThreadTreeFromFG(focus=False, nextGesture="", getThreadPane=False) :
 		o = o.next
 	if  o and focus : o.setFocus()
 	if nextGesture :
-		prevSpeechMode = getSpeechMode()
+		prevSpeechMode = utis.getSpeechMode()
 		setSpeechMode(SpeechMode.off)
 		CallLater(50, silentSendKey, nextGesture)
 	return  o
@@ -153,7 +153,7 @@ def getThreadTreeFromFG(focus=False, nextGesture="", getThreadPane=False) :
 		# sharedVars.objLooping = True
 		# if hasID(o, "threadTree")  : # threadTree item
 			# # Path : | i2, Role-SECTION, , IA2ID : threadPane | i3, Role-TEXTFRAME, , IA2ID : threadTree | i0, Role-TABLE,  | i2, Role-TREEVIEW,  | i0, Role-TREEVIEWITEM, , IA2ID : threadTree-row0 
-			# o = findParentByID(o, controlTypes.Role.TEXTFRAME, "threadTree")
+			# o = utis.findParentByID(o, controlTypes.Role.TEXTFRAME, "threadTree")
 			# while o :
 				# if hasID(o, "quick-filter-bar") : break
 				# if o.previous : o = o.previous
@@ -558,7 +558,7 @@ def getHeader(o, key, repeats=0, say=True) :
 		else :
 			return oHeader.outLabel, oHeader.outName
 	elif repeats == 1 :
-		CallLater(100, inputBox , label=oHeader.outLabel, title= oHeader.outLabel + ": " + _("Copy to clipboard"), postFunction=None, startValue=oHeader.outName)
+		CallLater(100, utis.inputBox , label=oHeader.outLabel, title= oHeader.outLabel + ": " + _("Copy to clipboard"), postFunction=None, startValue=oHeader.outName)
 	else :
 		try : oHeader.outObj.doAction()
 		except : clickObject(oHeader.outObj, False) # right click
@@ -634,7 +634,7 @@ def smartReply(repeats=0) :
 	toLabel, toNames = getHeader(o, 4, 0, False) # key repeats say
 	if not toNames :
 		toNames = str(getHeader(5, 0, False)) # key repeats say
-	isList = (repeats== 0 and wordsMatchWord("@googlegroups|@framalist|@freelist", toNames))
+	isList = (repeats== 0 and utis.wordsMatchWord("@googlegroups|@framalist|@freelist", toNames))
 	if isList : 
 		message(_("To the group, "))
 		# display a menu -> return CallLater(150, replyTo, msgHeader, 1)
@@ -669,6 +669,11 @@ def getTotalColIdx(oTT):
 	finally :
 		sharedVars.objLooping = prevLooping
 
+def cleanWinTitle(title) :
+	i =  title.rfind(" - ")
+	if i > -1 :
+		title =  title[0:i]
+	return title.strip((" ,;:?!+"))
 # test funcions
 def listColumnID(oTT):
 	try :
@@ -712,6 +717,31 @@ def listColumnNames(oRow) :
 		sharedVars.logte(left + ", " +  cls + ", " + clsFull + str(name) + str(value) + str(cName) + str(cValue))
 		o = o.next
 	# sharedVars.logte("* End of columnNames ")
+	
+
+def getColValue(oRow, colID) :
+	o = oRow.firstChild
+	idx = 0
+	iFound = -1
+	while o :
+		cls = str(getIA2Attr(o, False, "class"))
+		if cls.startswith(colID) :
+			iFound = idx
+			break
+		idx += 1
+		o=o.next
+
+	if iFound == -1 : return "" # colID + " column not found"
+	cName = ""	
+	oc = oRow.getChild(iFound)
+	while oc :
+		if hasattr(oc, "name") : cName +=str(oc.name)
+		try : oc = oc.firstChild
+		except : break
+
+	# result = "cls={}, index={}, cName={}".format(cls, iFound, cName)
+	return cName
+		
 def recurseObjects(o, level): 
 	if not o : return None
 	o = o.firstChild
