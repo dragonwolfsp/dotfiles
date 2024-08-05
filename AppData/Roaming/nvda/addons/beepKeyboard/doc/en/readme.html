@@ -1,11 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<link rel="stylesheet" type="text/css" href="../style.css" media="screen"/>
-<title>Beep keyboard 1.9</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="../style.css" media="screen">
+<title>Beep keyboard 24.1.1</title>
 </head>
 <body>
 <h1>Beep keyboard NVDA Add-on</h1>
@@ -40,17 +38,44 @@
 <li>Test tone: this button lets you to play a test with the current set parameters.</li>
 <li>Press OK button to save settings or cancel to discard.</li>
 </ul>
-<h2>contributions, reports and donations</h2>
-<p>If you like my project or this software is useful for you in your daily life and you would like to contribute in some way, you can donate via the following methods:</p>
+<h2>Download.</h2>
+<p>The latest release is available to <a href="https://davidacm.github.io/getlatest/gh/davidacm/beepKeyboard/?index=1">download in this link</a></p>
+<h2>Contributing with the project.</h2>
+<h3>Donations.</h3>
+<p>If you like my project or this software is useful for you in your daily life and you would like to contribute in some way, you can donate via the following methods.</p>
 <ul>
 <li><a href="https://paypal.me/davicm">PayPal.</a></li>
 <li><a href="https://ko-fi.com/davidacm">Ko-fi.</a></li>
 <li><a href="https://davidacm.github.io/donations/">cryptocurrencies and other methods.</a></li>
 </ul>
-<p>If you want to fix bugs, report problems or new features, you can contact me at: <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#104;&#102;&#51;&#54;&#48;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#100;&#104;&#102;&#51;&#54;&#48;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>.</p>
-<p>Or in the github repository of this project:
-  <a href="https://github.com/davidacm/beepKeyboard">Beep keyboard on GitHub</a></p>
-<pre><code>You can get the latest release of this add-on in that repository.
-</code></pre>
+<h3>fixing bugs and new features.</h3>
+<p>If you want to fix a bug or add new feature, You will need to fork this repository.</p>
+<p>#### Forking the repository.
+  If this is your first contribution, you will first need to "fork" the BeepKeyboard repository on GitHub:</p>
+<ol>
+<li>Fork this repo in your github account.</li>
+<li>Clone your forked repo locally: "git clone yourRepoUrl".</li>
+<li>Add this repo in your forked repo from the command line:<br />
+  "git remote add davidacm https://github.com/davidacm/beepKeyboard.git".</li>
+<li>fetch my branches:<br />
+  "git fetch davidacm".</li>
+<li>Switch to the local master branch: "git checkout master".</li>
+<li>Set the local master to use the davidacm  master as its upstream:<br />
+  "git branch -u davidacm/master".  </li>
+</ol>
+<h4>Steps before coding.</h4>
+<p>You must use a separate "topic" branch for each issue or feature. All code should usually be based on the latest commit in the official master branch at the time you start the work.
+  So, before begin to work, do the following:</p>
+<ol>
+<li>Remember the steps of "Forking the repository" section.</li>
+<li>Checkout to master branch: "git checkout master".</li>
+<li>Update the local master: "git pull".</li>
+<li>Create a new branch based on the updated master branch: "git checkout -b YourNewBranch".</li>
+<li>write your code.</li>
+<li>Add your work to be commited (clean unwanted files first): git "add ."</li>
+<li>create a commit: "git commit" and write the commit message.</li>
+<li>push your branch in your repository: "git push". if the branch doesn't exist, git will tell you how to deal with this.</li>
+<li>Request a pull request on my repository.</li>
+</ol>
 </body>
 </html>

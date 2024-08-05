@@ -279,6 +279,9 @@ class OptionsDialog(SettingsPanel):
 		# Translators: A checkbox in add-on options dialog to set whether allow or block speech commands
 		self.speech_commands = wx.CheckBox(self, wx.ID_ANY, label=_("Process speech commands when controlling another computer"))
 		sizer.Add(self.speech_commands)
+		# Translators: A checkbox in add-on options dialog to set whether server welcome messages are displayed only once
+		self.motd_once = wx.CheckBox(self, wx.ID_ANY, label=_("Show server welcome messages only once"))
+		sizer.Add(self.motd_once)
 		# Translators: a text field in add-on options dialog to set the portcheck service URL
 		sizer.Add(wx.StaticText(self, wx.ID_ANY, label=_("Portcheck &service URL: ")))
 		self.portcheck = wx.TextCtrl(self, wx.ID_ANY)
@@ -321,6 +324,7 @@ class OptionsDialog(SettingsPanel):
 		self.alert_before_slave_disconnect.SetValue(config['ui']['alert_before_slave_disconnect'])
 		self.mute_when_controlling_local_machine.SetValue(config['ui']['mute_when_controlling_local_machine'])
 		self.speech_commands.SetValue(config['ui']['allow_speech_commands'])
+		self.motd_once.SetValue(config['ui']['display_motd_once'])
 		self.portcheck.SetValue(config['ui']['portcheck'])
 		self.originalProfileName = NVDAConfig.conf.profiles[-1].name
 		NVDAConfig.conf.profiles[-1].name = None
@@ -370,6 +374,7 @@ class OptionsDialog(SettingsPanel):
 		config['ui']['alert_before_slave_disconnect'] = self.alert_before_slave_disconnect.GetValue()
 		config['ui']['mute_when_controlling_local_machine'] = self.mute_when_controlling_local_machine.GetValue()
 		config['ui']['allow_speech_commands'] = self.speech_commands.GetValue()
+		config['ui']['display_motd_once'] = self.motd_once.GetValue()
 		config['ui']['portcheck'] = self.portcheck.GetValue()
 		config.write()
 

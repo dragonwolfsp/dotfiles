@@ -67,7 +67,7 @@ class Beeper:
                 self.getPitch(l), beepLen, volume, volume)
             bufPtr += pauseBufSize # add a short pause
         self.player.stop()
-        self.player.feed(buf.raw)
+        threading.Thread(target=lambda:self.player.feed(buf.raw)).start()
 
     def simpleCrackle(self, n, volume, initialDelay=0):
         return self.fancyCrackle([0] * n, volume, initialDelay=initialDelay)
@@ -108,7 +108,7 @@ class Beeper:
         maxInt = 1 << (8 * intSize)
         result = map(lambda x : x %maxInt, result)
         packed = struct.pack("<%dQ" % (bufSize // intSize), *result)
-        self.player.feed(packed)
+        threading.Thread(target=lambda:self.player.feed(packed)).start()
 
     def uniformSample(self, a, m):
         n = len(a)
@@ -152,7 +152,7 @@ spcBuf = None
 def skippedParagraphChime():
     global spcFile, spcPlayer, spcBuf
     if spcPlayer is  None:
-        spcFile = wave.open(getSoundsPath() + "\\on.wav","r")
+        spcFile = wave.open(getSoundsPath() + "\\classic\\on.wav","r")
         spcPlayer = nvwave.WavePlayer(channels=spcFile.getnchannels(), samplesPerSec=spcFile.getframerate(),bitsPerSample=spcFile.getsampwidth()*8, outputDevice=config.conf["speech"]["outputDevice"],wantDucking=False)
         spcFile.rewind()
         spcFile.setpos(100 *         spcFile.getframerate() // 1000)

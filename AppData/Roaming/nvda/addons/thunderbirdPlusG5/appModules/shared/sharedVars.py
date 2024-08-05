@@ -1,5 +1,8 @@
 #-*- coding:utf-8 -*
+debug = False
+TBMajor = 0
 objLooping = False
+speechOff = False
 gTimer = None
 lastKey = ""
 oCurFrame = None
@@ -17,9 +20,8 @@ menuCommands = {} # parallel to some menu items
 lockEditMenu = None
 scriptCategory = "Thunderbird+G5"
 virtualSpellChk = False
-delayReadWnd = 99
+delayFocusDoc = 20
 testMode = False
-debug = False
 debugLog = ""
 
 import quoteNav
@@ -47,20 +49,9 @@ def setLooping(value) :
 def logte(msg) :
 	global debugLog
 	debugLog += msg + "\n" 
-
-def log(o, msg="Objet", withStep=False):
-	global debugLog
-	if withStep :
-		step = "step " + str(globalVars.TBStep) + " "
-		curFunc = inspect.stack()[1][3] 
-		prevFunc = inspect.stack()[2][3]
-		lastFunction = " fonk {0}, {1} : ".format(curFunc, prevFunc)
-	else :
-		step = lastFunction = ""
-	if not o : 
-		debugLog = debugLog + step + msg + " : objet None, " + lastFunction + "\n"
-		return
-	states =  ("focused, " if hasattr(o, "hasFocus") and o.hasFocus else "")
+def getObjAttrs(o) :
+	states = " Busy, " if controlTypes.State.BUSY in o.states else " "
+	states +=  (" focused, " if hasattr(o, "hasFocus") and o.hasFocus else " ")
 	states += (", selected" if controlTypes.State.SELECTED in o.states else "")
 	if o.role == controlTypes.Role.TREEVIEWITEM :
 		states += (",Collapsed" if controlTypes.State.COLLAPSED in o.states else ", Expanded")
@@ -75,7 +66,23 @@ def log(o, msg="Objet", withStep=False):
 		ID = str(o.IA2Attributes.get("id"))
 	else : ID = ""
 	t =  states + " : {}, ID : {}, class : {}, childCount : {}{}".format(o.role.name, ID, str(o.windowClassName), o.childCount, nm + val)
-	debugLog = debugLog + step + lastFunction + msg +  t + "\n"
+	return t
+
+
+def log(o, msg="Objet", withStep=False):
+	global debugLog
+	if withStep :
+		step = "step " + str(globalVars.TBStep) + " "
+		curFunc = inspect.stack()[1][3] 
+		prevFunc = inspect.stack()[2][3]
+		lastFunction = " fonk {0}, {1} : ".format(curFunc, prevFunc)
+	else :
+		step = lastFunction = ""
+	if not o : 
+		debugLog = debugLog + step + msg + " : objet None, " + lastFunction + "\n"
+		return
+	t = getObjAttrs(o)
+	debugLog = debugLog + step + lastFunction + msg + t + "\n"
 
 def debugMess(o, msg="Objet") :
 	lastFunc = inspect.stack()[1][3]

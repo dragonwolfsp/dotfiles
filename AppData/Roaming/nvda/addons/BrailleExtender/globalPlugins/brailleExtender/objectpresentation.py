@@ -1,3 +1,4 @@
+# coding: utf-8
 # objectpresentation.py
 # Part of BrailleExtender addon for NVDA
 # Copyright 2020-2022 Emil Hesmyr, André-Abush Clause, released under GPL.
@@ -485,9 +486,9 @@ class SettingsDlg(gui.settingsDialogs.SettingsPanel):
 			choices=[_("like speech"), _("enabled"), _("disabled")]
 		)
 		self.background.SetSelection(config.conf["brailleExtender"]["objectPresentation"]["reportBackgroundProgressBars"])
-		
-		
-		
+
+
+
 		bHelper = gui.guiHelper.ButtonHelper(orientation=wx.HORIZONTAL)
 		self.orderPropertiesBtn = bHelper.addButton(
 			self, label="&Order Properties..."

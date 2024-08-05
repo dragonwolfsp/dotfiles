@@ -619,8 +619,8 @@ def browserNavPopup(selfself,gesture):
     try:
         frame = wx.Frame(None, -1,"Fake popup frame", pos=(1, 1),size=(1, 1))
         menu = wx.Menu()
-        menu.AppendMenu(wx.ID_ANY, '&Bookmark', quickJump.makeBookmarkSubmenu(self, frame))
-        menu.AppendMenu(wx.ID_ANY, '&Website', quickJump.makeWebsiteSubmenu(self, frame))
+        menu.AppendMenu(wx.ID_ANY, _("&Bookmark"), quickJump.makeBookmarkSubmenu(self, frame))
+        menu.AppendMenu(wx.ID_ANY, _("&Website"), quickJump.makeWebsiteSubmenu(self, frame))
         frame.Bind(
             wx.EVT_MENU_CLOSE,
             lambda evt: frame.Close()
@@ -663,6 +663,8 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
         quickJump.originalReportLiveRegion = NVDAHelper.nvdaControllerInternal_reportLiveRegion
         NVDAHelper.nvdaControllerInternal_reportLiveRegion = quickJump.newReportLiveRegion
+        quickJump.originalBrowseModeReport = browseMode.TextInfoQuickNavItem.report
+        browseMode.TextInfoQuickNavItem.report = quickJump.preBrowseModeReport
         NVDAHelper._setDllFuncPointer(NVDAHelper.localLib,"_nvdaControllerInternal_reportLiveRegion", quickJump.newReportLiveRegion)
         self.thread = threading.Thread(name="BrowserNav browser monitor thread", target = quickJump.browseMonitorThreadFunc, args =())
         self.thread.start()
@@ -1072,9 +1074,13 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
             self.beeper.fancyBeep("AF#", length=100, left=20, right=20)
             return
         fg=winUser.getForegroundWindow()
-        if api.getFocusObject().appModule.productName == 'NVDA':
+        focus = api.getFocusObject()
+        appName = focus.appModule.appName
+        if appName == 'nvda':
             ui.message(_("Cannot edit in this window."))
             return
+        fastChromeMode = appName == 'chrome'
+        slowFirefoxMode = appName == 'firefox'
         if isinstance(selfself, editableText.EditableText):
             obj = selfself
         elif not config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
@@ -1131,6 +1137,12 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
             raise e
         finally:
             self.endInjectingKeystrokes()
+        if (uniqueID is not None) and (uniqueID != 0):
+            focus = api.getFocusObject()
+            if uniqueID != focus.IA2UniqueID:
+                mesage = _("Warning! While copying text out of edit box, focused elementon the page has changed. Please try again.")
+                gui.messageBox(message)
+                return
         if (len(text) == 0) or len(preText) == 0:
             ui.message("Failed to copy text from semi-accessible edit-box. Please make sure edit box is not empty.")
             return
@@ -1194,34 +1206,42 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
                     winUser.setFocus(fg)
                     yield 1
               # Step 2.1: Ensure that the browser window is fully focused.
-                # This is needed sometimes for Firefox - switching to it takes hundreds of milliseconds, especially when jupyter cells are large.
-                obj.setFocus()
-                #step21timeout = time.time() + 1 # Leave 1 second for this step
-                goodCounter = 0
-                roles = []
-                kbdControlHome.send()
-                while True:
-                    if time.time() > timeout:
-                        raise EditBoxUpdateError(_("Timed out during switch to window stage"))
+                if True:
+                    # This is needed sometimes for Firefox - switching to it takes hundreds of milliseconds, especially when jupyter cells are large.
+                    # This also proves necessary for Chrome on some websites like Jupyter
+                    obj.setFocus()
+                    #step21timeout = time.time() + 1 # Leave 1 second for this step
+                    goodCounter = 0
+                    roles = []
+                    kbdControlHome.send()
+                    while True:
+                        if time.time() > timeout:
+                            raise EditBoxUpdateError(_("Timed out during switch to window stage"))
+                        focus = api.getFocusObject()
+                        roles.append(focus.role)
+                        if focus.role in [
+                            ROLE_PANE,
+                            ROLE_FRAME,
+                            ROLE_DOCUMENT,
+                        ]:
+                            # All good, Firefox is burning cpu, keep sleeping!
+                            yield 10
+                            goodCounter = 0
+                            continue
+                        elif focus.role == ROLE_EDITABLETEXT:
+                            goodCounter += 1
+                            if goodCounter > 10:
+                                tones.beep(1000, 100)
+                                break
+                            yield 10
+                        else:
+                            raise EditBoxUpdateError(_("Error during switch to window stage, focused element role is %d") % focus.role)
+              # Step 2.2: Ensure that the same edit box is focused
+                if (uniqueID is not None) and (uniqueID != 0):
                     focus = api.getFocusObject()
-                    roles.append(focus.role)
-                    if focus.role in [
-                        ROLE_PANE,
-                        ROLE_FRAME,
-                        ROLE_DOCUMENT,
-                    ]:
-                        # All good, Firefox is burning cpu, keep sleeping!
-                        yield 10
-                        goodCounter = 0
-                        continue
-                    elif focus.role == ROLE_EDITABLETEXT:
-                        goodCounter += 1
-                        if goodCounter > 10:
-                            tones.beep(1000, 100)
-                            break
-                        yield 10
-                    else:
-                        raise EditBoxUpdateError(_("Error during switch to window stage, focused element role is %d") % focus.role)
+                    if uniqueID != focus.IA2UniqueID:
+                        mesage = _("Error! When switching back to browser window, a different edit box is focused.")
+                        raise EditBoxUpdateError(message)
 
               # Step 3: start sending keys
                 self.startInjectingKeystrokes()
@@ -1297,8 +1317,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
                                 )
                             ):
                                 # Bingo! First char has appeared in clipboard. Restoring original clipboard state and exiting
+                                result = clipboard.deleteEntryFromClipboardHistory(firstChar, maxEntries=1)
+                                if False and result:
+                                    core.callLater(1000, tones.beep, 100, 1000)
                                 self.endInjectingKeystrokes()
-                                clipboard.deleteEntryFromClipboardHistory(firstChar, maxEntries=1)
                                 return
                             else:
                                 # Something else found in clipboard - likely user has already copied something there. So just exit without restoring state
@@ -1306,9 +1328,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
                                 log.error(f"text='{text}'")
                                 log.error(f"newText='{newText}'")
                                 log.error(f"firstChar='{firstChar}'")
-                                #api.newText=newText
-                                #api.firstChar=firstChar
-                                #api.text=text
                                 return
                         log.error(f"asdf Timeout")
                     utils.executeAsynchronously(watchAndRestoreClipboard())
@@ -1316,6 +1335,12 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
               # Step 4: send the original keystroke, e.g. Control+Enter
                 if keystroke is not None:
                     keystroke.send()
+              # Step 4.2: Verify again that the right edit box is focused
+                if (uniqueID is not None) and (uniqueID != 0):
+                    focus = api.getFocusObject()
+                    if uniqueID != focus.IA2UniqueID:
+                        mesage = _("Error! Focused element on the page has changed while pasting updated text. Possibly content of a different edit box has changed. Please inspect edit boxes manually and undo if needed.")
+                        raise EditBoxUpdateError(message)
 
             except EditBoxUpdateError as e:
                 tones.player.stop()
@@ -1404,8 +1429,9 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
                 #time.sleep(1)
                 #core.callLater(1000, clipboard.deleteEntryFromClipboardHistory, data)
                 result = clipboard.deleteEntryFromClipboardHistory(data, maxEntries=1)
-                #if result:
-                    #core.callLater(1000, tones.beep, 1000, 1000)
+                # self.endInjectingKeystrokes() will be called outside 
+                if False and  result:
+                    core.callLater(1000, tones.beep, 1000, 1000)
                 return data
             wx.Yield()
             time.sleep(10/1000)
@@ -1465,19 +1491,19 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
             "moveToPreviousSibling",
             doc=_("Moves to previous sibling in browser"))
         self.injectBrowseModeKeystroke(
-            ["kb:NVDA+Alt+LeftArrow", "kb:NVDA+Alt+Home"],
+            ["kb:NVDA+Alt+LeftArrow"],
             "moveToParent",
             doc=_("Moves to next parent in browser"))
         self.injectBrowseModeKeystroke(
-            ["kb:NVDA+Control+Alt+LeftArrow", "kb:NVDA+Alt+End"],
+            ["kb:NVDA+Control+Alt+LeftArrow"],
             "moveToNextParent",
             doc=_("Moves to next parent in browser"))
         self.injectBrowseModeKeystroke(
-            ["kb:NVDA+Alt+RightArrow", "kb:NVDA+Alt+PageDown"],
+            ["kb:NVDA+Alt+RightArrow"],
             "moveToChild",
             doc=_("Moves to next child in browser"))
         self.injectBrowseModeKeystroke(
-            ["kb:NVDA+Control+Alt+RightArrow", "kb:NVDA+Alt+PageUp"],
+            ["kb:NVDA+Control+Alt+RightArrow"],
             "moveToPreviousChild",
             doc=_("Moves to previous child in browser"))
       #Rotor
@@ -1497,28 +1523,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
             "quickJumpBack",
             script=lambda selfself, gesture: quickJump.quickJump(selfself, gesture, quickJump.BookmarkCategory.QUICK_JUMP, -1,  _("No next QuickJump result. To configure QuickJump rules, please go to BrowserNav settings in NVDA configuration window.")),
             doc=_("QuickJump back according to BrowserNav QuickJump bookmarks; please check browserNav configuration panel for the list of bookmarks."))
-      # QuickJump 2 and 3 bookmarks
-        self.injectBrowseModeKeystroke(
-            [],
-            "quickJump2Forward",
-            script=lambda selfself, gesture: quickJump.quickJump(selfself, gesture, quickJump.BookmarkCategory.QUICK_JUMP_2, 1,  _("No next QuickJump result for QuickJump2 bookmarks. To configure QuickJump rules, please go to BrowserNav settings in NVDA configuration window.")),
-            doc=_("QuickJump forward according to BrowserNav QuickJump2 bookmarks; please check browserNav configuration panel for the list of bookmarks."))
-        self.injectBrowseModeKeystroke(
-            [],
-            "quickJump2Back",
-            script=lambda selfself, gesture: quickJump.quickJump(selfself, gesture, quickJump.BookmarkCategory.QUICK_JUMP_2, -1,  _("No next QuickJump result for QuickJump2 bookmarks. To configure QuickJump rules, please go to BrowserNav settings in NVDA configuration window.")),
-            doc=_("QuickJump back according to BrowserNav QuickJump2 bookmarks; please check browserNav configuration panel for the list of bookmarks."))
-        self.injectBrowseModeKeystroke(
-            [],
-            "quickJump3Forward",
-            script=lambda selfself, gesture: quickJump.quickJump(selfself, gesture, quickJump.BookmarkCategory.QUICK_JUMP_3, 1,  _("No next QuickJump result for QuickJump3 bookmarks. To configure QuickJump rules, please go to BrowserNav settings in NVDA configuration window.")),
-            doc=_("QuickJump forward according to BrowserNav QuickJump3 bookmarks; please check browserNav configuration panel for the list of bookmarks."))
-        self.injectBrowseModeKeystroke(
-            [],
-            "quickJump3Back",
-            script=lambda selfself, gesture: quickJump.quickJump(selfself, gesture, quickJump.BookmarkCategory.QUICK_JUMP_3, -1,  _("No next QuickJump result for QuickJump3 bookmarks. To configure QuickJump rules, please go to BrowserNav settings in NVDA configuration window.")),
-            doc=_("QuickJump back according to BrowserNav QuickJump3 bookmarks; please check browserNav configuration panel for the list of bookmarks."))
-
       # AutoClick
         self.injectBrowseModeKeystroke(
             "kb:Alt+J",
@@ -1582,130 +1586,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
             script=lambda selfself, gesture: quickJump.autoClick(selfself, gesture, quickJump.BookmarkCategory.QUICK_SPEAK),
             doc=_("QuickSpeak  according to BrowserNav QuickSpeak bookmark; please check browserNav configuration panel for the list of bookmarks."))
 
-      # Tabs
-        # Example page with tabs:
-        # https://wet-boew.github.io/v4.0-ci/demos/tabs/tabs-en.html
-        self.injectBrowseModeKeystroke(
-            "kb:Y",
-            "nextTab",
-            script=lambda selfself, gesture: self.findByRole(
-                direction=1,
-                roles={ROLE_TAB, ROLE_TABCONTROL},
-                errorMessage=_("No next tab"),
-                newMethod=True,
-            ),
-            doc=_("Jump to next tab"))
-        self.injectBrowseModeKeystroke(
-            "kb:Shift+Y",
-            "previousTab",
-            script=lambda selfself, gesture: self.findByRole(
-                direction=-1,
-                roles={ROLE_TAB, ROLE_TABCONTROL},
-                errorMessage=_("No previous tab"),
-                newMethod=True,
-            ),
-            doc=_("Jump to previous tab"))
-
-      #Dialog
-        dialogTypes = [ROLE_APPLICATION, ROLE_DIALOG]
-        self.injectBrowseModeKeystroke(
-            "kb:P",
-            "nextDialog",
-            script=lambda selfself, gesture: self.findByRole(
-                direction=1,
-                roles=dialogTypes,
-                errorMessage=_("No next dialog")),
-            doc=_("Jump to next dialog"))
-        self.injectBrowseModeKeystroke(
-            "kb:Shift+P",
-            "previousDialog",
-            script=lambda selfself, gesture: self.findByRole(
-                direction=-1,
-                roles=dialogTypes,
-                errorMessage=_("No previous dialog")),
-            doc=_("Jump to previous dialog"))
-      # Menus
-        menuTypes = [
-            ROLE_MENU,
-            ROLE_MENUBAR,
-            ROLE_MENUITEM,
-            ROLE_POPUPMENU,
-            ROLE_CHECKMENUITEM,
-            ROLE_RADIOMENUITEM,
-            ROLE_TEAROFFMENU,
-            ROLE_MENUBUTTON,
-        ]
-        self.injectBrowseModeKeystroke(
-            "kb:Z",
-            "nextMenu",
-            script=lambda selfself, gesture: self.findByRole(
-                direction=1,
-                roles=menuTypes,
-                errorMessage=_("No next menu"),
-                newMethod=True,
-            ),
-            doc=_("Jump to next menu"))
-        self.injectBrowseModeKeystroke(
-            "kb:Shift+Z",
-            "previousMenu",
-            script=lambda selfself, gesture: self.findByRole(
-                direction=-1,
-                roles=menuTypes,
-                errorMessage=_("No previous menu"),
-                newMethod=True,
-            ),
-            doc=_("Jump to previous menu"))
-
-      # Tree views, tool bars
-        self.injectBrowseModeKeystroke(
-            "kb:0",
-            "nextTreeView",
-            script=lambda selfself, gesture: self.findByRole(
-                direction=1,
-                roles=[ROLE_TREEVIEW],
-                errorMessage=_("No next tree view")),
-            doc=_("Jump to next tree view"))
-        self.injectBrowseModeKeystroke(
-            "kb:Shift+0",
-            "previousTreeView",
-            script=lambda selfself, gesture: self.findByRole(
-                direction=-1,
-                roles=[ROLE_TREEVIEW],
-                errorMessage=_("No previous tree view")),
-            doc=_("Jump to previous tree view"))
-        self.injectBrowseModeKeystroke(
-            "kb:9",
-            "nextToolBar",
-            script=lambda selfself, gesture: self.findByControlField(
-                direction=1,
-                role=ROLE_TOOLBAR,
-                errorMessage=_("No next tool bar")),
-            doc=_("Jump to next tool bar"))
-        self.injectBrowseModeKeystroke(
-            "kb:Shift+9",
-            "previousToolBar",
-            script=lambda selfself, gesture: self.findByControlField(
-                direction=-1,
-                role=ROLE_TOOLBAR,
-                errorMessage=_("No previous tool bar")),
-            doc=_("Jump to previous tool bar"))
-      #Format change
-        self.injectBrowseModeKeystroke(
-            "kb:`",
-            "nextFormatChange",
-            script=lambda selfself, gesture: self.findFormatChange(
-                selfself,
-                direction=1,
-                errorMessage=_("No next format change")),
-            doc=_("Jump to next format change"))
-        self.injectBrowseModeKeystroke(
-            "kb:Shift+`",
-            "previousFormatChange",
-            script=lambda selfself, gesture: self.findFormatChange(
-                selfself,
-                direction=-1,
-                errorMessage=_("No previous format change")),
-            doc=_("Jump to previous format change"))
       # Scroll all:
         self.injectBrowseModeKeystroke(
             "kb:\\",

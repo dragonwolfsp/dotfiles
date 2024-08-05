@@ -27,10 +27,13 @@ class QuoteNav() :
 	curItem =  lastItem = curQuote = 0
 
 	def __init__(self) :
+		self.clean = not sharedVars.oSettings.getOption("mainWindow", "CleanPreview") 
 		self.lItems  = self.lQuotes = []
+		self.nav = False
 		self.translate = False # 2024.01.02
 		self.browseTranslation = sharedVars.oSettings.getOption("mainWindow", "browseTranslation")
 		self.browsePreview = sharedVars.oSettings.getOption("mainWindow", "browsePreview")
+		self.fromSpellCheck = False
 		self.iTranslate = None
 		self.langTo = utis.getLang()
 
@@ -113,10 +116,11 @@ class QuoteNav() :
 				# sleep(0.1)
 				oDoc =  getFocusObject()
 
-	def setDoc(self, oDoc, nav=False): 	
+	def setDoc(self, oDoc, nav=False, fromSpellCheck=False): 	
 		# converts the doc into HTML code
 		if not oDoc : return 0 
 		self.nav = nav
+		self.fromSpellCheck = fromSpellCheck
 		# self.text = "\n---" # alt+0031
 		self.text = "\n" # alt+0031
 		self.lItems = []
@@ -131,7 +135,7 @@ class QuoteNav() :
 			self.quoteMode = True
 
 		self.subject = getEndSubject(parID)
-		sharedVars.logte("self.subject=" + self.subject)
+		# sharedVars.logte("self.subject=" + self.subject)
 
 		o=oDoc.firstChild # section ou paragraph
 		# # sharedVars.logte(u"après  o.firstChild " + str(o.role)  + ", " + str(o.name))
@@ -199,8 +203,9 @@ class QuoteNav() :
 			# beep(440, 20)
 		# removes multiple pseudo \n 
 		self.text=self.regMultiNL.sub(CNL,self.text)
-		self.cleanStdHeaders()
-		self.cleanMSHeaders()
+		if self.clean : 
+			self.cleanStdHeaders()
+			self.cleanMSHeaders()
 
 		# removes multiple  spaces again
 		self.text = self.regMultiSpaces.sub(" ", self.text)
@@ -283,10 +288,10 @@ class QuoteNav() :
 			subject =   self.iTranslate.translateAndCache(cleanSubject(sharedVars.curWinTitle), "auto", self.langTo).translation
 			subject = self.truncateSubj(subject, 25)
 			text = self.iTranslate.translateAndCache(self.text.split("")[1]  , "auto", self.langTo).translation
-			if self.browseTranslation or self.browsePreview : self.displayMessage(subject, text)
+			if self.browseTranslation or self.browsePreview and not self.fromSpellCheck : self.displayMessage(subject, text)
 			else : message(msg + subject + text)
 		else : # no translation
-			if self.browsePreview : 
+			if self.browsePreview and not self.fromSpellCheck  : 
 				subject = cleanSubject(sharedVars.curWinTitle)
 				subject = self.truncateSubj(subject, 25)
 				self.displayMessage(subject, self.text)
@@ -296,7 +301,7 @@ class QuoteNav() :
 	def speakQuote(self, quote) :
 		if self.translate : 
 			quote  = self.iTranslate.translateAndCache(quote, "auto", self.langTo).translation
-		if self.browseTranslation : self.displayMessage("", quote) 
+		if self.browseTranslation and not self.fromSpellCheck : self.displayMessage("", quote) 
 		else : message(quote)
 
 	def deleteMetas(self) :

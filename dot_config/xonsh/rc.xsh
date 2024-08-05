@@ -2,6 +2,23 @@
 import json
 import threading
 
+
+#functions to simplify setup.
+
+def promptSetUp():
+	if shellPrompt == 1:
+		if  not !(which starship):
+			echo Starship is missing, using xonsh prompt instead.
+		elif 'prompt_starship' in xontribs==False:
+			echo xontrib-prompt-starship is missing, using xonsh prompt instead.
+		else:
+			xontrib load prompt_starship
+	elif shellPrompt == 2:
+		if not !(which oh-my-posh):
+			echo oh-my-posh is missing, using xonsh prompt instead.
+		else:
+			execx($(oh-my-posh init xonsh --config "$POSH_THEMES_PATH/powerline.omp.json" ))
+
 #Show full python tracebacks.
 $XONSH_SHOW_TRACEBACK = True
 
@@ -11,19 +28,15 @@ $XONSH_COLOR_STYLE='dracula'
 #make the default prompt a bit more useful.
 $PROMPT = '{curr_branch} {env_prefix}{env_name}{env_postfix} {user}@{hostname}:{cwd} {last_return_code}-{prompt_end}'
 
+# Set variables to easily change settings later on.
+# 0 = built in xonsh prompt, 1 = starship, 2 = oh-my-posh
+shellPrompt = 1
+
 #plugins
 #Get currently usable xontribs first.
 xontribs = json.loads($(xontrib list --json))
 #replace some corutils with faster equivalents.
 xontrib load coreutils
-#for starship prompt.
-if !(which starship):
-	if 'prompt_starship' in xontribs:
-		xontrib load prompt_starship
-	else:
-		echo xontrib-prompt-starship is missing, using xonsh prompt instead.
-else:
-	echo Starship is missing, using xonsh prompt instead.
 #add abbrevs
 if 'abbrevs' in xontribs:
 	xontrib load abbrevs
@@ -31,6 +44,9 @@ if 'abbrevs' in xontribs:
 else:
 	echo xontrib-abbrevs is missing, abbrevs will be unuseable.
 	abbrevsAreHere=False
+
+# Run function to set up prompt.
+promptSetUp()
 
 #set up other shell utilities.
 #Zoxide, the way smarter version of cd.
@@ -61,15 +77,15 @@ fastThread.start()
 #custom ls functions to use prefered settings and replace ls with eza
 def _ls(args):
 	if ezaIsHere:
-		eza -am1F --color=auto @(args)
+		eza -am1F --color=auto --sort=Name  @(args)
 	else:
-		ls -Amp1 --color=auto @(args)
+		ls -Amp1 --color=auto --sort=version @(args)
 
 def _lsLong(args):
 	if ezaIsHere:
-		eza -almF --color=auto @(args)
+		eza -almF --color=auto --sort=Name @(args)
 	else:
-		ls -Almp --color=auto @(args)
+		ls -Almp --color=auto --sort=version @(args)
 
 #quick git commands.
 def _gcom(args):

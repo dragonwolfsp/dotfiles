@@ -14,6 +14,7 @@ This package is distributed under the terms of the GNU General Public License, v
 * Announce toggle keys changes: just when "Beep for toggle keys changes" is on. You can enable or disable NVDA to announce toggle key status.
 * Beep for specified characters: NVDA will beep for all characters that you set in advanced settings.
 * Disable beeping on password fields: this feature is enabled by default to aboid security risks. Disable it if you want to hear beeps on password fields.
+
 ## Requirements
   You need NVDA 2018.2 or later.
 
@@ -34,17 +35,44 @@ This package is distributed under the terms of the GNU General Public License, v
 * Test tone: this button lets you to play a test with the current set parameters.
 * Press OK button to save settings or cancel to discard.
 
-## contributions, reports and donations
+## Download.
+ The latest release is available to [download in this link](https://davidacm.github.io/getlatest/gh/davidacm/beepKeyboard/?index=1)
 
-If you like my project or this software is useful for you in your daily life and you would like to contribute in some way, you can donate via the following methods:
-
+## Contributing with the project.
+### Donations.
+  If you like my project or this software is useful for you in your daily life and you would like to contribute in some way, you can donate via the following methods.
+  
 * [PayPal.](https://paypal.me/davicm)
 * [Ko-fi.](https://ko-fi.com/davidacm)
 * [cryptocurrencies and other methods.](https://davidacm.github.io/donations/)
 
-If you want to fix bugs, report problems or new features, you can contact me at: <dhf360@gmail.com>.
 
-  Or in the github repository of this project:
-  [Beep keyboard on GitHub](https://github.com/davidacm/beepKeyboard)
+### fixing bugs and new features.
+  If you want to fix a bug or add new feature, You will need to fork this repository.
 
-    You can get the latest release of this add-on in that repository.
+  #### Forking the repository.
+  If this is your first contribution, you will first need to "fork" the BeepKeyboard repository on GitHub:
+
+  1. Fork this repo in your github account.
+  2. Clone your forked repo locally: "git clone yourRepoUrl".
+  3. Add this repo in your forked repo from the command line:  
+  "git remote add davidacm https://github.com/davidacm/beepKeyboard.git".
+  4. fetch my branches:  
+  "git fetch davidacm".
+  5. Switch to the local master branch: "git checkout master".
+  6. Set the local master to use the davidacm  master as its upstream:  
+  "git branch -u davidacm/master".  
+
+#### Steps before coding.
+  You must use a separate "topic" branch for each issue or feature. All code should usually be based on the latest commit in the official master branch at the time you start the work.
+  So, before begin to work, do the following:
+
+  1. Remember the steps of "Forking the repository" section.
+  2. Checkout to master branch: "git checkout master".
+  3. Update the local master: "git pull".
+  4. Create a new branch based on the updated master branch: "git checkout -b YourNewBranch".
+  5. write your code.
+  6. Add your work to be commited (clean unwanted files first): git "add ."
+  7. create a commit: "git commit" and write the commit message.
+  8. push your branch in your repository: "git push". if the branch doesn't exist, git will tell you how to deal with this.
+  9. Request a pull request on my repository.

@@ -3,6 +3,7 @@
 import api, config, sys, glob, shutil
 import gui, wx # Ajouté par Abdel.
 from checkListMenu import CheckListMenu # Ajouté par Abdel.
+from startupDlg import  StartupDialog
 from configobj import ConfigObj
 import re
 import addonHandler,  os, sys
@@ -45,6 +46,15 @@ class  Settings() :
 			self.options["messengerWindow"]["separateCols"] = True
 			self.options["messengerWindow"]["responseMentionGroup"] = True
 			self.options["messengerWindow"]["junkStatusCol"] = True
+			self.options["messengerWindow"]["delayFocusDoc"] = "25"
+			self.options["messengerWindow"]["focusMode"] = "1"
+			self.options["messengerWindow"]["focusOnStartup"] = False
+			sharedVars.delayFocusDoc = 25
+		if 			not self.options["messengerWindow"]["focusMode"] :
+			# beep(80, 30)
+			self.options["messengerWindow"]["focusMode"] = "1"
+			self.options["messengerWindow"]["focusOnStartup"] = False
+
 			# made by deactiv or the  "start with inbox" thunderbird addon ->self.options["startup"]["alwaysMainTab"] = True
 
 			self.options["msgcomposeWindow"]["closeMessageWithEscape"] = True
@@ -72,6 +82,7 @@ class  Settings() :
 		self.option_mainWindow={
 		"firstTabActivation" : _("Access the first unread message when first activating the first tab, otherwise the last message."),
 		"withoutReceipt" : _("Ignore acknowledgment requests"),
+		"CleanPreview" : _("Partially purify the message when reading it with Space or F4, otherwise purify it completely."),
 		"browsePreview" : _("Always display the  cleaned messages when reading them with Space or F4"),
 		"browseTranslation" : _("Always display the translation of messages when reading them with Space or F4"),
 		}
@@ -80,7 +91,7 @@ class  Settings() :
 		"spellWords" : _("Spell Check: Spell the misspelled word and the suggested word."),
 		# "virtualSpellChk" : _("Enable improved Spell Check while typing."),
 		"closeMessageWithEscape" : _("The Esc key closes the message being written"),
-		"onePress" : _("Single press to show the context menus, double press to write a grave accent  or Tilde or ¬¬.")
+		"onePress" : _("Single press on Shift+the key above the tab key to show the option menus, double press to write the corresponding printable character.")
 	}
 
 
@@ -101,13 +112,24 @@ class  Settings() :
 
 		self.setSharedVars(section="messengerWindow")
 		section = self.options["messengerWindow"]
-		self.options["messengerWindow"].update({"delayReadWnd":"100"})
-		sharedVars.delayReadWnd =    int(section.as_int ("delayReadWnd")		)
+		if "delayFocusDoc" not in section  : self.options["messengerWindow"].update({"delayFocusDoc":"25"})
+		sharedVars.delayFocusDoc = section.as_int("delayFocusDoc")
+		if "focusMode" not in section  :
+			self.options["messengerWindow"].update({"focusMode":"1"})
+			self.options["messengerWindow"].update({"focusOnStartup":"False"})
+			self.options.write()
+			self.options["messengerWindow"]["focusMode"] = "1"
+			self.options["messengerWindow"]["focusOnStartup"] = False
+		else : # options are in section, we change their type
+			section["focusOnStartup"]= section.as_bool("focusOnStartup")
+			section["focusMode"]= section.as_int("focusMode")
+			
 		# words to remove from subject in the message list
 		if not "removeInSubject" in self.options["messengerWindow"] : 
 			self.options["messengerWindow"].update({"removeInSubject":""})
 		else : # option  exists   as string  in the ini file
 			self.regex_removeInSubject = re.compile(makeRegex(section["removeInSubject"]))
+
 		
 		# coptions for deactiv : speed needed
 		self.setSharedVars(section="deactiv")
@@ -161,7 +183,7 @@ class  Settings() :
 		utis.inputBox(label=_("Words separated by semicolons :"), title= _("Edit words to hide in the subject of messages"), postFunction=saveWords, startValue=wrds)
 
 	def editDelay(self) :
-		utis.inputBox(label=_("Delay between 20 and 2000 milliseconds before filtered reading (default: 100):"), title= _("Separate reading window"), postFunction=saveDelay, startValue=sharedVars.delayReadWnd)
+		utis.inputBox(label=_("Delay before document focusing, 20 to 2000 ms::"), title= _("Special tabs"), postFunction=saveDelay, startValue=sharedVars.delayFocusDoc)
 	def openSoundFolder(self) :
 		soundPath = api.config.getUserDefaultConfigPath() + "\\TB+Sounds"
 		if  not os.path.exists(soundPath) :  return beep(100, 30)
@@ -200,12 +222,16 @@ class  Settings() :
 		# if   os.path.exists(tb4File) :		
 			# shutil.copyfile(tb4File, self.iniFile) 
 
-	def getOption(self, iniSect, iniKey="") : # si iniKey == "", retourne la section entière 
+	def getOption(self, iniSect, iniKey="", kind="b") : # si iniKey == "", retourne la section entière 
+		# kind Valuses : "" = no type  conversion, b = bool, s = string, i = int
 		if iniSect == "messenger" : iniSect = "messengerWindow"
 		elif iniSect == "compose" : iniSect = "msgcomposeWindow"
 		if iniKey == "" : return self.options[iniSect]
 		else : 
-			try : return self.options[iniSect].as_bool(iniKey)
+			try : 
+				if kind == "b" : return self.options[iniSect].as_bool(iniKey)
+				elif kind == "" : return self.options[iniSect][iniKey]
+				elif kind == "i" : return self.options[iniSect].as_int(iniKey)
 			except : return False
 
 	def showOptionsMenu(self, frame) :
@@ -270,6 +296,7 @@ class  Settings() :
 			""" # Fin du bloc multilignes mis en commentaire par Abdel.
 			mainMenu.Append (1996, _("Deactivations")) # Ajouté par Abdel.
 			mainMenu.Bind (EVT_MENU,self.onOptMenu)
+			mainMenu.Append(895, _("&Focus and Startup Options"))
 			mainMenu.Append(899, _("Open sound folder..."))
 			mainMenu.Append(900, _("Backup current configuration file"))
 			mainMenu.Append(901, _("Restore backed up configuration file"))
@@ -339,7 +366,13 @@ class  Settings() :
 				CheckListMenu, title=_("Deactivations"), frame="deactiv", options=self, 
 				fakeRadioGroups=None,
 				postFunction=self.setSharedVars)
-		elif eID == 899 :
+		elif eID == 895 : # Focus and startup options
+			wx.CallAfter(
+				(gui.mainFrame.popupSettingsDialog if hasattr(gui.mainFrame, "popupSettingsDialog")
+				 else gui.mainFrame._popupSettingsDialog),
+				StartupDialog, title=_("Focus and Startup Options"), options=self)
+			return
+		elif eID == 899 : # sound folder
 			self.openSoundFolder()
 		elif eID == 900 :
 			self.backup()
@@ -393,7 +426,7 @@ def saveWords(words) :
 	# sharedVars.log(None, "Mots saisis " + words)
 	# speech.cancelSpeech()
 	sharedVars.oSettings.options["messengerWindow"]["removeInSubject"] = words
-	# sharedVars.delayReadWnd = iDelay
+	# sharedVars.delayFocusDoc = iDelay
 	sharedVars.oSettings.options["messengerWindow"].update({"removeInSubject" : words})
 	sharedVars.oSettings.options.write()
 	sharedVars.oSettings.regex_removeInSubject = re.compile(makeRegex(words))
@@ -405,6 +438,6 @@ def saveDelay(strDelay) :
 	except : return beep(100, 50) # return CallLater(50, message, u"La valeur doit être un nombre")
 	if iDelay < 20 or iDelay > 2000 :
 		return beep(250, 50) # CallLater(50, message, u"Le délai doit être compris entre 20 et 2000 milli-secondes !")
-	sharedVars.delayReadWnd = iDelay
-	sharedVars.oSettings.options["messengerWindow"].update({"delayReadWnd":strDelay})
+	sharedVars.delayFocusDoc = iDelay
+	sharedVars.oSettings.options["messengerWindow"].update({"delayFocusDoc":strDelay})
 	sharedVars.oSettings.options.write()

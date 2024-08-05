@@ -12,7 +12,10 @@
                 {
                     "alsoUseDefaultQuickJump": false,
                     "attributes": [],
+                    "autoSpeakMode": "off",
+                    "builtInWavFile": null,
                     "category": 1,
+                    "enableAutoSpeak": false,
                     "enabled": true,
                     "keystroke": null,
                     "message": "",
@@ -25,7 +28,10 @@
                 {
                     "alsoUseDefaultQuickJump": false,
                     "attributes": [],
+                    "autoSpeakMode": "off",
+                    "builtInWavFile": null,
                     "category": 1,
+                    "enableAutoSpeak": false,
                     "enabled": true,
                     "keystroke": null,
                     "message": "",
@@ -38,7 +44,10 @@
                 {
                     "alsoUseDefaultQuickJump": false,
                     "attributes": [],
+                    "autoSpeakMode": "off",
+                    "builtInWavFile": null,
                     "category": 1,
+                    "enableAutoSpeak": false,
                     "enabled": true,
                     "keystroke": null,
                     "message": "",
@@ -59,7 +68,10 @@
                             "invert": false
                         }
                     ],
+                    "autoSpeakMode": "off",
+                    "builtInWavFile": null,
                     "category": 1,
+                    "enableAutoSpeak": false,
                     "enabled": true,
                     "keystroke": null,
                     "message": "",
@@ -75,6 +87,7 @@
             "focusMode": 0,
             "liveRegionMode": 0,
             "name": "Amazon",
+            "suppressDescription": false,
             "urlMatch": 2
         },
         {
@@ -97,7 +110,10 @@
                             "invert": false
                         }
                     ],
+                    "autoSpeakMode": "off",
+                    "builtInWavFile": null,
                     "category": 1,
+                    "enableAutoSpeak": false,
                     "enabled": true,
                     "keystroke": null,
                     "message": "",
@@ -125,7 +141,10 @@
                             "invert": false
                         }
                     ],
+                    "autoSpeakMode": "off",
+                    "builtInWavFile": null,
                     "category": 8,
+                    "enableAutoSpeak": false,
                     "enabled": true,
                     "keystroke": null,
                     "message": "",
@@ -146,7 +165,10 @@
                             "invert": false
                         }
                     ],
+                    "autoSpeakMode": "off",
+                    "builtInWavFile": null,
                     "category": 4,
+                    "enableAutoSpeak": false,
                     "enabled": true,
                     "keystroke": null,
                     "message": "",
@@ -162,6 +184,7 @@
             "focusMode": 0,
             "liveRegionMode": 0,
             "name": "Hacker news",
+            "suppressDescription": false,
             "urlMatch": 2
         },
         {
@@ -184,7 +207,10 @@
                             "invert": false
                         }
                     ],
+                    "autoSpeakMode": "off",
+                    "builtInWavFile": null,
                     "category": 8,
+                    "enableAutoSpeak": false,
                     "enabled": true,
                     "keystroke": null,
                     "message": "",
@@ -205,7 +231,10 @@
                             "invert": false
                         }
                     ],
+                    "autoSpeakMode": "off",
+                    "builtInWavFile": null,
                     "category": 1,
+                    "enableAutoSpeak": false,
                     "enabled": true,
                     "keystroke": null,
                     "message": "",
@@ -221,6 +250,7 @@
             "focusMode": 0,
             "liveRegionMode": 0,
             "name": "Reddit old",
+            "suppressDescription": false,
             "urlMatch": 2
         },
         {
@@ -243,7 +273,10 @@
                             "invert": false
                         }
                     ],
+                    "autoSpeakMode": "off",
+                    "builtInWavFile": null,
                     "category": 5,
+                    "enableAutoSpeak": false,
                     "enabled": true,
                     "keystroke": null,
                     "message": "",
@@ -264,7 +297,10 @@
                             "invert": false
                         }
                     ],
+                    "autoSpeakMode": "off",
+                    "builtInWavFile": null,
                     "category": 5,
+                    "enableAutoSpeak": false,
                     "enabled": true,
                     "keystroke": null,
                     "message": "",
@@ -285,7 +321,10 @@
                             "invert": false
                         }
                     ],
+                    "autoSpeakMode": "off",
+                    "builtInWavFile": null,
                     "category": 1,
+                    "enableAutoSpeak": false,
                     "enabled": true,
                     "keystroke": null,
                     "message": "",
@@ -301,6 +340,7 @@
             "focusMode": 0,
             "liveRegionMode": 0,
             "name": "Youtube",
+            "suppressDescription": false,
             "urlMatch": 2
         },
         {
@@ -519,7 +559,10 @@
                             "invert": true
                         }
                     ],
+                    "autoSpeakMode": "off",
+                    "builtInWavFile": null,
                     "category": 4,
+                    "enableAutoSpeak": false,
                     "enabled": true,
                     "keystroke": null,
                     "message": "",
@@ -535,6 +578,7 @@
             "focusMode": 0,
             "liveRegionMode": 0,
             "name": "All sites",
+            "suppressDescription": false,
             "urlMatch": 0
         }
     ]
