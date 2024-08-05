@@ -1,0 +1,58 @@
+(defcfg
+  concurrent-tap-hold yes
+)
+
+(defsrc)
+
+(defalias
+swlayer (multi lmet (layer-while-held switchActivator))
+)
+
+(deflayermap (baseLayer)
+ caps (tap-hold-press 60 150 ret caps)
+ret (tap-hold-press 60 150 ret caps)
+comp (tap-hold 100 150 comp (layer-while-held functions))
+f4 (tap-dance 200 (f4 A-f4))
+lmet @swlayer
+)
+
+(deflayermap (functions)
+grv comp 1 f1 2 f2 3 f3 4 f4 5 f5 6 f6 7 f7 8 f8  9 f9 0 f10 - f11 = f12
+w up
+a lft
+s down
+d rght
+h home
+l end
+j pgup
+k pgdn
+lmet @swlayer
+)
+
+(deflayermap (switchActivator)
+spc (multi spc (layer-switch switcher))
+)
+
+(deflayermap (switcher)
+m (layer-switch media)
+esc (layer-switch baseLayer)
+f (layer-switch functions)
+1 lrld
+)
+
+(deflayermap (media)
+j next
+k prev
+h volu
+l voldwn
+ret mute
+spc pp
+r f13
+e f14
+n f15
+lft A-S-lft
+rght A-S-rght
+up A-S-up
+down A-S-down
+lmet @swlayer
+)
