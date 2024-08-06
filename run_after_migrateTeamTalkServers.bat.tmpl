@@ -1,7 +1,7 @@
 {{- if eq .chezmoi.os "windows" -}}
 @echo off
 {{ .chezmoi.sourceDir | replace "/" "\\" }}\.utils\ttconv\ttconv.exe {{ .chezmoi.homeDir | replace "/" "\\" }}\AppData\Roaming\Bearware.dk\servers.ini .ini
-{{ else }}
+{{- else -}}
 #!/bin/bash
 python3 {{ .chezmoi.sourceDir }}/.utils/ttconv/ttconv.py {{ .chezmoi.homeDir }}/.config.Bearware.dk/servers.ini .ini
 {{ end }}
