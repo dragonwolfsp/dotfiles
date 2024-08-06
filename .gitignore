@@ -5,6 +5,4 @@ AppData/Roaming/foobar2000-v2/playlists-v2.0/**
 AppData/Roaming/foobar2000-v2/playlists-v1.4/**
 AppData/Roaming/foobar2000-v2/library-v2.0/**
 AppData/Roaming/foobar2000-v2/library/**
-**/*.src.ini
-**/*.tempignore
 AppData/Roaming/nvda/teleNVDA.ini

@@ -1,0 +1,22 @@
+#!/usr/bin/env chezmoi_modify_manager
+
+
+source auto
+
+# Add your ignores and transforms here
+#ignore section "my-section"
+#ignore "exact section name without brackets" "exact key name"
+#ignore regex "section.*" "key_prefix_.*"
+#transform "section" "key" transform_name read="the docs" for="more detail on transforms"
+ignore section "texttospeech
+ignore section "history"
+ignore section "soundevents"
+ignore section "soundsystem"
+ignore section "videocapture"
+ignore section "media-storage"
+ignore "general" "nickname"
+ignore regex "display" "*header*"
+ignore regex "display" "*size"
+ignore regex "display" "*splitter"
+ignore regex "display" "*position"
+ignore regex "stream-media" "\d+_stream-media-filename"
