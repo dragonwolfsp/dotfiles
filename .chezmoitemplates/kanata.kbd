@@ -12,7 +12,7 @@ swlayer (multi lmet (layer-while-held switchActivator))
  caps (tap-hold-press 60 150 ret caps)
 ret (tap-hold-press 60 150 ret caps)
 comp (tap-hold 100 150 comp (layer-while-held functions))
-f4 (tap-dance 200 (f4 A-f4))
+f4 (tap-dance 200 (f4 A-f4 lctl-f4))
 lmet @swlayer
 )
 
