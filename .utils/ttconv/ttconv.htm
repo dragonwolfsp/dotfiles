@@ -1,0 +1,350 @@
+<!DOCTYPE HTML>
+<html lang="en-us"><head>
+<meta charset="utf-8">
+<style type="text/css">
+thead {
+display: table-header-group
+}
+tfoot {
+display: table-footer-group
+td {
+  vertical-align: top;
+}
+</style>
+
+<title>
+TTConv, the TeamTalk Configuration File Converter
+</title>
+</head><body>
+
+<h1>
+TTConv, the TeamTalk Configuration File Converter<br/>
+Doug Lee<br/>
+Last Revised May, 2024
+</h1>
+
+<p>
+This utility is designed to help with the following tasks:
+<ul>
+<li>Migrating from TeamTalk 5 Classic to the regular TeamTalk 5 QT client.
+<li>Producing an HTML file containing links for all servers in a TeamTalk configuration file, such as for
+posting to Dropbox for use on a phone.
+<li>Updating secondary configuration profile server lists after adding or changing servers in the primary
+configuration.
+<li>Mass creation of <code>.tt</code> files, one for each server in a TeamTalk server or latest-hosts list.
+</ul>
+
+<p>
+TTConv is a console application and can be run either with command-line options or without arguments in an
+interactive mode.
+At this time, the interactive mode is only for migration of servers from the Classic client to the Qt client;
+the other uses require command-line arguments.
+
+<p>
+TTConv is Copyright (c) 2013-2024 by Doug Lee and is covered by the
+<a href="http://www.gnu.org/licenses/agpl-3.0.html">GNU AFFERO GENERAL PUBLIC LICENSE, version 3</a>.
+A copy of this license is also included as file <code>copying.txt</code>.
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it under
+certain conditions. See the full license for details.
+iniparse, included in its entirety, comes with its own license (also included).
+
+<!-- TOC Start -->
+<h2>Table of Contents</h2>
+
+<ul>
+<li><a href="#requirements">System Requirements</a>
+<li><a href="#inst">Installation and Launch Instructions</a>
+<li><a href="#use">TTConv Usage</a>
+<ul>
+<li><a href="#use_migrate">Migrating From the Classic Client To the Qt Client</a>
+<li><a href="#use_html">Creating an HTML Version of a Set of Servers</a>
+<li><a href="#use_prof">Updating Secondary TeamTalk Configuration Profile Server Lists</a>
+<li><a href="#use_tt">Creating .tt Files For a Set of Servers</a>
+</ul>
+<li><a href="#issues">Known Issues</a>
+<li><a href="#hist">Revision History</a>
+</ul>
+
+<!-- TOC End -->
+
+<h2 id="requirements">System Requirements</h2>
+
+<p>
+On Windows, users can run the executable (<code>.exe</code>) version of this utility.
+Those wishing to run this utility from source on Windows must first download and install a version of Python
+3.7 or later.
+
+<p>
+On MacOS, Linux, and other Python-supporting platforms, make sure to run this utility via Python 3.7 or later.
+
+<h2 id="inst">Installation and Launch Instructions</h2>
+
+<p>
+To install and launch this utility:
+<ol>
+<li><a href="https://www.dlee.org/teamtalk/ttconv/ttconv.zip">Download the TTConv zip file</a>,
+and extract the zip's contents into a location of your choosing.
+Alternatively, on Windows, simply <a href="https://www.dlee.org/teamtalk/ttconv/ttconv.exe">download the Windows
+executable</a> and place it in a location of your choosing.
+<li>Run the utility from its extracted or downloaded location.
+Do not try to run the utility from inside the Zip file.
+On Windows, run <code>ttconv.exe</code>.
+On other operating systems, or on Windows with Python 3.7 or later installed, run <code>ttconv.py</code> via the
+correct Python command.
+</ol>
+
+<h2 id=use>TTConv Usage</h2>
+
+<p>
+This document will use the command <code>ttconv</code> to indicate launching TTConv.
+If you are using the Windows executable, it might be necessary to type the full path to TTConv, such as <code>c:\TTConv\ttconv.exe</code> instead.
+To run TTConv from source, on Windows after installing Python 3.7 or later or on any other operating system,
+it will more likely be necessary to type something like <code>python c:\TTConv\ttconv.py</code> or <code>python3 c:\TTConv\ttconv.py</code>.
+
+<h3 id=use_migrate>Migrating From the Classic Client To the Qt Client</h3>
+
+<p>
+For the most common interactive use, migrating from Classic to Qt,
+TTConv is designed not to require being launched from within a shell window (e.g., <code>cmd</code> on Windows).
+This is why TTConv will often stop before closing with a message like "Press Enter to exit."
+This facilitates use of TTConv via a Windows or similar shortcut or from Windows Explorer or similar.
+
+<p>
+If run without command-line arguments, TTConv will
+currently assume that a Classic-to-QT migration is wanted and will analyze files accordingly.
+If items are found to migrate, TTConv will offer to convert them. Otherwise it will report finding nothing and
+prompt to exit.
+
+<p id=portable>
+Before proceeding, TTConv will ask whether you wish to migrate a portable TeamTalk instance. Most users will
+probably answer no (<kbd>n</kbd>) to this question and migrate an installed TeamTalk instance.
+If you do wish to migrate a portable copy, answer yes (<kbd>y</kbd>) and then, when prompted, enter the path
+to the folder containing the portable TeamTalk files.
+
+<p>
+When TTConv finds entries in the TeamTalk 5 Qt client <code>.ini</code> file, it will indicate this and will
+prompt for permission to replace those entries. This will happen if you have previously migrated or if you
+have already added servers to the Qt client. The number of servers found in the Qt file should help in
+choosing whether to proceed with the current migration.
+
+<h3 id=use_html>Creating an HTML Version of a Set of Servers</h3>
+
+<p>
+TTConv is capable of making an HTML file in which servers appear as links. This can be especially useful for
+phone users who also use a file sharing service, such as Dropbox, to pass files between Mac or Windows and a phone.
+
+<p>
+<strong>Warning</strong>: As currently written, TTConv does not pause after messages before exiting when used
+in this mode.
+This contrasts with TTConv's behavior when used to migrate servers from the Classic client to the Qt client.
+Rationale: Whereas migration from the Classic client to the Qt client is likely to be a one-time or at least
+infrequent event, creation/updating of an HTML version of a TeamTalk server list can remain perpetually useful
+as the server list evolves. The expected usage, therefore, is via a shortcut, written once and run as needed.
+
+<p>
+To create an HTML version of a set of servers, type a command line that includes an indication of which
+servers to use and where to store the resulting HTML file. An example:
+<blockquote><code>
+c:\ttconv\ttconv.exe .ini c:\Dropbox\tt.htm
+</code></blockquote>
+In this example:
+<ul>
+<li><code>c:\ttconv\ttconv.exe</code> is the full path to the Windows executable instance of TTConv.
+<li><code>.ini</code> causes TTConv to use the named servers in the Windows Qt client's configuration file.
+To use the latest-hosts section instead, use <code>.ini:l</code>.
+<li><code>c:\Dropbox\tt.htm</code> is the full path of the file to create.
+If this file already exists, it will be replaced.
+</ul>
+
+<p>
+To facilitate running the above HTML generation periodically after TeamTalk servers are added, modified, etc.,
+make a Desktop shortcut whose "Target" field is a command such as the one in the preceding example.
+It is likely even possible to run such updates on a schedule in the background, though means of setting this
+up fall beyond the scope of this documentation.
+
+<h3 id=use_prof>Updating Secondary TeamTalk Configuration Profile Server Lists</h3>
+
+<p>
+Some TeamTalk users maintain secondary configuration profiles, such as for different sound setups. As the
+primary server list evolves, keeping secondary profile server lists up to date can become laborious.
+TTConv can help with this by transferring the primary server list to a secondary profile with a single
+command.
+
+<p>
+As with creating HTML server lists, the expected usage of this profile server list copying feature is
+periodic; therefore, there is no pause after messages in this mode of operation.
+A Windows shortcut for this purpose may very well prove very effective. Example:
+<blockquote><code>
+c:\ttconv\ttconv.exe .ini .ini.1
+</code></blockquote>
+If multiple secondary profiles must periodically be updated, create one shortcut for each, or create a
+<code>.bat</code>, <code>.cmd</code>, or similar script file that updates them all, then make a shortcut
+that runs that file.
+An example <code>.bat</code> or <code>.cmd</code> file of this sort:
+<blockquote><code>
+@echo off
+c:\ttconv\ttconv.exe .ini .ini.1
+c:\ttconv\ttconv.exe .ini .ini.2
+c:\ttconv\ttconv.exe .ini .ini.3
+</code></blockquote>
+Note that each secondary profile should already exist, having been created by TeamTalk itself prior to being
+updated by this utility.
+TTConv should not be used to create secondary profiles because this would not include required information
+that TeamTalk needs.
+
+<h3 id=use_tt>Creating .tt Files For a Set of Servers</h3>
+
+<p>
+TTConv can populate a folder with a set of <code>.tt</code> files, one per server in a server or latest-hosts
+list. TeamTalk can then be launched directly into a server, and possibly channel, by activating a
+<code>.tt</code> file, such as by clicking or pressing <kbd>Enter</kbd> on it from Windows Explorer or
+activating it from the Finder in MacOS. <code>.tt</code> files may also work to launch TeamTalk on other
+platforms.
+
+<p>
+<strong>Warning</strong>: As currently written, TTConv does not pause after messages before exiting when used
+in this mode. See the similar warning and rationale in the previous section regarding the creation of HTML
+server lists.
+
+<p>
+To create a set of <code>.tt</code> files from a server list, type a command line that includes an indication of which
+servers to use and where to store the resulting <code>.tt</code> files. An example:
+<blockquote><code>
+c:\ttconv\ttconv.exe .ini c:\Dropbox\ttfiles/.tt
+</code></blockquote>
+In this example:
+<ul>
+<li><code>c:\ttconv\ttconv.exe</code> is the full path to the Windows executable instance of TTConv.
+<li><code>.ini</code> causes TTConv to use the named servers in the Windows Qt client's configuration file.
+To use the latest-hosts section instead, use <code>.ini:l</code>.
+<li><code>c:\Dropbox\ttfiles/.tt</code> is the full path of the folder where the <code>.tt</code> files should
+be created, plus the trailing "<code>/.tt</code>" which indicates that <code>.tt</code> files are wanted.
+The specified folder must already exist.
+</ul>
+
+<p>
+<strong>Warning</strong>: TTConv does not check whether the given folder is empty and does not check for
+pre-existing <code>.tt</code> files within it. Consequences:
+<ul>
+<li>If any <code>.tt</code> files exist already that are not regenerated during this TTConv run, they will
+remain unchanged.
+<li>Any pre-existing <code>.tt</code> file that is generated anew by this TTConv run will quietly replace any
+identically-named file with the updated version.
+<li>Any files other than <code>.tt</code> files in the folder will remain unchanged.
+</ul>
+
+<h2 id=issues>Known Issues</h2>
+
+<p>
+Issues shown in this section may be fixed in future TTConv versions.
+
+<p>
+Alternate TeamTalk configuration profiles are not yet supported during a migration from the Classic client to
+the Qt client. They may of course be handled via individual TTConv runs with command lines that request
+copying of specific server lists among specific files.
+
+<p>
+The support for generating <code>.tt</code> files is perhaps less than ideal, in that it provides no simple
+means to keep a folder precisely synchronized with a TeamTalk configuration file. Because the HTML approach
+fills the needs previously filled by <code>.tt</code> files, however, this author does not predict this
+shortcoming to be a significant problem.
+
+<h2 id=hist>Revision History</h2>
+
+<p>
+Here is the revision history of TTConv, most recent entry first:
+Note that the revision numbers are artificially high because this project began as part of another much older one.
+
+<h3>Revision 1270, May 17, 2024</h3>
+<ul>
+<li>Added read/write access to TeamTalk Qt non-primary profile configurations, which have their
+normal extensions followed by <code>.1</code>, <code>.2</code>, etc.
+This facilitates <a href="#use_prof">transfer of the primary server list to non-primary profiles</a>,
+such as after adding a new server to the main configuration file.
+Read-only Classic non-primary profile access is also included,
+which facilitates converting Classic non-primary profiles to Qt. This usage has not been carefully tested,
+however.
+<li>Stopped adding spaces around equals signs (<kbd>=</kbd>) when updating <kbd>.ini</kbd> files.
+This oddity was actually a side effect of using the third-party Iniparse library.
+The effect for most users of this change is negligible, especially since TeamTalk itself quietly removes
+such spaces on first accessing the file.
+This change was introduced and posted shortly after the initial May 17, 2024 release of this utility as
+revision 1269.
+</ul>
+
+<h3>Revision 1267, January 12, 2024</h3>
+<ul>
+<li>Fixed a bug, when reading an HTML file for conversion to another format, that caused ports to be set to 0 when they were the default of 10333
+and not actually included in the HTML link.
+<li>Improved formatting of text produced by <code>ttconv -h</code> or <code>ttconv --help</code>.
+<li>Old history entries in this document section are now hidden inside a <code>details</code> tag
+that may be expanded to show them. Among the benefits of this, heading count is reduced and text searches won't
+match very old material.
+</ul>
+
+<h3>Revision 1260, June 23, 2023</h3>
+<ul>
+<li>Fixed three errors reported by Batuhan Demir on my Telegram discussion group:
+<ul>
+<li>A typing error in code that caused the wrong variable name to be referenced under some conditions.
+<li>A logic error that caused migration of a normal (non-portable) configuration to fail.
+<li>An error that caused migration of configurations with missing XML sections to fail.
+This would have affected those who, for example, never named a TeamTalk server in the local client.
+</ul>
+</ul>
+
+<h3>Revision 1258, May 15, 2023</h3>
+<ul>
+<li>When launched without arguments, TTConv will
+<a href="#portable">offer to migrate a portable TeamTalk instance</a> before
+proceeding with the migration.
+<li>There is a bit more protection against error tracebacks when attempting to convert an xml file that does
+not contain any servers.
+</ul>
+
+<details><summary>3 older revisions back through July 4, 2021</summary>
+<h3>Revision 1256, January 1, 2023</h3>
+<ul>
+<li>Fixed missing file issue in the zip file version of this utility.
+</ul>
+
+<h3>Revision 1255, December 5, 2021</h3>
+<ul>
+<li>The license under which TTConv is distributed is now the
+<a href="http://www.gnu.org/licenses/agpl-3.0.html">GNU AFFERO GENERAL PUBLIC LICENSE, version 3</a>.
+The original July, 2021 release of this utility fell under the
+<a href="http://www.gnu.org/licenses/gpl-3.0.html">GNU GENERAL PUBLIC LICENSE, version 3</a>.
+The included <code>copying.txt</code> file is correspondingly updated.
+The most substantial difference is the handling of web servers that use this code.
+<li>Fixed a small and harmless (though potentially confusing) bug that caused a few fields to be placed in Qt
+configuration files though they are not used by TeamTalk itself. The fields are <code>shortname</code>,
+<code>url</code>, and <code>srvpassword</code>.
+Industrious users who manually edit their TeamTalk5.ini files may safely remove any instances of these fields,
+but leaving them in the file is harmless.
+<li>If there are already servers in the Qt configuration file, this is reported before migration; and the
+migration confirmation prompt includes the word "replace" to draw attention to that effect of migrating.
+<li>TTConv supports creation of a set of <code>.tt</code> files from a TeamTalk configuration file section.
+<li>This documentation is significantly enhanced, notably including the addition of sections separately describing
+each supported usage of the utility.
+<li>Servers taken from a <code>[latesthosts]</code> section are named more like TeamTalk itself would
+name them.  This doesn't matter for a Classic-to-Qt migration but will for command-line-based server movement
+among file formats; notably, when creating an HTML version of a latest-hosts section. This usage is expected to
+be very rare.
+<li>An unused <code>-m</code> command-line option is removed.
+<li>Various files accidentally included but not needed at runtime are omitted to conserve executable file size.
+</ul>
+
+<h3>Revision 1232, July 4, 2021</h3>
+<p>
+First public release.
+This release was published very rapidly to coincide with the unexpected timing of the initial TeamTalk 5.8.0
+Qt release.
+Various older versions existed, back through February, 2013; but all were considered experimental and not
+formally released. The original provisional name for the utility was <code>IXConv</code>.
+Work on this incarnation began on February 5, 2013, as part of this author's experimentation with non-Classic
+Windows and MacOS TeamTalk clients.
+
+</details>
+</body></html>
+
