@@ -8,6 +8,9 @@ portable/keyop/**)
 Documents/
 Documents/**
 {{ end }}
+{{ if eq .chezmoi.os "windows" }}
+.config/kanata/**
+{{ end }}
 AppData/Roaming/foobar2000-v2/running
 AppData/Roaming/foobar2000-v2/nobadshutdown
 AppData/Roaming/foobar2000-v2/library-error-log.txt
@@ -16,4 +19,5 @@ AppData/Roaming/foobar2000-v2/playlists-v1.4/**
 AppData/Roaming/foobar2000-v2/library-v2.0/**
 AppData/Roaming/foobar2000-v2/library/**
 AppData/Roaming/nvda/teleNVDA.ini
+**/__pycache__
 readme.md
