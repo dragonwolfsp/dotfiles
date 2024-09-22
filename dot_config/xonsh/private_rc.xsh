@@ -44,6 +44,15 @@ if 'abbrevs' in xontribs:
 else:
 	echo xontrib-abbrevs is missing, abbrevs will be unuseable.
 	abbrevsAreHere=False
+#better tab completion thrue fish shell.
+if 'fish_completer' in xontribs: 
+	if not !(which fish):
+		echo "Fish is missing, many tab completions will be unavailable."
+	else:
+		xontrib load fish_completer
+else:
+	echo "xontrib-fish-completer is missing, many tab completions will be unavailable"
+
 
 # Run function to set up prompt.
 promptSetUp()

@@ -3,5 +3,5 @@
 {{ .chezmoi.sourceDir | replace "/" "\\" }}\.utils\ttconv\ttconv.exe {{ .chezmoi.homeDir | replace "/" "\\" }}\AppData\Roaming\Bearware.dk\servers.ini .ini
 {{- else -}}
 #!/bin/bash
-python3 {{ .chezmoi.sourceDir }}/.utils/ttconv/ttconv.py {{ .chezmoi.homeDir }}/.config/Bearware.dk/servers.ini .ini
+python3 {{ .chezmoi.sourceDir }}/.utils/ttconv/ttconv.py {{ .chezmoi.homeDir }}/.config/BearWare.dk/servers.ini .ini
 {{ end }}
