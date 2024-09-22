@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
-"POT-Creation-Date: 2023-03-28 07:20+0000\n"
-"PO-Revision-Date: 2024-05-08 06:40+0300\n"
-"Last-Translator: Heorhii Halas <nvda.translation.uk@gmail.com>\n"
+"Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
+"POT-Creation-Date: 2024-08-05 17:29+0200\n"
+"PO-Revision-Date: 2024-08-19 07:48+0300\n"
+"Last-Translator: Volodymyr Pyrih <vp88.mobile@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 "X-Poedit-Basepath: переклад/TeleNVDA-teleNVDA/addon\n"
 "X-Poedit-SearchPath-0: globalPlugins/remoteClient\n"
 "X-Poedit-SearchPath-1: installTasks.py\n"
@@ -169,6 +169,17 @@ msgstr ""
 #. Translators: message spoken when the file has been sent successfully
 msgid "File sent"
 msgstr "Файл надіслано"
+
+#. Translators: report number of connected computers gesture description
+msgid "Reports number of computers connected to a session"
+msgstr "Повідомляє кількість комп'ютерів, підключених до сеансу"
+
+#. TRANSLATORS: message reported when get number of clients gesture is pressed
+msgid "This is the only computer connected to this session"
+msgid_plural "There are {} computers connected to this session"
+msgstr[0] "До цієї сесії під’єднано один комп’ютер"
+msgstr[1] "До цієї сесії під’єднано {} комп’ютери"
+msgstr[2] "До цієї сесії під’єднано {} комп’ютерів"
 
 #. Translators: send file gesture description
 msgid "Sends the specified file to the remote machine"
@@ -430,7 +441,7 @@ msgstr "Обробляти мовні команди під час керува�
 
 #. Translators: A checkbox in add-on options dialog to set whether server welcome messages are displayed only once
 msgid "Show server welcome messages only once"
-msgstr ""
+msgstr "Показувати вітальні повідомлення сервера лише один раз"
 
 #. Translators: a text field in add-on options dialog to set the portcheck service URL
 msgid "Portcheck &service URL: "

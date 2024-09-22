@@ -397,6 +397,14 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@scriptHandler.script(
 		# Translators: Message presented in input help mode.
+		description=_("Lists available commands in clock command layer, showing them in browse mode.")
+	)
+	def script_getHelpInBrowseMode(self, gesture):
+		browseableMessageText = "<ul><li>" + ("</li><li>".join(x[0] + " : " + x[1].__doc__ if x[0] != "space" else skipTranslation.translate(x[0]) + " : " + x[1].__doc__ for x in self._clockLayerGestures)) + "</li></ul>"  # NOQA: E501
+		ui.browseableMessage(browseableMessageText, self.scriptCategory, isHtml=True)
+
+	@scriptHandler.script(
+		# Translators: Message presented in input help mode.
 		description=_("Allows to check the next alarm. If pressed twice, cancels it.")
 	)
 	def script_checkOrCancelAlarm(self, gestures):

@@ -30,7 +30,7 @@ lmet @swlayer
 )
 
 (deflayermap (switchActivator)
-spc (multi spc (layer-switch switcher))
+spc (multi spc (layer-switch switcher) (cmd play -n synth tri 600 tri 800))
 )
 
 (deflayermap (switcher)
