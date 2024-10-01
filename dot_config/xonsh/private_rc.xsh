@@ -28,9 +28,23 @@ $XONSH_COLOR_STYLE='dracula'
 #make the default prompt a bit more useful.
 $PROMPT = '{curr_branch} {env_prefix}{env_name}{env_postfix} {user}@{hostname}:{cwd} {last_return_code}-{prompt_end}'
 
+#Set linux accessibility variables.
+$QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1
+$ACCESSIBILITY_ENABLED=1
+$QT_ACCESSIBILITY=1
+$GNOME_ACCESSIBILITY=1
+
+# ensure that command output is captured, warning: this breakse some interactiv commands.
+$XONSH_CAPTURE_ALWAYS = True
+
+
 # Set variables to easily change settings later on.
 # 0 = built in xonsh prompt, 1 = starship, 2 = oh-my-posh
 shellPrompt = 1
+
+#add things to path
+if not '~/.local/bin' in $PATH:
+	$PATH.append('~/.local/bin')
 
 #plugins
 #Get currently usable xontribs first.
@@ -52,7 +66,19 @@ if 'fish_completer' in xontribs:
 		xontrib load fish_completer
 else:
 	echo "xontrib-fish-completer is missing, many tab completions will be unavailable"
+#Automaticly run ssh-agent.
+if "ssh_agent" in xontribs:
+	if not !(which ssh-agent):
+		echo "ssh-agent is not installed, ssh keys can not be remembered."
+	xontrib load ssh_agent
+else:
+	echo "xontrib-ssh-agent is missing, ssh keys can not be remembered."
 
+#Enable onepath so xonsh will be smart about files and directories.
+if 'onepath' in xontribs:
+	xontrib load onepath
+else:
+	echo "xontrib_onepath is missing, xonsh will not be smart about files and directories."
 
 # Run function to set up prompt.
 promptSetUp()
@@ -65,12 +91,14 @@ if not !(which zoxide):
 else:
 	execx($(zoxide init xonsh), 'exec', __xonsh__.ctx, filename='zoxide')
 	zoxideIsHere=True
+
 #Use eza instead of ls if available.
 if not !(which eza):
 	ezaIsHere = False
 	echo eza is missing, using ls instead.
 else:
 	ezaIsHere = True
+
 #For greate tab completion thrue carapace-bin 
 if not !(which carapace):
 	echo Carapace is missing, many tab completions will be unavailable.
@@ -152,7 +180,9 @@ if abbrevsAreHere:
 #Ask to rerun if a command requires administrator permitions.
 @events.on_postcommand
 def on_postcommand(cmd: str, rtn: int, out: str || None, ts: list):
-	if rtn in (2, 126): 
+	subs = ('administrator', 'root', 'admin')
+	if rtn in (2, 126) or (rtn>0 and out is not None and any(sub in out.lower() for sub in subs)):
 		result = input('rerun as administrator?')
 		if result.lower() in ('y','yes'):
-			sudo @(cmd)
+			#Rerun with sudo, we have to use rstrip and split to make the flags not count as one string.
+			sudo @(arg for arg in cmd.rstrip().split(' '))
