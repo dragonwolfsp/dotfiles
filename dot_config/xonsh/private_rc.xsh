@@ -1,7 +1,12 @@
+#Show full python tracebacks.
+$XONSH_SHOW_TRACEBACK = True
+
 #pythonic imports
 import json
 import threading
 
+#xonshy imports
+from xonsh.platform import ON_ANACONDA, ON_CYGWIN, ON_DARWIN, ON_DRAGONFLY, ON_FREEBSD, ON_LINUX, ON_MSYS, ON_NETBSD, ON_OPENBSD, ON_POSIX, ON_WINDOWS, ON_WSL
 
 #functions to simplify setup.
 
@@ -19,9 +24,6 @@ def promptSetUp():
 		else:
 			execx($(oh-my-posh init xonsh --config "$POSH_THEMES_PATH/powerline.omp.json" ))
 
-#Show full python tracebacks.
-$XONSH_SHOW_TRACEBACK = True
-
 #change up that color theam.
 $XONSH_COLOR_STYLE='dracula'
 
@@ -29,14 +31,14 @@ $XONSH_COLOR_STYLE='dracula'
 $PROMPT = '{curr_branch} {env_prefix}{env_name}{env_postfix} {user}@{hostname}:{cwd} {last_return_code}-{prompt_end}'
 
 #Set linux accessibility variables.
-$QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1
-$ACCESSIBILITY_ENABLED=1
-$QT_ACCESSIBILITY=1
-$GNOME_ACCESSIBILITY=1
+if ON_LINUX or ON_wsl:
+	$QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1
+	$ACCESSIBILITY_ENABLED=1
+	$QT_ACCESSIBILITY=1
+	$GNOME_ACCESSIBILITY=1
 
 # ensure that command output is captured, warning: this breakse some interactiv commands.
 $XONSH_CAPTURE_ALWAYS = True
-
 
 # Set variables to easily change settings later on.
 # 0 = built in xonsh prompt, 1 = starship, 2 = oh-my-posh
