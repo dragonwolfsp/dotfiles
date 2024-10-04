@@ -34,7 +34,6 @@ def loadXontrib(xontribName: str, xontribPackage: str, additionalError: str = ""
 	if xontribHere == True and len(missingPrograms)==0:
 		xontrib load @(xontribName)
 		return True
-		return
 	if not xontribHere:
 		missing += xontribPackage
 		if len(missingPrograms)>0:
@@ -81,16 +80,20 @@ if not '~/.local/bin' in $PATH:
 xontrib load coreutils
 #add abbrevs
 abbrevsAreHere = loadXontrib('abbrevs', 'xontrib-abbrevs', additionalError = 'abbreveations will be unavailable')
-#better tab completion thrue fish shell.
-loadXontrib('fish_completer', 'xontrib-fish-completer', additionalError = 'many tab completions will be unavailable', requiredPrograms = ('fish',))
-#Automaticly run ssh-agent.
-loadXontrib('ssh_agent', 'xontrib-ssh-agent', additionalError = 'ssh keys can not be remembered.', requiredPrograms = ('ssh-agent',))
 
+if not ON_WINDOWS:
+	#better tab completion thrue fish shell.
+	loadXontrib('fish_completer', 'xontrib-fish-completer', additionalError = 'many tab completions will be unavailable', requiredPrograms = ('fish',))
+	#Automaticly run ssh-agent.
+	loadXontrib('ssh_agent', 'xontrib-ssh-agent', additionalError = 'ssh keys can not be remembered.', requiredPrograms = ('ssh-agent',))
 #Enable onepath so xonsh will be smart about files and directories.
-if 'onepath' in xontribs:
-	xontrib load onepath
-else:
-	echo "xontrib_onepath is missing, xonsh will not be smart about files and directories."
+#things get a bit special here because we need to check for libmagic.
+try:
+	#We have to try importing magic ourselvs because xonsh does something weerd to exceptions when loading xontribs and it won't catch them.
+	import magic as pymagic
+	loadXontrib('onepath', 'xontrib-onepath', additionalError = 'Xonsh will not be smart about paths.')
+except ImportError:
+	echo "Error loading xontrib-onepath, libmagic could not be found on your system, Xonsh will not be smart about paths."
 
 # Run function to set up prompt.
 promptSetUp()
