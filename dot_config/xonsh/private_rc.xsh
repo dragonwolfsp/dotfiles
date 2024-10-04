@@ -33,12 +33,13 @@ def loadXontrib(xontribName: str, xontribPackage: str, additionalError: str = ""
 	missingPrograms=[program for program in requiredPrograms if not !(which @(program))]
 	if xontribHere == True and len(missingPrograms)==0:
 		xontrib load @(xontribName)
+		return True
 		return
 	if not xontribHere:
 		missing += xontribPackage
 		if len(missingPrograms)>0:
 			missing += ', '
-			missing += ', '.join(missingPrograms)
+	missing += ', '.join(missingPrograms)
 	if len(missingPrograms)>2 or (not xontribHere and len(missingPrograms)>0):
 		misser = 'are'
 	else:
@@ -49,6 +50,7 @@ def loadXontrib(xontribName: str, xontribPackage: str, additionalError: str = ""
 	else:
 		missing += '.'
 	echo @(missing)
+	return False
 
 #change up that color theam.
 $XONSH_COLOR_STYLE='dracula'
@@ -78,27 +80,11 @@ if not '~/.local/bin' in $PATH:
 #replace some corutils with faster equivalents.
 xontrib load coreutils
 #add abbrevs
-if 'abbrevs' in xontribs:
-	xontrib load abbrevs
-	abbrevsAreHere=True
-else:
-	echo xontrib-abbrevs is missing, abbrevs will be unuseable.
-	abbrevsAreHere=False
+abbrevsAreHere = loadXontrib('abbrevs', 'xontrib-abbrevs', additionalError = 'abbreveations will be unavailable')
 #better tab completion thrue fish shell.
-if 'fish_completer' in xontribs: 
-	if not !(which fish):
-		echo "Fish is missing, many tab completions will be unavailable."
-	else:
-		xontrib load fish_completer
-else:
-	echo "xontrib-fish-completer is missing, many tab completions will be unavailable"
+loadXontrib('fish_completer', 'xontrib-fish-completer', additionalError = 'many tab completions will be unavailable', requiredPrograms = ('fish',))
 #Automaticly run ssh-agent.
-if "ssh_agent" in xontribs:
-	if not !(which ssh-agent):
-		echo "ssh-agent is not installed, ssh keys can not be remembered."
-	xontrib load ssh_agent
-else:
-	echo "xontrib-ssh-agent is missing, ssh keys can not be remembered."
+loadXontrib('ssh_agent', 'xontrib-ssh-agent', additionalError = 'ssh keys can not be remembered.', requiredPrograms = ('ssh-agent',))
 
 #Enable onepath so xonsh will be smart about files and directories.
 if 'onepath' in xontribs:
