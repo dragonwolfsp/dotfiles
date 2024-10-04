@@ -24,6 +24,32 @@ def promptSetUp():
 		else:
 			execx($(oh-my-posh init xonsh --config "$POSH_THEMES_PATH/powerline.omp.json" ))
 
+#make loading xontribs and error checking easier.
+#Get currently usable xontribs first.
+xontribs = json.loads($(xontrib list --json))
+def loadXontrib(xontribName: str, xontribPackage: str, additionalError: str = "", requiredPrograms: tuple[str] = ()):
+	missing = ""
+	xontribHere= True if xontribName in xontribs else False
+	missingPrograms=[program for program in requiredPrograms if not !(which @(program))]
+	if xontribHere == True and len(missingPrograms)==0:
+		xontrib load @(xontribName)
+		return
+	if not xontribHere:
+		missing += xontribPackage
+		if len(missingPrograms)>0:
+			missing += ', '
+			missing += ', '.join(missingPrograms)
+	if len(missingPrograms)>2 or (not xontribHere and len(missingPrograms)>0):
+		misser = 'are'
+	else:
+		misser = 'is'
+	missing += f' {misser} missing'
+	if len(additionalError)>0:
+		missing += f', {additionalError}.'
+	else:
+		missing += '.'
+	echo @(missing)
+
 #change up that color theam.
 $XONSH_COLOR_STYLE='dracula'
 
@@ -31,7 +57,7 @@ $XONSH_COLOR_STYLE='dracula'
 $PROMPT = '{curr_branch} {env_prefix}{env_name}{env_postfix} {user}@{hostname}:{cwd} {last_return_code}-{prompt_end}'
 
 #Set linux accessibility variables.
-if ON_LINUX or ON_wsl:
+if ON_LINUX or ON_WSL:
 	$QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1
 	$ACCESSIBILITY_ENABLED=1
 	$QT_ACCESSIBILITY=1
@@ -49,8 +75,6 @@ if not '~/.local/bin' in $PATH:
 	$PATH.append('~/.local/bin')
 
 #plugins
-#Get currently usable xontribs first.
-xontribs = json.loads($(xontrib list --json))
 #replace some corutils with faster equivalents.
 xontrib load coreutils
 #add abbrevs
