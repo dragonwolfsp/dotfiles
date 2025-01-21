@@ -4,9 +4,12 @@
 * NVDA 兼容性： 2018.1 或更高版本（未在早期版本中测试）
 * 下载 [稳定版][1]
 
-MathCAT 旨在最终取代不在被支持的 MathPlayer。MathCAT 从 MathML 生成语音和盲文。MathCAT
-生成的数学语音通过韵律进行了增强，使其听起来更自然。语音可以使用与 MathPlayer
-相同的命令在三种模式下导航。此外，在盲文显示器上指示导航节点。支持 Nemeth 和 UEB technical 等盲文方案。
+MathCAT is designed to eventually replace MathPlayer because MathPlayer is
+no longer supported. MathCAT generates speech and braille from MathML. The
+speech for math produced by MathCAT is enhanced with prosody so that it
+sounds more natural. The speech can be navigated in three modes using the
+same commands as MathPlayer. In addition, the navigation node is indicated
+on a braille display. Both Nemeth and UEB technical are supported.
 
 MathCAT 有许多控制语音、导航和盲文的配置选项。其中许多可以在 MathCAT 设置对话框中设置 （可从 NVDA
 首选项菜单中找到）。有关这些设置的更多信息，请参阅 [MathCAT
@@ -21,14 +24,17 @@ MathCAT 项目的常规信息，请参阅 [MathCAT 文档主页](https://nsoiffe
 
 * 那些需要高质量 Nemeth 码盲文的人 （MathPlayer 的 Nemeth 码基于 liblouis 的 Nemeth
   码一代，有许多技术上难以修复的重大错误）。
-* 需要 UEB technical 盲文的人
+* Those who need UEB technical braille, CMU (Spanish/Portuguese), German
+  LaTeX, ASCIIMath, or Vietnamese braille
 * 那些想要尝试最新技术并愿意通过报告 Bug 来提供帮助的人
 * 那些用 Eloquence 合成器的人
 
 谁不应该使用 MathCAT：
 
-* 任何使用非英语语言的 MathPlayer 的人 （存在印度尼西亚语和越南语翻译； 更多翻译将会在未来推出）。
-* 任何使用 MathPlayer 的非 Nemeth 码、 UEB 盲文输出的人 (如果您想帮助进行盲文翻译，请联系我)
+* Anyone who uses MathPlayer with a language that is not yet supported by
+  MathCAT (translations exist for Chinese (Traditional), Spanish, Indonesian
+  and Vietnamese; translations will be coming in the future) and are not
+  comfortable with speech in one of the supported languages.
 * 任何喜欢 Access8Math 而不是 MathPlayer 的人 (需要使用语音或其他更多功能的人)
 
 MathCAT 的语音规则还没有 MathPlayer 的规则那么全面——这可能是坚持使用 MathPlayer 的另一个原因。MathCAT 被用作
@@ -36,6 +42,58 @@ MathML 4 思想的测试平台，它允许作者表达他们的意图，以便�
 的体系结构以使用和推断作者意图为中心，这些还没有完全解决。
 
 ## MathCAT 更新日志
+
+### Version 0.6.3
+
+* All the language and braille Rule files are zipped up per directory and
+  unzipped on demand.
+
+	* This currently saves ~5mb when Rules.zip is unzipped, and will save even
+	  more as more languages and braille codes are added.
+	* This is in preparation for MathCAT being built into NVDA 2024.3
+
+* Added new preference `DecimalSeparator`.
+
+	* The default value is `Auto`, with other values being ".", ",", and
+	  "Custom". The first three values set `DecimalSeparators` and
+	  `BlockSeparators`.
+	* `Auto` sets those preferences based on the value of the `Language`
+	  pref. For some language such as Spanish, `,` is used in some countries
+	  and `.` is used in others. In this case, it is best to set the language
+	  to also include the country code (e.g, `es-es` or `es-mx`) to ensure the
+	  right value is used.
+
+* Added Swedish to supported languages.
+* Added more Unicode chars to include both all Unicode chars marked as "Sm"
+  and those with a mathclass (except Alphabetic and Glyph classes) in the
+  Unicode standard.
+* After changing how prefs work in a previous version, I forgot to change
+  `MathRate` and `PauseFactor` to be numbers, not strings.
+* Fixed bug in the braille Rules (missed change from earlier) where a third
+  argument should have been given to say to look in the _Braille_
+  `definitions.yaml` files and not the speech ones when looking up the value
+  of a definition.
+* Cleaned up use of `definitions.yaml`.
+* Fixed some bugs in the MathML cleanup for "," decimal separators.
+* Found a bug in braille highlighting when nothing is highlighted (maybe
+  never happens which is why I didn't see it in practice?)
+* Fixed "Describe" mode so that it works -- it is still very minimal and
+  probably not useful yet
+* Fixed minimum supported version
+
+### Version 0.5.6
+* Added Copy As... to the MathCAT dialog (in the "Navagation" pane).
+* Fixed a bug where the language reverted to English when changing speech
+  styles.
+* Fixed a bug with navigation and braille
+* Fixed some Asciimath spacing problems.
+* Improved chemistry recognition
+* Updated MathCAT to new BANA Nemeth chemistry spec (still only single line
+  and special case style/font changes not handled)
+* Fix a crash when non-ASCII digits (e.g., bold digits) are used in numbers
+* Don't use italic indicators in braille codes when the math alphanumeric
+  italic chars are used
+* Some other smaller bug fixes that weren't reported by users
 
 ### 版本 0.5.0
 * 添加了德语 LaTeX 盲文代码。与其他盲文代码不同，这会生成 ASCII 字符，并使用当前盲文输出表将字符转换为盲文。
@@ -60,6 +118,7 @@ MathML 4 思想的测试平台，它允许作者表达他们的意图，以便�
 * 修复了 HTML 标记内部的空白错误
 * 改进了罗马数字检测
 
+
 ### 版本 0.3.9
 * 增加了繁体中文翻译（感谢 Hon-Jang Yang）
 * Fixed bug with navigating into the base of a scripted expression that has
@@ -69,7 +128,9 @@ MathML 4 思想的测试平台，它允许作者表达他们的意图，以便�
 * 添加化学示例后产生的UEB盲文修复
 * UEB 修复了在某些情况下添加辅助括号的问题
 
+
 ### 版本 0.3.8
+
 盲文：
 
 * 对话已经国际化（非常感谢翻译者们！）
@@ -106,10 +167,10 @@ MathCAT 版本将包含一个可靠的实现。
 * 进一步化学改进
 * 对 Nemeth 码的修复：
 
-	* 增加了省略规则
-	* 增加了一些英语语言指示符的规则
-	* 添加了更多需要多用途指示符的情况
-	* Nemeth 码标点相关的修复
+	* Added "omission" rules
+	* Added some rules for English Language Indicators
+	* Added more cases where the Mulitpurpose indicator is needed
+	* Fixes related to Nemeth and punctuation
 
 ### 版本 0.2
 * 大量错误修复

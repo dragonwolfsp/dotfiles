@@ -8,7 +8,7 @@
 
 # Гарячі клавіші
 
-All commands support speech on demand mode (NVDA 2024.1 and later).
+All commands support speech on demand mode.
 
 * NVDA+Shift+E: Надає інформацію про використання оперативної пам’яті,
   середню завантаженість процесора та акумулятор, якщо він є.
@@ -46,10 +46,19 @@ All commands support speech on demand mode (NVDA 2024.1 and later).
 * При оголошенні інформації про архітектуру процесора, «x86» і «AMD64»
   відносяться до 32-розрядних і 64-розрядних (x64) процесорів Intel і AMD
   відповідно.
-* Цей додаток вимагає Windows 10 чи пізнішу.
+* This add-on requires Windows 10 22H2 (2022 Update/build 19045) or later.
+* Installing the add-on on Windows 10/11 LTSC is not supported.
 
 Примітка про ліцензування: цей додаток використовує Psutil, проліцензований
 ліцензією 3-Clause BSD, яка сумісна з GNU General Public License.
+
+## Version 24.08
+
+* NVDA 2024.2 or later is required. This allows psutil dependency to be
+  removed from the add-on as NVDA includes it.
+* Updated psutil dependency to the version included with NVDA 2024.2
+  (6.0.0).
+* Ruff replaces Flake8 as code linter.
 
 ## Version 24.05
 

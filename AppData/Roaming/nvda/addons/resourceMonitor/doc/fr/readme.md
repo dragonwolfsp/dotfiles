@@ -9,8 +9,7 @@ ressources.
 
 # Raccourcis
 
-Toutes les commandes prennent en charge le mode parole à la demande (NVDA
-2024.1 et versions ultérieures).
+Toutes les commandes prennent en charge le mode parole à la demande.
 
 * NVDA+Maj+E: Annonce le pourcentage de mémoire utilisée, la charge moyenne
   du processeur et des informations sur la batterie si disponibles.
@@ -51,10 +50,21 @@ programmes d'information système pour Windows. Aussi, notez ce qui suit :
 * Lors de l'annonce des informations d'architecture du processeur, "x86" et
   "AMD64" se réfèrent aux processeurs Intel et AMD 32 bits et 64 bits (x64),
   respectivement.
-* Cette extension requiert Windows 10 ou au-delà.
+* Cette extension requiert Windows 10 22H2 (2022 Update/build 19045) ou
+  au-delà.
+* L'installation de l'extension sur Windows 10/11 LTSC n'est pas prise en
+  charge.
 
 Remarque sur la licence : cette extension utilise Psutil, sous licence BSD à
 3 clauses compatible avec la GNU General Public License.
+
+## Version 24.08
+
+* NVDA 2024.2 ou version ultérieure est requis. Cela permet de supprimer la
+  dépendance psutil de l'extension car NVDA l'inclut.
+* Mise à jour de la dépendance psutil  vers la version incluse avec NVDA
+  2024.2 (6.0.0).
+* Ruff remplace Flake8 comme code linter.
 
 ## Version 24.05
 

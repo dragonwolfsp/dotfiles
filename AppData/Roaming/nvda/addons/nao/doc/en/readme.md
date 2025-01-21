@@ -5,7 +5,7 @@
 * NVDA compatibility: 2019.3 and beyond
 
 Nao (NVDA Advanced OCR) is an addon that improves the standard OCR capabilities that NVDA provides on modern Windows versions.
-While NVDA standard command uses Windows OCR to recognize the screen, NAO is able to make the OCR on files saved on your hard drive or USB devices. 
+While NVDA standard command uses Windows OCR to recognize the screen, NAO is able to make the OCR on files saved on your hard drive or USB devices or attached to e-mails. 
 Use NVDA-Shift-R to recognize any sorts of images and pdf! 
 Simply put the focus / cursor on the file you desire, don't open it, but hit NVDA-Shift-r. 
 The document will be recognized and a simple text window will appear, allowing you to read the entire content, save it, find text or copy content to clipboard.
@@ -15,9 +15,10 @@ Nao is able to handle also multipage pdf, so if you have a not accessible docume
 The addon works on Windows 10 and Windows 11 systems, since they have OCR capabilities builtin. 
 Nao is compatible from NVDA version 2019.3, so don't use older versions of the screen reader.
 Note that Nao works with Windows Explorer, on desktop, with Total Commander or xplorer² filemanager; don't use other software like 7zip or Winrar, since they are not supported.
+For e-mail attachments, it also works with Microsoft Outlook 2016 or beyond.
 
 ## Features and commands
-* NVDA + Shift + R: recognize any sorts of images and pdf from file system;
+* NVDA + Shift + R: recognize any sorts of images and pdf from file system or attached to an e-mail;
   * PgUp / PgDown: move the cursor between real pages of a multipages document.
   * Ctrl + S: save the document in nao-document format. You can open it again with NVDA + Shift + R.
   * P: report page number related to the cursor position, in a multipage document.
@@ -45,6 +46,14 @@ If you think our work is good and improve your life, a <a href="https://nvda-nao
 Do you want to report a bug, suggest new features, translate the addon in your language? We have the email for you! Just write to support@nvda-nao.org and we will be happy to help you.
 
 ## History
+### 2025.1
+* NVDA version 2025.1 compatibility
+* Implement OCR recognition on the selected attachment of an opened Outlook message, from outlook 2016 and beyond
+* Added finnish translation
+
+### 2024.1
+* NVDA version 2024.1 compatibility
+
 ### 2023.1.1
 * Compatibility with NVDA version 2023.3 restored
 * New NVDA + Ctrl + Shift + W hotkey take a screen shot of the current window and recognize it

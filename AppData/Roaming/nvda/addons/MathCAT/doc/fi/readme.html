@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="../style.css" media="screen">
-<title>MathCAT: speech and braille from MathML 0.5.6</title>
+<title>MathCAT: speech and braille from MathML 0.6.6</title>
 </head>
 <body>
 <h1>MathCAT</h1>
@@ -12,12 +12,12 @@
 <li>Yhteensopivuus: NVDA 2018.1 tai uudempi (ei testattu aiemmissa versioissa)</li>
 <li>Lataa <a href="https://www.nvaccess.org/addonStore/legacy?file=mathcat">vakaa versio</a></li>
 </ul>
-<p>MathCAT on suunniteltu korvaamaan lopulta MathPlayerin, koska sitä ei enää
-tueta. MathCAT luo MathML:stä puhetta ja pistekirjoitusta. MathCATin
-tuottamaa matemaattista puhetta on paranneltu prosodialla, jotta se
-kuulostaa luonnollisemmalta. Puhetta voidaan navigoida kolmessa eri tilassa
-samoilla komennoilla kuin MathPlayerissa. Navigointisolmu näkyy lisäksi
-pistenäytöllä. Sekä Némethiä että UEB:tä tuetaan.</p>
+<p>MathCAT is designed to eventually replace MathPlayer because MathPlayer is
+no longer supported. MathCAT generates speech and braille from MathML. The
+speech for math produced by MathCAT is enhanced with prosody so that it
+sounds more natural. The speech can be navigated in three modes using the
+same commands as MathPlayer. In addition, the navigation node is indicated
+on a braille display. Both Nemeth and UEB technical are supported.</p>
 <p>MathCATissa on useita asetusvaihtoehtoja, jotka ohjaavat puhetta,
 navigointia ja pistekirjoitusta. Monia näistä voidaan määrittää MathCATin
 asetusvalintaikkunassa (löytyy NVDA:n Asetukset-valikosta). Lisätietoja saat
@@ -34,19 +34,18 @@ apuvälineteknologisissa projekteissa. Yleistä tietoa MathCAT-projektista on
 <li>Käyttäjien, jotka tarvitsevat korkealaatuista Nemeth-pistekirjoitusta
   (MathPlayerin Nemeth perustuu liblouisin Nemeth-sukupolveen, jossa on
   useita merkittäviä bugeja, joita on teknisesti vaikea korjata).</li>
-<li>Käyttäjien, jotka tarvitsevat teknistä UEB-pistekirjoitusta.</li>
+<li>Those who need UEB technical braille, CMU (Spanish/Portuguese), German
+  LaTeX, ASCIIMath, or Vietnamese braille</li>
 <li>Käyttäjien, jotka haluavat kokeilla uusinta teknologiaa ja ovat valmiita
-  auttamaan ilmoittamalla bugeista.</li>
-<li>Käyttäjien, jotka käyttävät puhesyntetisaattorina Eloquencea.</li>
+  auttamaan ilmoittamalla bugeista</li>
+<li>Käyttäjien, jotka käyttävät puhesyntetisaattorina Eloquencea</li>
 </ul>
 <p>Kenen EI tulisi käyttää MathCATia:</p>
 <ul>
-<li>Kaikkien, jotka käyttävät MathPlayeria muulla kuin englannin kielellä
-  (indonesian- ja vietnaminkieliset käännökset ovat käytettävissä, muita
-  käännöksiä on tulossa myöhemmin).</li>
-<li>Kaikkien, jotka käyttävät MathPlayeria muulla kuin
-  Nemeth/UEB-pistekirjoituksella (ota yhteyttä, jos haluat auttaa
-  pistekirjoituskäännöksen tekemisessä).</li>
+<li>Anyone who uses MathPlayer with a language that is not yet supported by
+  MathCAT (translations exist for Chinese (Traditional), Spanish, Indonesian
+  and Vietnamese; translations will be coming in the future) and are not
+  comfortable with speech in one of the supported languages.</li>
 <li>Kaikkien, jotka pitävät enemmän Access8Mathista kuin MathPlayerista
   (puheen tai muiden ominaisuuksien vuoksi).</li>
 </ul>
@@ -58,14 +57,73 @@ arvailla. Olen viivytellyt liian monien sääntöjen lisäämistä, koska
 MathCATin arkkitehtuuri keskittyy käyttöön ja tekijän tarkoituksen
 päättelemiseen, eikä niitä ole vielä täysin ratkaistu.</p>
 <h2>MathCATin päivitysloki</h2>
+<h3>Version 0.6.3</h3>
+<ul>
+<li>
+<p>All the language and braille Rule files are zipped up per directory and
+  unzipped on demand.</p>
+<ul>
+<li>This currently saves ~5mb when Rules.zip is unzipped, and will save even
+  more as more languages and braille codes are added.</li>
+<li>This is in preparation for MathCAT being built into NVDA 2024.3</li>
+</ul>
+</li>
+<li>
+<p>Added new preference <code>DecimalSeparator</code>.</p>
+<ul>
+<li>The default value is <code>Auto</code>, with other values being ".", ",", and
+  "Custom". The first three values set <code>DecimalSeparators</code> and
+  <code>BlockSeparators</code>.</li>
+<li><code>Auto</code> sets those preferences based on the value of the <code>Language</code>
+  pref. For some language such as Spanish, <code>,</code> is used in some countries
+  and <code>.</code> is used in others. In this case, it is best to set the language
+  to also include the country code (e.g, <code>es-es</code> or <code>es-mx</code>) to ensure the
+  right value is used.</li>
+</ul>
+</li>
+<li>
+<p>Added Swedish to supported languages.</p>
+</li>
+<li>Added more Unicode chars to include both all Unicode chars marked as "Sm"
+  and those with a mathclass (except Alphabetic and Glyph classes) in the
+  Unicode standard.</li>
+<li>After changing how prefs work in a previous version, I forgot to change
+  <code>MathRate</code> and <code>PauseFactor</code> to be numbers, not strings.</li>
+<li>Fixed bug in the braille Rules (missed change from earlier) where a third
+  argument should have been given to say to look in the <em>Braille</em>
+  <code>definitions.yaml</code> files and not the speech ones when looking up the value
+  of a definition.</li>
+<li>Cleaned up use of <code>definitions.yaml</code>.</li>
+<li>Fixed some bugs in the MathML cleanup for "," decimal separators.</li>
+<li>Found a bug in braille highlighting when nothing is highlighted (maybe
+  never happens which is why I didn't see it in practice?)</li>
+<li>Fixed "Describe" mode so that it works -- it is still very minimal and
+  probably not useful yet</li>
+<li>Fixed minimum supported version</li>
+</ul>
+<h3>Version 0.5.6</h3>
+<ul>
+<li>Added Copy As... to the MathCAT dialog (in the "Navagation" pane).</li>
+<li>Fixed a bug where the language reverted to English when changing speech
+  styles.</li>
+<li>Fixed a bug with navigation and braille</li>
+<li>Fixed some Asciimath spacing problems.</li>
+<li>Improved chemistry recognition</li>
+<li>Updated MathCAT to new BANA Nemeth chemistry spec (still only single line
+  and special case style/font changes not handled)</li>
+<li>Fix a crash when non-ASCII digits (e.g., bold digits) are used in numbers</li>
+<li>Don't use italic indicators in braille codes when the math alphanumeric
+  italic chars are used</li>
+<li>Some other smaller bug fixes that weren't reported by users</li>
+</ul>
 <h3>Versio 0.5.0</h3>
 <ul>
 <li>Lisätty saksalainen LaTeX-pistekirjoitusmerkistö. Toisin kuin muut
-  pistekirjoitusmerkistöt, tämä muodostaa ASCII-merkkejä ja käyttää
+  pistekirjoitusmerkistöt, tämä tuottaa ASCII-merkkejä ja käyttää
   senhetkistä pistetulostustaulukkoa merkkien kääntämiseen
   pistekirjoitukseksi.</li>
 <li>Lisätty kokeellinen ASCIIMath-pistekirjoitusmerkistö. Kuten
-  LaTeX-merkistö, tämä muodostaa ASCII-merkkejä ja  käyttää senhetkistä
+  LaTeX-merkistö, tämäkin tuottaa ASCII-merkkejä ja  käyttää senhetkistä
   pistetulostustaulukkoa merkkien kääntämiseen pistekirjoitukseksi.</li>
 <li>Lisätty "CopyAs"-asetus, joka tukee kopiointia MathML-, LaTeX- tai
   ASCIIMath-muodossa Ctrl+C-näppäinkomentoa käyttäen kohdistuksen ollessa
@@ -79,36 +137,40 @@ päättelemiseen, eikä niitä ole vielä täysin ratkaistu.</p>
   "Automaattinen"</li>
 <li>Lisätty tarkistuksia $Impairments-muuttujalle lukemisen parantamiseksi
   silloin, kun se on määritetty muita kuin sokeita varten.</li>
-<li>Nemeth: Korjaus "~":lle, kun se ei ole osa mrow:ta.</li>
+<li>Nemeth: Korjaus "~":lle, kun se ei ole osa mrow:ta</li>
 <li>UEB: Merkkejä lisätty, "~":n välilyönnin korjaus jos etuliitteenä,
-  xor-korjaus.</li>
+  xor-korjaus</li>
 <li>MathML:n siistiminen korostetuille vokaaleille (pääasiassa
   vietnamilaisille).</li>
-<li>Huomattava uudelleenkirjoitus asetusten lukemis- ja päivityskoodille
-  suurella nopeutuksella – lisätty <code>CheckRuleFiles</code>-asetus säätelemään,
-  mitkä tiedostot tarkistetaan päivitysten varalta.</li>
-<li>Added two new interface calls -- enables setting the navigaton location
-  from the braille cursor (not part of MathCAT addon yet)</li>
+<li>Suuri osa asetusten luku- ja päivityskoodista kirjoitettu uudestaan, mikä
+  nopeutti koodia huomattavasti – lisätty <code>CheckRuleFiles</code>-asetus
+  säätelemään, mitkä tiedostot tarkistetaan päivitysten varalta</li>
+<li>Lisätty kaksi uutta rajapintakutsua: mahdollistaa navigointisijainnin
+  asettamisen pistekohdistimesta (ei vielä osa MathCAT-lisäosaa)</li>
 </ul>
 <h3>Versio 0.3.11</h3>
 <ul>
-<li>Upgraded to python 3.11 and verified working with NVDA 2024.1</li>
-<li>Fix bugs in Vietnamese braille and also in Speech, mostly for chemistry.</li>
-<li>Fix broken braille when braille code and dependent language don't match
-  (specifically Vietnam braille and Vietnamese speech)</li>
-<li>Fix whitespace bug in HTML inside of tokens</li>
-<li>Improve roman numeral detection</li>
+<li>Päivitetty python versioksi 3.11 ja varmistettu toimivuus NVDA 2024.1:n
+  kanssa</li>
+<li>Korjattu pääasiassa kemiaan liittyviä bugeja vietnaminkielisessä
+  pistekirjoituksessa ja puheessa.</li>
+<li>Korjattu rikkoutuva pistekirjoitus, kun pistemerkistö ja siihen liittyvä
+  kieli eivät täsmää (erityisesti Vietnamilainen pistekirjoitus ja puhe)</li>
+<li>Korjattu tyhjän tilan bugi HTML:n sisällä olevissa merkeissä</li>
+<li>Paranneltu roomalaisten numeroiden tunnistusta</li>
 </ul>
 <h3>Versio 0.3.9</h3>
 <ul>
-<li>Added Traditional Chinese translation (thanks to Hon-Jang Yang)</li>
-<li>Fixed bug with navigating into the base of a scripted expression that has
-  parenthesis</li>
-<li>Significantly changed the way whitespace is handled. This mainly affects
-  braille output (spaces and "omission" detection).</li>
+<li>Lisätty perinteisen kiinan käännös (kiitos Hon-Jang Yangille)</li>
+<li>Korjattu bugi navigoitaessa skriptatun lausekkeen sulkeita sisältävään
+  perusosaan</li>
+<li>Muutettu merkittävästi tapaa, jolla tyhjätilaa käsitellään. Tämä vaikuttaa
+  pääasiassa pistekirjoitustulosteeseen (välilyönnit ja "jättämisen"
+  havaitseminen).</li>
 <li>Kemiallisten merkintöjen tunnistusta paranneltu</li>
-<li>UEB braille fixes that came up from adding chemistry examples</li>
-<li>UEB fixes for adding auxillary parenthesis in some cases</li>
+<li>Tehty UEB-pistekirjoituksen korjauksia, joiden tarve ilmeni kemiallisten
+  kaavojen esimerkkejä lisättäessä</li>
+<li>Korjauksia UEB:lle apusulkeita lisättäessä joissakin tapauksissa</li>
 </ul>
 <h3>Versio 0.3.8</h3>
 <p>Pistekirjoitus:</p>
@@ -125,8 +187,8 @@ päättelemiseen, eikä niitä ole vielä täysin ratkaistu.</p>
   on 100 % (sallii nyt vain hitaampien nopeuksien asettamisen). Lisätty myös
   askelkokoja, jotta nopeuden merkittävä nostaminen/laskeminen olisi
   helpompaa.</li>
-<li>Fix eSpeak bug that sometimes cut off speech when the relative rate was
-  changed</li>
+<li>Korjattu eSpeakin bugi, joka katkaisi toisinaan puheen, kun suhteellista
+  nopeutta muutettiin</li>
 <li>Parannuksia vietnaminkieliseen puheeseen</li>
 <li>Korjattu OneCore-äänien bugi, joka sai ne sanomaan "a"</li>
 <li>Korjattu navigoinnin bugeja, joita esiintyi kun automaattinen
@@ -134,9 +196,9 @@ päättelemiseen, eikä niitä ole vielä täysin ratkaistu.</p>
 <li>Korjattu kielen vaihtamisen ja muutaman muun valintaikkunan muutosten
   päivittämistä siten, että muutokset tulevat voimaan heti Käytä- tai
   OK-painiketta painettaessa.</li>
-<li>Added an "Use Voice's Language" option so that out of the box, MathCAT
-  will speak in the right language (if there is a translation)</li>
-<li>Several improvements for cleaning up poor MathML code</li>
+<li>Lisätty "Käytä äänen kieltä" -asetus, jotta MathCAT puhuu oletusarvoisesti
+  oikealla kielellä (jos käännös on saatavilla)</li>
+<li>Useita parannuksia huonon MathML-koodin siistimiseksi</li>
 </ul>
 <h3>Versio 0.3.3</h3>
 <p>Tähän versioon on tehty useita bugikorjauksia. Merkittävimpiä uusia
@@ -175,10 +237,10 @@ toteutus.</p>
 <li>
 <p>Korjauksia Nemeth-merkintöihin:</p>
 <ul>
-<li>Lisätty "jättösääntöjä"</li>
-<li>Lisätty sääntöjä englannin kielen ilmaisimille</li>
-<li>Lisätty enemmän tapauksia, joissa monitoimi-ilmaisinta tarvitaan</li>
-<li>Nemeth-merkintöihin ja välimerkkeihin liittyviä korjauksia</li>
+<li>Added "omission" rules</li>
+<li>Added some rules for English Language Indicators</li>
+<li>Added more cases where the Mulitpurpose indicator is needed</li>
+<li>Fixes related to Nemeth and punctuation</li>
 </ul>
 </li>
 </ul>

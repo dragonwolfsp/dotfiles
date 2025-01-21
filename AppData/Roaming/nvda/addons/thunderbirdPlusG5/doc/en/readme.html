@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="../style.css" media="screen">
-<title>Thunderbird+G5 (TB 115 & 128 ESR) 2407.24.00</title>
+<title>Thunderbird+G5 (TB 115 - 128ESR - 133) 2501.15.00</title>
 </head>
 <body>
-<h1>Thunderbird+G5 for Thunderbird &gt;= 115</h1>
+<h1>Thunderbird+G5 for Thunderbird 115 and 128 ESR</h1>
 <ul>
 <li>Authors: Pierre-Louis Renaud (From Thunderbird 78 to 115) &amp; Cyrille Bougot (TB 102), Daniel Poiraud (From TB 78 to 91), Yannick (TB 45 to 60);</li>
 <li>URL: <a href="https://www.rptools.org/NVDA-Thunderbird/index.html">thunderbird+ G5 and G4 add-ons home page</a> ;
-  <a href="https://www.rptools.org/NVDA-Thunderbird/get.php?pg=changes&amp;v=G5&amp;lang=en">History of changes at RPTools.org</a> ;
+  <a href="https://www.rptools.org/NVDA-Thunderbird/get.php?pg=changes&amp;v=G5&amp;lang=en">History of changes and additional documentation</a> ;
   <a href="https://www.rptools.org/NVDA-Thunderbird/toContact.html">Contact in French or English</a> ;</li>
-<li>Download <a href="https://www.rptools.org/?p=9514">stable version</a></li>
+<li>Installation: NVDA menu / Tools / Add-on store / available extensions or updates tab;;</li>
 <li>Download <a href="https://www.rptools.org/?p=9514">Latest version from RPTools.org</a> ;</li>
 <li>NVDA compatibility: 2021.1 and later;</li>
 <li><a href="https://github.com/RPTools-org/thunderbirdPlusG5/">Source code on gitHub</a></li>
@@ -70,27 +70,16 @@ Additionally, the add-on gives focus to the tab's content when it is first activ
 
 <h3>Custom vocalization of rows (2023.11.10)</h3>
 <p>This custom mode, disabled by default, allows more comfortable listening to lines in the message list.</p>
-<p>However, it has some disadvantages:</p>
+<p>You can activate this mode by pressing shift+power2 and selecting from the menu the item "Oprtions for the main window" then "List of messages". In the list of options, check the option "Message list: Custom vocalization of lines";</p>
+<p>This list of options also contains other customization options that only work if custom vocalization is enabled.</p>
 <ul>
-<li>It is not compatible with the card view of the message list. To return to the table view, go to the message list, press Shift+Tab to the "Message list options" button, press Enter and in the context menu, check "Table view".</li>
-<li>On slower PCs, it may cause a noticeable slowdown in navigation with the arrows in the message list.</li>
-<li>If you press down arrow on the last line, it will not be announced.</li>
-</ul>
-<p>You can activate this mode by pressing shift+ key above Tab and selecting the "Main window options" item in the menu then checking the "Message list: custom vocalization of rows" option.</p>
-<p>This submenu also contains other customization options that only work if custom vocalization is enabled.
+<li>The "Reading Status" column announces "unread" does not announce the "read" status;</li>
+<li>The "Status" column, recommended, announces the statuses "New", "Answered" and "Transferred". <br>
+Note: If you type the letter "m" to reverse the status of the message, this column must be present in the list of messages for the new status to be announced.</li>
+<li>The extension will ensure that "Unread" is only announced once and that "Read" is never announced.
 <br>
-Remark :</p>
-<p>Some users are experiencing a problem with blank lines in normal mode. If you are in this case, activate "Message list: force filling of rows if always blank" option.</p>
-<p>But ideally, this problem should be solved by creating a new user profile in Thunderbird, which involves reconfiguring email accounts.</p>
-<h4>Tip for custom vocalization of rows</h4>
-<p>You can use the two columns "Reading Status" and "Status" together to combine their respective advantages:</p>
-<ul>
-<li>The "Reading Status" column announces "unread" when you press the letter m to reverse the reading status.</li>
-<li>The "Status" column announces the statuses "New", "Replied" and "Transferred".</li>
-<li>The add-on will ensure that "Unread" is only announced once and that "Read" is never announced.</li>
+also read the section <a href="#cols">Choice and order of columns</a></li>
 </ul>
-<p><br>
-also read the section <a href="#cols">Choice and order of columns</a></p>
 <h3>Message list shortcuts</h3>
 <!-- end 2023.10.31 -->
 
@@ -251,30 +240,32 @@ When the focus is in the attachment list, the escape key returns to the message 
 <li>Alt+Enter: adds the word declared as misspelled to the dictionary.</li>
 </ul>
 <h2>Address book, easier management (v.2024.02.07)</h2>
-<p>The add-on improves address book announcements and provides you with keyboard commands that allow you to organize address books and mailing lists via virtual drag and drop.</p>
-<h3>Improved annoucements</h3>
+<p>The extension improves address book announcements and provides you with keyboard commands that allow you to organize address books and mailing lists via virtual drag and drop.</p>
+<h3>Improved ads</h3>
 <ul>
-<li>Address books and mailing lists tree : the add-on also announces the type of an element: address book or list of the parent address book,</li>
-<li>contact list: the add-on also announces the email address of the selected contact.</li>
+<li>Tree of address books and mailing lists: the extension also announces the type of an element: address book or list of the parent address book,</li>
+<li>contact list: pressing space announces the detailed contact file, pressing twice announces and copies the file to the clipboard.<br>
+Note: if this list is in "Table presentation" mode, uncheck this case via the "List display options" button which is located above the list of contacts. </li>
 </ul>
-<h3>Command Summary</h3>
+<h3>Order Summary</h3>
 <ul>
-<li>Tab key from search field: Goes directly to the contacts table by skipping the "List display options" button. This button remains accessible with shift+Tab from the contacts table; .</li>
+<li>Tab from the address book and mailing list tree: accesses the search field in the book or list selected in the tree. </li>
+<li>Tab from search field: Goes directly to the contacts table by skipping the "List display options" button. This remains accessible with shift+Tab from the contacts table;  .  </li>
 <li>
-<p>Escape key:</p>
+<p>escapes:</p>
 <ul>
-<li>From the address book tree, bring the focus to the search field;</li>
+<li>From the address book tree, bring the focus to the "Create a new address book" button in the button bar above the tree. From one of these buttons, the escape key brings the focus to the tree;</li>
 <li>From the search field, bring the focus to the address book tree;</li>
 <li>From the contacts table, bring the focus to the search field;</li>
 </ul>
 </li>
 <li>
-<p>Control+Applications or key above Tab: opens a context menu including: Go to   address books and mailing lists tree, Access the contacts table, New address book, New contact, New list , Import. Aside from the first two, these items come from the Address Book toolbar.</p>
+<p>Control+Applications or key above Tab: opens a context menu including: Access the tree of address books and mailing lists, Access the contacts table, New address book, New contact, New list , Import. Aside from the first two, these items come from the Address Book toolbar. </p>
 </li>
-<li>letter "a" from the contacts table: drags and drops the selected contacts to the mailing list or address book defined as destination. The first time you press this key, you are asked for the destination via a menu. Then you won't be asked for the destination again until you change the source list or address book.</li>
-<li>letter "d" from the contacts table: displays the menu of lists and  address books destinations.</li>
+<li>letter "a" from the contacts table: drags and drops the selected contacts to the distribution list or address book defined as destination. The first time you press this key, you are asked for the destination via a menu. Then you won't be asked for the destination again until you change the source list or address book.</li>
+<li>letter "d" from the contacts table: displays the menu of lists and destination address books.</li>
 </ul>
-<h3>Example 1: Creating a mailing list in the Personal Address Book</h3>
+<p>Tip: You can also use navigation keys on a web page.   The letter "e" takes you directly to the search field and the letter "t" takes you to the contacts table.### Example 1: Creating a mailing list in the Personal Address Book</p>
 <ul>
 <li>Go to the address book tree and select "Personal addresses". A new list is created only in the selected address book, it is not possible from "All address books";</li>
 <li>Press Control+Applications or the key above Tab and in the menu, press Enter on: New list;</li>

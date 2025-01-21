@@ -211,11 +211,7 @@ GC_KEY_MAPS_SOURCE = [
 def normalizeKb(s):
     if s is None:
         return None
-    SHIFT_SUFFIX = '+shift'
-    if s.endswith(SHIFT_SUFFIX):
-        s = s[:-len(SHIFT_SUFFIX)]
-        s = "shift+" + s
-    return keyboardHandler.KeyboardInputGesture.fromName(s).normalizedIdentifiers[-1]
+    return inputCore.normalizeGestureIdentifier(f"kb:{s}")
 
 def makeIndentNavKeyMaps():
     result = {
@@ -352,27 +348,39 @@ def updateKeyMaps():
 
 config.post_configProfileSwitch .register(updateKeyMaps)
 
+def getControlVGesture():
+    try:
+        return keyboardHandler.KeyboardInputGesture.fromName("Control+v")
+    except LookupError:
+        # This happens if vk code for letter V fails to resolve, when current keyboard layout is for example Russian
+        # vk code for V key is 86
+        return keyboardHandler.KeyboardInputGesture(modifiers={(winUser.VK_CONTROL, False)}, vkCode=86, scanCode=0, isExtended=False)
 
 def initConfiguration():
     clutterRegex = (
         r"^\s*(" +
         "|".join([
-          # Python
+          # (not only) Python
             # ) : #comment
                 r"\)\s*:?\s*(#.*)?",
             # ) -> type :
-                r"""\)\s*->[\s\w.,\[\]|"']*:""",
+                r"""\)\s*->[\s\w.,\[\]|"']*:?""",
             # ), # comment
             # ], # comment
             # }, # comment
-            # Also allows // comment; also allows semicolon;
-                r"[\])}]\s*[,;]?\s*((#|//).*)?",
+            # Also allows // comment; also allows colon or semicolon;
+                r"[\])}]\s*[,:;]?\s*((#|//).*)?",
             # { // comment
                 r"[{]\s*((#|//).*)?",
             # # comment
                 r"#.*",
             # from? import
+            # import ...
                 r"(^from\s+[\w\s.]+\s+|^)import\s+.*",
+            # from ... \
+                r"from\s+[\w\s.]+\s*" + "\\\\",
+            # @annotations
+                r"@.*",
           # C++
             # ) { // comment
                 r"\)\s*[{;]?\s*(//.*)?",
@@ -380,6 +388,16 @@ def initConfiguration():
                 r"//.*",
             # #include
                 r"^#include.*",
+            # /* comment
+                r"/\*.*",
+          # PHP
+            # ): void {
+                r"\):.*",
+            # <<__Memoize>>
+                r"<<.*>>",
+          # other
+            # importThrift
+                r"importThrift\b.*",
         ])
         + r")\s*$"
     )
@@ -415,6 +433,8 @@ class QuickFindBookmark:
     keystroke: str
     pattern: str
     enabled: bool = True
+    id: int = 0
+    parentId: int = 0
 
     def getDisplayName(self):
         return self.name or self.keystroke
@@ -430,6 +450,29 @@ def saveBookmarks(bookmarks):
         'bookmarks': items,
     }))
 
+def getNextBookmarkId():
+    usedIds = set([bookmark.id for bookmark in globalBookmarks.values()])
+    for i in range(1, 10**10):
+        if i not in usedIds:
+            return i
+    raise RuntimeError
+
+def getBookmarkById(id):
+    for bookmark in globalBookmarks.values():
+        if bookmark.id == id:
+            return bookmark
+    return IndexError
+
+def getAllParentBookmarks(bookmark):
+    result = []
+    for __ in range(1000):
+        parentId = bookmark.parentId
+        if parentId == 0:
+            return result
+        bookmark = getBookmarkById(parentId)
+        result.append(bookmark)
+    raise RuntimeError("Infinite loop")
+
 globalBookmarks = {}
 def reloadBookmarks():
     global globalBookmarks
@@ -438,6 +481,9 @@ def reloadBookmarks():
         bookmark.keystroke: bookmark
         for bookmark in bookmarks
     }
+    for k, bookmark in globalBookmarks.items():
+        if bookmark.id == 0:
+            bookmark.id = getNextBookmarkId()
     cls = EditableIndentNav
     gestures = getattr(cls, f"_{cls.__name__}__gestures")
     QF = "quickFind"
@@ -449,12 +495,12 @@ def reloadBookmarks():
     gestures = {
         **gestures,
         **{
-            keyboardHandler.KeyboardInputGesture.fromName(keystroke).normalizedIdentifiers[-1]: QF
+            inputCore.normalizeGestureIdentifier(f"kb:{keystroke}"): QF
             for keystroke, bookmark in globalBookmarks.items()
             if bookmark.enabled
         },
         **{
-            keyboardHandler.KeyboardInputGesture.fromName("shift+" + keystroke).normalizedIdentifiers[-1]: QF
+            inputCore.normalizeGestureIdentifier(f"kb:shift+{keystroke}"): QF
             for keystroke, bookmark in globalBookmarks.items()
             if bookmark.enabled
         },
@@ -613,6 +659,24 @@ class EditBookmarkDialog(wx.Dialog):
         enabledText = _("Bookmark enabled")
         self.enabledCheckBox=sHelper.addItem(wx.CheckBox(self,label=enabledText))
         self.enabledCheckBox.SetValue(self.bookmark.enabled)
+      # Parent combo box
+        label=_("Parent bookmark (optional; searching for this bookmark will never cross parent boundary):")
+        self.parentOptionIds = [bookmark.id for bookmark in globalBookmarks.values() if bookmark.id != self.bookmark.id]
+        self.parentOptionNames = [getBookmarkById(id).getDisplayName() for id in self.parentOptionIds]
+        self.parentOptionIds.insert(0, 0)
+        self.parentOptionNames.insert(0, _("None"))
+        self.parentCategory=guiHelper.LabeledControlHelper(
+            self,
+            label,
+            wx.Choice,
+            choices=self.parentOptionNames,
+        )
+        try:
+            optionIndex = self.parentOptionIds.index(self.bookmark.parentId)
+        except ValueError:
+            optionIndex = 0
+        self.parentCategory.control.SetSelection(optionIndex)
+
       #  OK/cancel buttons
         sHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK|wx.CANCEL))
 
@@ -650,6 +714,8 @@ class EditBookmarkDialog(wx.Dialog):
             name=self.commentTextCtrl.Value,
             pattern=pattern,
             keystroke=self.keystroke,
+            id=self.bookmark.id or getNextBookmarkId(),
+            parentId=self.parentOptionIds[self.parentCategory.control.GetSelection()],
         )
         return bookmark
 
@@ -787,11 +853,16 @@ class QuickFindSettingsDialog(SettingsPanel):
 
     def OnRemoveClick(self,evt):
         bookmarks = list(self.bookmarks)
+        deletedIds = []
         index=self.bookmarksList.GetFirstSelected()
         while index>=0:
             self.bookmarksList.DeleteItem(index)
+            deletedIds.append(bookmarks[index].id)
             del bookmarks[index]
             index=self.bookmarksList.GetNextSelected(index)
+        for bookmark in bookmarkss:
+            if bookmark.parentId in deletedIds:
+                bookmark.parentId = 0
         self.bookmarksList.SetFocus()
 
     def OnMoveClick(self,evt, increment):
@@ -1028,8 +1099,10 @@ class FastLineManagerV2:
         self.lineIndex = newIndex
         return increment
 
-    def getText(self):
-        return self.lines[self.lineIndex]
+    def getText(self, line=None):
+        if line is None:
+            line = self.lineIndex
+        return self.lines[line]
 
     def getLine(self):
         return self.lineIndex
@@ -1121,7 +1194,6 @@ class VSCodePiper(threading.Thread):
         super().__init__(name=f"IndentNav Piper thread for pid={pid}")
         self.pid = pid
         pipeName = r"\\.\pipe\VSCodeIndentNavBridge" + str(pid)
-        #log.error(f"asdf {pipeName}")
         self.f = open(pipeName, 'rb+', buffering=0)
         self.inputQueue  = queue.Queue()
         self.closed = False
@@ -1148,12 +1220,10 @@ class VSCodePiper(threading.Thread):
                         },
                     ))
                     return
-                #log.error(f"asdf received {len(messageBytes)} bytes")
                 buffer += messageBytes
                 if messageLength == -1 and len(buffer) >= 4:
                     messageLength = struct.unpack('I', buffer[:4])[0]
                     buffer = buffer[4:]
-                    #log.error(f"asdf len={messageLength}")
                 if messageLength != -1 and len(buffer) >= messageLength:
                     s = buffer[:messageLength].decode('utf-8')
                     buffer = buffer[messageLength:]
@@ -1261,17 +1331,13 @@ def updatePipers():
             except ValueError:
                 continue
             piperPids.append(pid)
-    #log.error(f"asdf piperPids={piperPids}")
     pidsToRemove = []
     for pid, piper in namedPipesCache.items():
         if pid not in piperPids or piper.closed:
             piper.join()
             pidsToRemove.append(pid)
-            #log.error(f"asdf Killing piper for pid={pid}")
     namedPipesCache = {k: v for k, v in namedPipesCache.items() if k in pidsToRemove}
-    #log.error(f"asdf namedPipesCache={list(namedPipesCache.keys())}")
     for pid in [pid for pid in piperPids if pid not in namedPipesCache]:
-        #log.error(f"asdf opening piper for pid={pid}")
         try:
             namedPipesCache[pid] = VSCodePiper(pid)
         except FileNotFoundError:
@@ -1301,7 +1367,6 @@ def findActivePiper():
         try:
             response = q.get(True, waitTime)
             n -= 1
-            #log.error(f"asdf {response.response}")
             if response.response["result"]["focused"]:
                 return response.pid
         except queue.Empty:
@@ -1642,6 +1707,28 @@ def moveToCodepointOffset(
             info.setEndPoint(tmpInfo, which="endToEnd")
     raise RuntimeError("Infinite loop during binary search.")
 
+def ephemeralCopyToClip(text: str):
+    """
+    Copies string to clipboard without leaving an entry in clipboard history.
+    """
+    with winUser.openClipboard(gui.mainFrame.Handle):
+        winUser.emptyClipboard()
+        winUser.setClipboardData(winUser.CF_UNICODETEXT, text)
+        ephemeralFormat = ctypes.windll.user32.RegisterClipboardFormatW("ExcludeClipboardContentFromMonitorProcessing")
+        ctypes.windll.user32.SetClipboardData(ephemeralFormat,None)
+
+class BackupClipboard:
+    def __init__(self, text):
+        self.backup = api.getClipData()
+        self.text = text
+    def __enter__(self):
+        ephemeralCopyToClip(self.text)
+        return self
+    def __exit__(self, *args, **kwargs):
+        core.callLater(300, self.restore)
+    def restore(self):
+        ephemeralCopyToClip(self.backup)
+
 class EditableIndentNav(NVDAObject):
     scriptCategory = _("IndentNav")
     beeper = Beeper()
@@ -1655,6 +1742,13 @@ class EditableIndentNav(NVDAObject):
             return 0
         indent = speech.splitTextIndentation(s)[0]
         return len(indent.replace("\t", " " * 4))
+    
+    def getIndentLevels(self, s):
+        if isinstance(s, str):
+            lines = s.splitlines()
+        else:
+            lines = s
+        return [self.getIndentLevel(line) for line in lines]
 
     def isReportIndentWithTones(self):
         if BUILD_YEAR >= 2023:
@@ -1896,51 +1990,48 @@ class EditableIndentNav(NVDAObject):
     @script(description=_("Indent-paste. This will figure out indentation level in the current line and paste text from clipboard adjusting indentation level correspondingly."), gestures=['kb:NVDA+V'])
     def script_indentPaste(self, gesture):
         clipboardBackup = api.getClipData()
-        try:
-            focus = api.getFocusObject()
-            selection = focus.makeTextInfo(textInfos.POSITION_SELECTION)
-            if len(selection.text) != 0:
-                ui.message(_("Some text selected! Cannot indent-paste."))
-                return
-            line = focus.makeTextInfo(textInfos.POSITION_CARET)
-            line.collapse()
-            line.expand(textInfos.UNIT_LINE)
-            # Make sure line doesn't include newline characters
-            while len(line.text) > 0 and line.text[-1] in "\r\n":
-                if 0 == line.move(textInfos.UNIT_CHARACTER, -1, "end"):
-                    break
-            lineLevel = self.getIndentLevel(line.text.rstrip("\r\n") + "a")
-            if not isBlank(line.text):
-                ui.message(_("Cannot indent-paste: current line is not empty!"))
-                return
-            text = clipboardBackup
-            textLevel = min([
-                self.getIndentLevel(s)
+        focus = api.getFocusObject()
+        selection = focus.makeTextInfo(textInfos.POSITION_SELECTION)
+        if len(selection.text) != 0:
+            ui.message(_("Some text selected! Cannot indent-paste."))
+            return
+        line = focus.makeTextInfo(textInfos.POSITION_CARET)
+        line.collapse()
+        line.expand(textInfos.UNIT_LINE)
+        # Make sure line doesn't include newline characters
+        while len(line.text) > 0 and line.text[-1] in "\r\n":
+            if 0 == line.move(textInfos.UNIT_CHARACTER, -1, "end"):
+                break
+        lineLevel = self.getIndentLevel(line.text.rstrip("\r\n") + "a")
+        if not isBlank(line.text):
+            ui.message(_("Cannot indent-paste: current line is not empty!"))
+            return
+        text = clipboardBackup
+        textLevel = min([
+            self.getIndentLevel(s)
+            for s in text.splitlines()
+            if not isBlank(s)
+        ])
+        useTabs = '\t' in text or '\t' in line.text
+        delta = lineLevel - textLevel
+        text = text.replace("\t", " "*4)
+        if delta > 0:
+            text = "\n".join([
+                " "*delta + s
                 for s in text.splitlines()
-                if not isBlank(s)
             ])
-            useTabs = '\t' in text or '\t' in line.text
-            delta = lineLevel - textLevel
-            text = text.replace("\t", " "*4)
-            if delta > 0:
-                text = "\n".join([
-                    " "*delta + s
-                    for s in text.splitlines()
-                ])
-            elif delta < 0:
-                text = "\n".join([
-                    s[min(-delta, len(s)):]
-                    for s in text.splitlines()
-                ])
-            if useTabs:
-                text = text.replace(" "*4, "\t")
-            api.copyToClip(text)
+        elif delta < 0:
+            text = "\n".join([
+                s[min(-delta, len(s)):]
+                for s in text.splitlines()
+            ])
+        if useTabs:
+            text = text.replace(" "*4, "\t")
+        with BackupClipboard(text):
             line.updateSelection()
             time.sleep(0.1)
-            keyboardHandler.KeyboardInputGesture.fromName("Control+v").send()
-            core.callLater(100, ui.message, _("Pasted"))
-        finally:
-            core.callLater(100, api.copyToClip, clipboardBackup)
+            getControlVGesture().send()
+        core.callLater(100, ui.message, _("Pasted"))
 
     def getHistory(self):
         try:
@@ -1968,11 +2059,20 @@ class EditableIndentNav(NVDAObject):
         lines, index = self.getHistory()
         if index > 0:
             with self.getLineManager() as lm:
-                currentLineIndex = lm.lineIndex
+                currentLineIndex = lm.getLine()
                 if currentLineIndex == lines[index]:
                     index -= 1
                 self.historyIndex = index
                 lineNumber = lines[index]
+                curLine = currentLineIndex
+                direction = 1 if lineNumber >= curLine else -1
+                lines = [lm.getText(i) for i in range(curLine, lineNumber, direction)]
+                if len(lines) >= 2:
+                    indentLevels = self.getIndentLevels(lines[1:])
+                    self.crackle(indentLevels)
+                textInfo = lm.updateCaret(lineNumber)
+                speech.speakTextInfo(textInfo, unit=textInfos.UNIT_LINE)
+
                 textInfo = lm.updateCaret(lineNumber)
                 speech.speakTextInfo(textInfo, unit=textInfos.UNIT_LINE)
         else:
@@ -1989,6 +2089,12 @@ class EditableIndentNav(NVDAObject):
             return
         self.historyIndex = index
         with self.getLineManager() as lm:
+                curLine = lm.getLine()
+                direction = 1 if lineNumber >= curLine else -1
+                lines = [lm.getText(i) for i in range(curLine, lineNumber, direction)]
+                if len(lines) >= 2:
+                    indentLevels = self.getIndentLevels(lines[1:])
+                    self.crackle(indentLevels)
                 textInfo = lm.updateCaret(lineNumber)
                 speech.speakTextInfo(textInfo, unit=textInfos.UNIT_LINE)
 
@@ -2001,11 +2107,16 @@ class EditableIndentNav(NVDAObject):
     def isVscodeApp(self):
         try:
             if self.treeInterceptor is not None:
-                return False
-        except NameError:
+                if not self.treeInterceptor.passThrough:
+                    # Browse mode is active; disable enhanced text info
+                    return False
+        except (AttributeError, NameError):
+            pass
+        try:
+            productName = self.appModule.productName or ""
+            return productName.startswith("Visual Studio Code")
+        except (AttributeError, NameError):
             return False
-        productName = self.appModule.productName or ""
-        return productName.startswith("Visual Studio Code")
 
     def getPiper(self):
         try:
@@ -2071,6 +2182,27 @@ class EditableIndentNav(NVDAObject):
         match = matches[0 if direction > 0 else -1]
         startIndex = match.start()
         endIndex = match.end()
+        parents = getAllParentBookmarks(bookmark)
+        if len(parents) > 0:
+            parentPattern = "|".join(parent.pattern for parent in parents)
+            parentMatches = list(re.finditer(parentPattern, text, re.MULTILINE))
+            if len(parentMatches) > 0:
+                parentMatch = parentMatches[0 if direction > 0 else -1]
+                parentStartIndex = parentMatch.start()
+                parentEndIndex = parentMatch.end()
+                outOfBounds = (
+                    (parentStartIndex <= startIndex)
+                    if direction > 0 else
+                    (parentEndIndex >= endIndex)
+                )
+                if outOfBounds:
+                    self.endOfDocument(_("Bookmark not found within bounds"))
+                    return
+        
+        crackleText = text[:endIndex] if direction > 0 else text[startIndex:]
+        crackleIndents = self.getIndentLevels(crackleText)
+        if len(crackleIndents) > 0:
+            crackleIndents = crackleIndents[1:] if direction > 0 else crackleIndents[:0:-1]
         compoundMode = False
         if isinstance(info, CompoundTextInfo):
             if info._start == info._end and  isinstance(info._start, OffsetsTextInfo):
@@ -2098,6 +2230,8 @@ class EditableIndentNav(NVDAObject):
         unit = textInfos.UNIT_LINE if isinstance(lineInfo, VsWpfTextViewTextInfo) else textInfos.UNIT_PARAGRAPH
         lineInfo.expand(unit)
         lineInfo.setEndPoint(selectionInfo, 'startToStart')
+        if len(crackleIndents) > 0:
+            self.crackle(crackleIndents)
         speech.speakTextInfo(lineInfo, unit=unit, reason=controlTypes.OutputReason.CARET)
 
     @script(description=_("Speak current line"), gestures=['kb:NVDA+Control+l'])

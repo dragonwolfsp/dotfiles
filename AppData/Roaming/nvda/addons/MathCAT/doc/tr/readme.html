@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="../style.css" media="screen">
-<title>MathCAT: speech and braille from MathML 0.5.6</title>
+<title>MathCAT: speech and braille from MathML 0.6.6</title>
 </head>
 <body>
 <h1>MathCAT</h1>
@@ -12,13 +12,13 @@
 <li>NVDA uyumluluğu: 2018.1 veya sonrası (önceki sürümlerde denenmemiştir)</li>
 <li><a href="https://www.nvaccess.org/addonStore/legacy?file=mathcat">Kararlı sürümü indir</a></li>
 </ul>
-<p>MathCAT, sonunda MathPlayer'ın yerini alacak şekilde tasarlanmıştır çünkü
-MathPlayer artık desteklenmemektedir. MathCAT, MathML'den konuşma ve braille
-oluşturur. MathCAT tarafından üretilen matematik konuşması, kulağa daha
-doğal gelmesi için prozodi ile geliştirilmiştir. Konuşma, MathPlayer ile
-aynı komutlar kullanılarak üç modda gezinilebilir. Ek olarak, navigasyon
-düğümü bir braille ekranda gösterilir. Hem Nemeth hem de UEB teknik
-desteklenir.</p>
+<p>MathCAT, MathPlayer artık desteklenmediğinden, sonunda MathPlayer'ın yerini
+alacak şekilde tasarlanmıştır. MathCAT, MathML'den konuşma ve braille
+üretir. MathCAT tarafından matematik için üretilen konuşma, daha doğal
+görünmesi için prozodi ile zenginleştirilmiştir. Konuşmada MathPlayer ile
+aynı komutlar kullanılarak üç modda gezinilebilir. Ayrıca gezinme düğümü bir
+braille ekranında gösterilir. Hem Nemeth hem de UEB teknik
+desteklenmektedir.</p>
 <p>MathCAT konuşma, Gezinme ve braille'i kontrol eden bir dizi yapılandırma
 seçeneğine sahiptir.  Bunların çoğu MathCAT ayarlar iletişim kutusunda
 ayarlanabilir (NVDA Tercihler menüsünde bulunur).  Bu ayarlar hakkında daha
@@ -36,18 +36,18 @@ sayfasına</a> bakın.</p>
 <li>Yüksek kaliteli Nemeth braille'e ihtiyaç duyanlar (MathPlayer'ın Nemeth'i,
   teknik olarak düzeltilmesi zor olan bir dizi önemli hataya sahip olan
   liblouis'in Nemeth nesline dayanmaktadır).</li>
-<li>UEB teknik braille'e ihtiyaç duyanlar</li>
+<li>UEB teknik braille, CMU (İspanyolca/Portekizce), Almanca LaTeX, ASCIIMath
+  veya Vietnamca braille'e ihtiyaç duyanlar</li>
 <li>En son teknolojiyi denemek isteyenler ve hataları bildirerek yardım etmeye
   istekli olanlar</li>
 <li>Eloquence sesini kullananlar</li>
 </ul>
 <p>MathCAT'ı kimler KULLANMAMALIDIR:</p>
 <ul>
-<li>MathPlayer'ı İngilizce dışında bir dille kullanan herkes (Endonezce ve
-  Vietnamca için çeviriler mevcuttur; çeviriler gelecekte eklenecektir)</li>
-<li>MathPlayer'ı Nemeth olmayan/UEB olmayan braille çıktısıyla kullanan herkes
-  (bir braille çevirisine yardımcı olmak istiyorsanız benimle iletişime
-  geçin)</li>
+<li>MathPlayer'ı henüz MathCAT tarafından desteklenmeyen bir dille kullanan
+  (Çince (Geleneksel), İspanyolca, Endonezce ve Vietnamca için çeviriler
+  mevcuttur; çeviriler gelecekte gelecektir) ve desteklenen dillerden
+  birinde konuşma konusunda rahat olmayan herkes.</li>
 <li>Access8Math'i MathPlayer'a tercih eden herkes (konuşma veya diğer
   özellikler için)</li>
 </ul>
@@ -59,6 +59,70 @@ bir test ortamı olarak kullanılıyor, böylece belirsiz gösterimler doğru bi
 niyetini kullanma ve çıkarım yapma etrafında toplandığından ve bunlar henüz
 tam olarak çözülmediğinden, çok fazla kural eklemeyi erteledim.</p>
 <h2>MathCAT Güncelleme Günlüğü</h2>
+<h3>Sürüm 0.6.3</h3>
+<ul>
+<li>
+<p>Tüm dil ve Braille Kural dosyaları dizin bazında sıkıştırılır ve talep
+  üzerine açılır.</p>
+<ul>
+<li>Bu, şu anda Rules.zip dosyası açıldığında yaklaşık 5 MB tasarruf
+  sağlar. Daha fazla dil ve braille kodu eklendikçe daha da fazla tasarruf
+  sağlayacaktır.</li>
+<li>Bu, MathCAT'in NVDA 2024.3'e dahili olarak eklenmesine hazırlık
+  niteliğindedir</li>
+</ul>
+</li>
+<li>
+<p>Yeni tercih 'Ondalık Ayırıcı' eklendi.</p>
+<ul>
+<li>Varsayılan değer "Otomatik" olup diğer değerler ".", "," ve
+  "Özel"dir. İlk üç değer <code>Ondalık Ayırıcılar</code> ve <code>Blok Ayırıcılar</code>ı
+  ayarlar.</li>
+<li>'Otomatik', bu tercihleri ​​'Dil' tercihinin değerine göre
+  ayarlar. İspanyolca gibi bazı diller için bazı ülkelerde <code>,</code>, bazılarında
+  ise <code>.</code> kullanılır. Bu durumda, doğru değerin kullanıldığından emin olmak
+  için dili ülke kodunu da içerecek şekilde ayarlamak (ör. "es-es" veya
+  "es-mx") en iyisidir.</li>
+</ul>
+</li>
+<li>
+<p>Desteklenen dillere İsveççe eklendi.</p>
+</li>
+<li>Unicode standardına hem "Sm" olarak işaretlenen tüm Unicode karakterlerini
+  hem de matematik sınıfına sahip olanları (Alfabetik ve Glif sınıfları
+  hariç) dahil etmek için daha fazla Unicode karakteri eklendi.</li>
+<li>Önceki bir sürümde tercihlerin çalışma şeklini değiştirdikten sonra,
+  'MathRate' ve 'PauseFactor'ı dize olarak değil sayı olarak değiştirmeyi
+  unuttum.</li>
+<li>Bir tanımın değerini ararken konuşma dosyalarına değil, <em>Braille</em>
+  <code>definitions.yaml</code> dosyalarına bakmak için üçüncü bir argümanın
+  verilmesinin gerektiği Braille Kurallarında (önceki değişikliklerde
+  kaçırılan) hata düzeltildi.</li>
+<li>'definitions.yaml' kullanımı temizlendi.</li>
+<li>``, ondalık ayırıcılar için MathML temizliğindeki bazı hatalar düzeltildi.</li>
+<li>Hiçbir şey vurgulanmadığında braille vurgulamada bir hata buldum (belki de
+  hiçbir zaman gerçekleşmez, bu yüzden bunu pratikte görmedim?)</li>
+<li>"Açıklama" modu çalışacak şekilde düzeltildi; hala çok az düzeyde ve
+  muhtemelen henüz kullanışlı değil</li>
+<li>Desteklenen minimum sürüm düzeltildi</li>
+</ul>
+<h3>Sürüm 0.5.6</h3>
+<ul>
+<li>MathCAT iletişim kutusuna ("Gezinme" bölmesinde) Farklı
+  Kopyala... eklendi.</li>
+<li>Konuşma stillerini değiştirirken dilin İngilizceye dönmesine neden olan
+  bir hata düzeltildi.</li>
+<li>Gezinme ve braille ile ilgili bir hata düzeltildi</li>
+<li>Bazı Asciimath aralık sorunları düzeltildi.</li>
+<li>Geliştirilmiş kimya tanıma</li>
+<li>MathCAT yeni BANA Nemeth kimya spesifikasyonuna güncellendi (hala yalnızca
+  tek satır ve özel durum stili/yazı tipi değişiklikleri işlenmedi)</li>
+<li>Sayılarda ASCII olmayan rakamlar (ör. kalın rakamlar) kullanıldığında
+  oluşan çökme düzeltildi</li>
+<li>Matematik alfanümerik italik karakterler kullanıldığında, braille
+  kodlarında italik göstergeler kullanmayın</li>
+<li>Kullanıcılar tarafından bildirilmeyen diğer bazı küçük hata düzeltmeleri</li>
+</ul>
 <h3>Sürüm 0.5.0</h3>
 <ul>
 <li>Almanca LaTeX braille kodu eklendi. Diğer braille kodlarından farklı
@@ -165,26 +229,10 @@ uygulama içermesini bekliyorum.</p>
 <li>
 <p>Nemeth için Düzeltmeler:</p>
 <ul>
-<li>
-<ul>
 <li>"İhmal" kuralları eklendi</li>
-</ul>
-</li>
-<li>
-<ul>
 <li>İngilizce Dil Göstergeleri için bazı kurallar eklendi</li>
-</ul>
-</li>
-<li>
-<ul>
 <li>Çok amaçlı göstergenin gerekli olduğu daha fazla durum eklendi</li>
-</ul>
-</li>
-<li>
-<ul>
 <li>Nemeth ve noktalama işaretleriyle ilgili düzeltmeler</li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>

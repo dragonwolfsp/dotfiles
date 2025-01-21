@@ -8,8 +8,7 @@ resurssien käytöstä.
 
 # Pikanäppäimet
 
-Kaikki komennot tukevat pyydettäessä-puhetilaa (NVDA 2024.1 ja sitä
-uudemmat).
+Kaikki komennot tukevat pyydettäessä-puhetilaa.
 
 * NVDA+Vaihto+E: Lukee käytetyn RAM-muistin määrän, suorittimen
   keskimääräisen kuormituksen sekä akun tiedot, mikäli sellainen on
@@ -48,11 +47,21 @@ järjestelmätietoja näyttäviä ohjelmia. Huomaa lisäksi seuraavat seikat:
   kuten suurten tiedostojen kopiointia, on runsaasti.
 * Suorittimen arkkitehtuuritietoja ilmoitettaessa "x86" ja "AMD64"
   viittaavat 32- ja 64-bittisiin (x64) Intel- ja AMD-suorittimiin.
-* Tämä lisäosa edellyttää Windows 10:tä tai uudempaa.
+* Tämä lisäosa edellyttää Windows 10 22H2:ta (2022-päivitys/koontiversio
+  19045) tai uudempaa.
+* Tämän lisäosan asentamista ei tueta Windows 10:n/11:n LTSC-versioissa.
 
 Huomautus lisenssistä: tämä lisäosa käyttää Psutil-riippuvuutta, joka on
 kolmilausekkeisen BSD-lisenssin alainen, joka on yhteensopiva GNU GPL
 -lisenssin kanssa.
+
+## Versio 24.08
+
+* Edellyttää NVDA 2024.2:ta tai uudempaa. Tämä mahdollistaa
+  psutil-riippuvuuden poistamisen lisäosasta, koska NVDA sisältää sen.
+* Päivitetty psutil-riippuvuus NVDA 2024.2:n mukana tulevaan versioon
+  (6.0.0).
+* Ruff korvaa Flake8:n koodin tarkastimena.
 
 ## Versio 24.05
 

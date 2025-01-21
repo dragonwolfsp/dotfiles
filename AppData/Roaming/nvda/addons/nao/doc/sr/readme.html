@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="../style.css" media="screen">
-<title>Nao 2023.1.1</title>
+<title>Nao 2025.1.0</title>
 </head>
 <body>
 <h1>Nao - NVDA napredni OCR</h1>
@@ -13,7 +13,7 @@
 <li>NVDA kompatibilnost: 2019.3  i noviji</li>
 </ul>
 <p>Nao (NVDA napredni OCR) je dodatak koji poboljšava standardne OCR sposobnosti koje NVDA pruža na modernim Windows verzijama.
-Iako NVDA standardna komanda za OCR prepoznaje ekran, NAO može da izvrši OCR na datotekama koje su sačuvane na vašem disku ili USB uređajima. 
+Iako NVDA standardna komanda za OCR prepoznaje ekran, NAO može da izvrši OCR na datotekama koje su sačuvane na vašem disku ili USB uređajima, 
 Koristite NVDA-šift-R da biste prepoznali bilo koju sliku i pdf! 
 Jednostavno se fokusirajte ili stanite kursorom na željenu datoteku, ne otvarajte je, već pritisnite NVDA-šift-r. 
 Dokument će biti prepoznat i pojaviće se jednostavan prozor sa tekstom, koji vam dozvoljava da pročitate sadržaj, sačuvate ga, pretražite tekst ili kopirate sadržaj u privremenu memoriju.
@@ -21,7 +21,8 @@ Nao takođe može da obradi PDF dokumente sa više stranica, pa ako imate dokume
 <h2>Sistemski zahtevi</h2>
 <p>Dodatak radi na sistemima Windows 10 i Windows 11, budući da oni imaju ugrađene OCR mogućnosti. 
 Nao je kompatibilan od NVDA verzije 2019.3, pa nemojte koristiti starije verzije čitača ekrana.
-Imajte na umu da Nao radi sa Windows istraživačem datoteka, na radnoj površini, sa Total Commanderom ili xplorerom² upravljačem datoteka; ne koristite druge programe kao što su 7zip ili Winrar, budući da oni nisu podržani.</p>
+Imajte na umu da Nao radi sa Windows istraživačem datoteka, na radnoj površini, sa Total Commanderom ili xplorerom² upravljačem datoteka; ne koristite druge programe kao što su 7zip ili Winrar, budući da oni nisu podržani.
+For e-mail attachments, it also works with Microsoft Outlook 2016 or beyond.</p>
 <h2>Karakteristike i komande</h2>
 <ul>
 <li>NVDA + šift + R: Prepoznaje bilo koje slike i pdf datoteke u sistemu;</li>
@@ -40,13 +41,29 @@ Imajte na umu da Nao radi sa Windows istraživačem datoteka, na radnoj površin
 </ul>
 <p>Imajte na umu da možete da prilagodite Nao prečice jednostavno iz dijaloga ulaznih komandi programa NVDA. Otvorite NVDA meni, uđite u opcije, i iz tog podmenija izaberite ulazne komande. Zapamtite da ove funkcije nisu globalne, već rade samo tamo gde NAO može da izvrši OCR. To znači da će se komande pojaviti samo ako ste na radnoj površini, ili u istraživaču datoteka, Total Commanderu ili Xploreru.</p>
 <p>Možete takođe otkazati dugotrajni OCR proces tako što ćete pritisnuti dugme "Otkaži" u prozoru sa trakom napredovanja; Ovaj prozor vam takođe daje informacije o stanju za OCR, a te informacije se ažuriraju svakih 5 sekundi. Možete da podesite kako ćete primati informacije o traci napredovanja standardnom komandom NVDA-u.</p>
-<p>Možete pronaći podmeni koji se zove Nao, u NVDA meniju alati. Trenutno on sadrži samo opciju koja će vam dozvoliti da donirate, ali ćemo ovo poboljšati sa novim funkcijama!</p>
+<p>Možete pronaći podmeni koji se zove Nao, u NVDA meniju alati. It contains following items:
+* Select file: allow you to select a file for processing without using a shortkey.
+* Make a donation: it's self-explanatory, if you feel like it we'll be very happy!
+* Nao Website: brings you to the homepage of Nao.
+* Git: brings you to the source codeò where you can check it, make commit or open an issue.
+* Check for updates: queries the server for a new version of Nao.
+* Empty cache: If you encounter problems with the add-on, receive error messages or find it slow, clear your cache to resolve the issue.</p>
 <h2>Podrška i donacije</h2>
 <p>Nao je u potpunosti besplatan. U svakom slučaju, imajte na umu da se dodatak razvija u slobodno vreme programera. 
 Zahvalni smo na svakoj saradnji!
 Ako mislite da radimo dobar posao i poboljšavamo vaš život, a <a href="https://nvda-nao.org/donate">razmotrite mogućnost doniranja.</a></p>
 <p>Da li želite da prijavite grešku, predložite nove funkcije, prevedete dodatak na vaš jezik? Imamo  e-mail za vas! Pišite nam na support@nvda-nao.org i biće nam zadovoljstvo da vam pomognemo.</p>
 <h2>Istorija</h2>
+<h3>2025.1</h3>
+<ul>
+<li>NVDA version 2025.1 compatibility</li>
+<li>Implement OCR recognition on the selected attachment of an opened Outlook message, from outlook 2016 and beyond</li>
+<li>Added finnish translation</li>
+</ul>
+<h3>2024.1</h3>
+<ul>
+<li>NVDA version 2024.1 compatibility</li>
+</ul>
 <h3>2023.1.1</h3>
 <ul>
 <li>Vraćena kompatibilnost sa NVDA verzijom 2023.3</li>

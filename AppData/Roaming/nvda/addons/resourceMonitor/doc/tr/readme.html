@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="../style.css" media="screen">
-<title>Resource Monitor 24.06.1</title>
+<title>Resource Monitor 25.01</title>
 </head>
 <body>
 <h1>Kaynak izleme</h1>
@@ -14,7 +14,7 @@
 <p>Bu eklenti, CPU yükü, bellek kullanımı ve diğer kaynak kullanımları hakkında
 bilgi verir.</p>
 <h1>Kısayollar</h1>
-<p>Tüm komutlar isteğe bağlı konuşma modunu destekler (NVDA 2024.1 ve üzeri).</p>
+<p>Tüm komutlar isteğe bağlı konuşma modunu destekler.</p>
 <ul>
 <li>NVDA+Shift+E: kullanılan ram, ortalama işlemci yükü ve varsa pil
   bilgilerini sunar.</li>
@@ -49,10 +49,20 @@ uygulamaların yerine geçmez. Yanısıra, aşağıdakileri de not edin:</p>
   kullanım bilgilerinin alınmasında gecikmeler olabilir.</li>
 <li>İşlemci mimarisi bilgileri açıklanırken "x86" ve "AMD64" sırasıyla 32 bit
   ve 64 bit (x64) Intel ve AMD işlemcileri ifade eder.</li>
-<li>Bu eklenti, Windows 10 veya üst sürümlerini gerektirir.</li>
+<li>Bu eklenti, Windows 10 22H2 (2022 Güncellemesi/derleme 19045) veya üzerini
+  gerektirir.</li>
+<li>Eklentinin Windows 10/11 LTSC'ye yüklenmesi desteklenmemektedir.</li>
 </ul>
 <p>Lisansla ilgili not: bu eklenti, GNU Genel Kamu Lisansı ile uyumlu 3 Maddeli
 BSD Lisansı kapsamında lisanslanan Psutil'i kullanır.</p>
+<h2>Sürüm 24.08</h2>
+<ul>
+<li>NVDA 2024.2 veya sonrası gereklidir. Bu, NVDA'nın içerdiği psutil
+  bağımlılığının eklentiden kaldırılmasına olanak tanır.</li>
+<li>Psutil bağımlılığı NVDA 2024.2 (6.0.0) ile birlikte gelen sürüme
+  güncellendi.</li>
+<li>Ruff, kod linter olarak Flake8'in yerini alır.</li>
+</ul>
 <h2>Sürüm 24.05</h2>
 <ul>
 <li>NVDA 2024.1 veya üstü gereklidir.</li>

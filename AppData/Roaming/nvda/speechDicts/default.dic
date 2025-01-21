@@ -3,11 +3,11 @@ uncosp	error, crash code detected	0	0
 blindelectron	blind electron	0	0
 ios	I O S	0	2
 eti	E T I	0	2
-ibmtts	I B M T T S	0	0
-Svox pico	S vox pico	0	0
-PuTTY	putty	0	0
+ibmtts	I B M T T S	0	2
+Svox pico	S vox pico	0	2
+PuTTY	putty	0	2
 <33	hart	0	0
-GPd Win Max	G P D WinMax	0	0
+GPd Win Max	G P D WinMax	0	2
 Tiedgen	teejin	0	0
 tunmi	tue me	0	0
 juaras	overide stopt	0	0
@@ -35,8 +35,8 @@ aria2	arya2	0	0
 Elana	elaina	0	0
  rog 	r o g	0	0
 acapela	acapella	0	0
-ajan	agein	0	0
-gebhard	Ghebhard	0	0
+ajan	agein	0	2
+gebhard	Ghebhard	0	2
 rhasspy	raspy	0	0
 aurelia 	o ray leea	0	0
 golang	go lang	0	0
@@ -52,4 +52,8 @@ qube	cube	0	0
 Riorson	ryerson	0	0
 xaden	zayden	0	0
 eostratus	ieahstratus	0	0
-daw	D A- W	0	0
+daw	D A- W	0	2
+hamid	hummeed	0	0
+lakota	luckota	0	2
+(?<!\w)dr(?!\.|[a-zA-Z])	d r	0	1
+nemeth	nemmeth	0	0

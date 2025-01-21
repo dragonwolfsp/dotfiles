@@ -8,7 +8,7 @@ memoriei și alte resurse de utilizare a informației.
 
 # Scurtături
 
-All commands support speech on demand mode (NVDA 2024.1 and later).
+All commands support speech on demand mode.
 
 * NVDA+Shift+E: presents used ram, average processor load, and battery info
   if available.
@@ -44,10 +44,19 @@ programelor de sistem pentru Windows. De asemenea, notați următoarele:
   informațiilor de utilizare a discului.
 * When announcing processor architecture information, "x86" and "AMD64"
   refer to 32-bit and 64-bit (x64) Intel and AMD processors, respectively.
-* This add-on requires Windows 10 or later.
+* This add-on requires Windows 10 22H2 (2022 Update/build 19045) or later.
+* Installing the add-on on Windows 10/11 LTSC is not supported.
 
 Note on license: this add-on uses Psutil, licensed under 3-Clause BSD
 License which is compatible with GNU General Public License.
+
+## Version 24.08
+
+* NVDA 2024.2 or later is required. This allows psutil dependency to be
+  removed from the add-on as NVDA includes it.
+* Updated psutil dependency to the version included with NVDA 2024.2
+  (6.0.0).
+* Ruff replaces Flake8 as code linter.
 
 ## Version 24.05
 

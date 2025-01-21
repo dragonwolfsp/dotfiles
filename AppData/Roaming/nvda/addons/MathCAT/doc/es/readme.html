@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="../style.css" media="screen">
-<title>MathCAT: speech and braille from MathML 0.5.6</title>
+<title>MathCAT: speech and braille from MathML 0.6.6</title>
 </head>
 <body>
 <h1>MathCAT</h1>
@@ -36,7 +36,8 @@ MathCat</a>.</p>
 <li>Quien necesite Braille Nemeth de alta calidad (el Nemeth de MathPlayer se
   basa en la generación Nemeth de Liblouis, que tiene una importante
   cantidad de fallos técnicamente complicados de corregir).</li>
-<li>Quien necesite braille técnico UEB</li>
+<li>Aquellos que necesiten braille técnico UEB, CMU (español/portugués), LaTeX
+  alemán, ASCIIMath, o braille vietnamita</li>
 <li>Quien quiera probar nuevas tecnologías y esté dispuesto a ayudar
   informando de fallos</li>
 <li>Quien use Eloquence como voz</li>
@@ -44,10 +45,9 @@ MathCat</a>.</p>
 <p>Quién no debería usar MathCat:</p>
 <ul>
 <li>Cualquiera que use Math Player en idiomas distintos al inglés (existen
-  traducciones a indonesio, vietnamita y español; las traducciones se irán
-  haciendo en el futuro).</li>
-<li>Cualquiera que use MathPlayer con una salida braille sin Nemeth o UEB
-  (contacta conmigo si quieres ayudar con una traducción braille)</li>
+  traducciones a chino (tradicional), indonesio, vietnamita y español; las
+  traducciones se irán haciendo en el futuro) y no se sienten cómodos con la
+  voz en uno de los idiomas soportados.</li>
 <li>Cualquiera que prefiera Access8Math a MathPlayer (por la voz u otras
   funciones)</li>
 </ul>
@@ -60,6 +60,70 @@ añadir muchas reglas, ya que la arquitectura de MathCat se centra en usar e
 inferir la intención del autor, y esto aún no está completamente
 establecido.</p>
 <h2>Registro de actualización de MathCat</h2>
+<h3>Versión 0.6.3</h3>
+<ul>
+<li>
+<p>Todos los archivos de idioma y reglas braille se comprimen por carpeta y
+  se descomprimen a petición.</p>
+<ul>
+<li>Se ahorran unos 5 mb cuando rules.zip está descomprimido, y ahorrará aún
+  más según se añadan más idiomas y códigos braille.</li>
+<li>Esto se hace como preparación para incluir MathCat en NVDA 2024.3</li>
+</ul>
+</li>
+<li>
+<p>Se añade una nueva preferencia de "separador decimal".</p>
+<ul>
+<li>El valor por defecto es <code>Automático</code>, siendo otros valores ".", ",", y
+  "personalizado". Los primeros tres valores establecen <code>DecimalSeparators</code>
+  y <code>BlockSeparators</code>.</li>
+<li><code>Automático</code> establece estas preferencias en función de la preferencia
+  <code>language</code>. En algunos idiomas, como el español, se usa ',' en algunos
+  países y '.' en otros. En este caso, es mejor configurar el idioma para
+  que incluya también el código del país (por ejemplo, <code>es-es</code> or <code>es-mx</code>)
+  para garantizar que se usa el valor correcto.</li>
+</ul>
+</li>
+<li>
+<p>Se añade el sueco a los idiomas soportados.</p>
+</li>
+<li>Se añaden más caracteres Unicode para incluir todos los caracteres Unicode
+  marcados como "Sm" y aquellos con una mathclass (excepto las clases
+  Alphabetic y Glyph) en el estándar Unicode.</li>
+<li>Tras cambiar el funcionamiento de las preferencias en una versión
+  anterior, olvidé cambiar <code>MathRate</code> y <code>PauseFactor</code> para que sean números
+  en vez de cadenas.</li>
+<li>Corregido un fallo en las reglas braille (un cambio anterior que se
+  perdió) por el que se debería haber dado un tercer argumento para decir
+  que se mire en los archivos <code>definitions.yaml</code> <em>Braille</em> y no en los de
+  voz al buscar el valor de una definición.</li>
+<li>Se limpia el uso de <code>definitions.yaml</code>.</li>
+<li>Se corrigen algunos fallos en la limpieza de MathML para los separadores
+  decimales ",".</li>
+<li>Se ha encontrado un fallo en el resaltado braille cuando no hay nada
+  resaltado (tal vez nunca se dio, ¿por eso no lo vi en la práctica?)</li>
+<li>Corregido el modo "describir" para que funcione. Todavía está al mínimo y
+  probablemente aún no es útil</li>
+<li>Se corrige la versión mínima soportada</li>
+</ul>
+<h3>Versión 0.5.6</h3>
+<ul>
+<li>Se ha añadido Copiar como... al diálogo de MathCat (en el panel
+  "Navegación")</li>
+<li>Se corrige un fallo por el que el idioma volvía a ser inglés al cambiar
+  los estilos de habla.</li>
+<li>Se corrige un fallo con la navegación y el braille</li>
+<li>Se corrigen algunos problemas de espaciado de Asciimath.</li>
+<li>Mejorado el reconocimiento de química</li>
+<li>Se actualiza MathCat a la nueva especificación química BANA Nemeth
+  (todavía sólo una sola línea y no se manejan los casos especiales de
+  cambio de estilo/fuente)</li>
+<li>Se corrige un error fatal cuando se usan dígitos no ASCII en números (por
+  ejemplo, dígitos en negrita)</li>
+<li>No se usan indicadores de cursiva en los códigos braille cuando se usan
+  los caracteres de cursiva alfanuméricos de matemáticas</li>
+<li>Algunas pequeñas correcciones de las que no informaron los usuarios</li>
+</ul>
 <h3>Versión 0.5.0</h3>
 <ul>
 <li>Se añade código braille LaTeX en alemán. Al contrario que otros códigos

@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="../style.css" media="screen">
-<title>Thunderbird+G5 (TB 115 & 128 ESR) 2407.24.00</title>
+<title>Thunderbird+G5 (TB 115 - 128ESR - 133) 2501.15.00</title>
 </head>
 <body>
-<h1>Thunderbird+G5 pour Thunderbird &gt;= 115</h1>
+<h1>Thunderbird+G5 pour Thunderbird 115 et 128 ESR</h1>
 <ul>
 <li>Auteurs: Pierre-Louis Renaud (de Thunderbird 78 à 115) &amp; Cyrille Bougot (TB 102), Daniel Poiraud (de TB 78 à 91), Yannick (TB 45 à 60);</li>
 <li>URL: <a href="https://www.rptools.org/NVDA-Thunderbird/index.html">Page d'accueil des extensions thunderbird+ G5 et G4</a> ;
-  <a href="https://www.rptools.org/NVDA-Thunderbird/get.php?pg=changes&amp;v=G5&amp;lang=fr">Historique des changements</a> ;
+  <a href="https://www.rptools.org/NVDA-Thunderbird/get.php?pg=changes&amp;v=G5&amp;lang=fr">Historique des changements et compléments de documentation</a> ;
   <a href="https://www.rptools.org/NVDA-Thunderbird/toContact.html">Contact</a> ;</li>
-<li>Télécharger : <a href="https://www.rptools.org/?p=9514">Version stable</a></li>
+<li>Installation : menu NVDA / Outils / Add-on store / onglet extensions disponibles ou mises à jour ;;</li>
 <li>Télécharger : <a href="https://www.rptools.org/?p=9514">Dernière version sur RPTools.org</a> ;</li>
 <li>Ccompatibilité NVDA : 2021.1 et ultérieures ;</li>
 <li><a href="https://github.com/RPTools-org/thunderbirdPlusG5/">Code Source  sur gitHub</a></li>
@@ -27,7 +27,7 @@
 <li>Un accès direct aux pièces jointes.</li>
 <li>Des raccourcis de consultation et d'accès directs aux champs d'adressage de la fenêtre de rédaction.</li>
 <li>Une amélioration considérable de l'utilisation du dialogue de vérification orthographique.</li>
-<li>Une gestion plus faciele  des carnets d'adresses et des listes de diffusion (v.2402.14.00).</li>
+<li>Une gestion plus facile des carnets d'adresses et des listes de diffusion (v.2402.14.00).</li>
 <li>Un menu de mise à jour de l'extension (v.2402.14.00)</li>
 <li>et bien d'autres choses encore... </li>
 </ul>
@@ -47,7 +47,8 @@
 <ul>
 <li>control+(touche au-dessus de Tab) : Un appui place le focus dans la liste de messages, deux appuis place le focus dans la liste de messages puis sélectionne le dernier message.</li>
 <li>Alt+c : affiiche le menu des comptes puis le menu des dossiers du compte choisi. Depuis la version 2312.14, supporte le mode "dossiers unifiés" de l'arborescence des dossiers.</li>
-<li>Control+Alt+c : affiiche le menu des comptes puis le menu des dossiers non lus du compte choisi. (2023.11.15)* Tab : va au volet suivant, sans détour.<br>
+<li>Control+Alt+c : affiche le menu des comptes puis le menu des dossiers non lus du compte choisi. (2023.11.15)</li>
+<li>Tab : va au volet suivant, sans détour.<br>
 Note : ces deux derniers raccourcis peuvent être modifiés ou permutés via le dialogue des Gestes de commande.</li>
 <li>alt+Début : 1 appui sélectionne le dossier courant dans l'arborescence des dossiers, 2 appuis affiche un menu permettant de choisir le compte de messagerie à atteindre dans l'arborescence </li>
 <li>Control+Alt+Début : idem mais pour les dossiers avec des messages non lus. (2023.10.31)</li>
@@ -60,7 +61,7 @@ Echappe permet aussi d'alterner entre l'arborescence des dossiers et la liste de
 <h3>Navigation parmi les onglets de la fenêtre principale</h3>
 <ul>
 <li>Control+Tab avec ou sans la touche majuscule et control+1 à 9 : L'extension intercepte les changements d'onglet afin d'annoncer leur numéro d'ordre et le nombre total d'onglets.<br>
-En outre, l'extension donne le focus au contenu de l'onglet lors de sa première activation. Pour le premier onglet, le focus peut être amené au dernier message de la liste de messages ou premier message non lu. Via le menu des options / Options pour la fenêtre principale, vous pouvez cocher l'option intitulée : Accéder au premier message non lu lors de la première activation du premier onglet, sinon au dernier message (v.2402.14.00));</li>
+En outre, l'extension donne le focus au contenu de l'onglet lors de sa première activation. Pour le premier onglet, le focus peut être amené au dernier message de la liste de messages ou premier message non lu. Via le menu des options / Options pour la fenêtre principale, vous pouvez cocher l'option intitulée : Accéder au premier message non lu lors de la première activation du premier onglet, sinon au dernier message (v.2402.14.00);</li>
 <li>Control+la première touche située à gauche de retour-arrière : affiche un menu avec la liste des onglets existants. Pressez Entrée sur un élément de menu pour activer l'onglet correspondant.</li>
 <li>Alt+la première touche située à gauche de retour-arrière : affiche le menu contextuel des onglets.Ce menu est natif de Thunderbird.</li>
 </ul>
@@ -70,23 +71,12 @@ En outre, l'extension donne le focus au contenu de l'onglet lors de sa première
 
 <h3>Vocalisation personnalisée des lignes (2023.11.10)</h3>
 <p>Ce modepersonnalisé, désactivé par défaut, permet une écoute plus confortable des lignes de la liste de messages.</p>
-<p>Il présente cependant certains inconvénients :</p>
+<p>Vous pouvez activer ce mode en pressant majuscule+puissance2 et en sélectionnant dans le menu  l'élément "Options pour la fenêtre principale" puis "Liste des messages". Dans la liste des options, cochez  l'option "Liste de messages :  vocalisation personnalisée des lignes" ;</p>
+<p>Cette liste d'options  contient également d'autres options  de personnalisation qui ne fonctionnent que si la vocalisation personnalisée est activée.</p>
 <ul>
-<li>Il n'est pas compatible avec la vue en fiches de la liste de messages. Pour revenir à la vue en tableau, placez vous dans la liste de messages, pressez Maj+Tab jusqu'au bouton "Options de la liste de messages", pressez Entrée et dans le menu contextuel, cochez "Vue en tableau".</li>
-<li>Sur les PC moins rapides, il peut provoquer un  ralentissement perceptible de la navigation avec les flèches dans la liste de messages. </li>
-<li>Si vous pressez flèche bas sur la dernière ligne, celle-ci ne sera pas annoncée.</li>
-</ul>
-<p>Vous pouvez activer ce mode en pressant majuscule+puissance2 et en sélectionnant dans le menu  l'élément "Oprtions pour la fenêtre principale" puis en cochant l'option "Liste de messages :  vocalisation personnalisée des lignes".</p>
-<p>Ce sous-menu contient également d'autres options  de personnalisation qui ne fonctionnent que si la vocalisation personnalisée est activée.
-<br>
-Remarque :</p>
-<p>Certains utilisateurs rencontrent un problème de lignes vides  dans le mode normal. Si vous êtes dans ce cas, activez l'option "Liste messages : forcer le remplissage des lignes si toujours vides".</p>
-<p>Mais idéalement, ce problème devrait être résolu en créant un nouveau profil utilisateur dans Thunderbird, ce qui implique une reconfiguration des comptes de messagerie.</p>
-<h4>Astuce pour la vocalisation personnalisée des lignes</h4>
-<p>Vous pouvez utiliser conjointement les deux colonnes "Statut de lecture" et "Statut" pour combiner  leurs avantages respectifs :</p>
-<ul>
-<li>La colonne "Statut de lecture" annonce "non lu" lorsque vous pressez la lettre m pour inverser le statut de lecture.</li>
-<li>La colonne "Statut" annonce quant à elle les statuts "Nouveau", "Répondu" et  "Transféré".</li>
+<li>La colonne "Statut de lecture" annonce "non lu" n'annonce pas le statut "lu" ;</li>
+<li>La colonne "Statut", recommandée,  annonce quant à elle les statuts "Nouveau", "Répondu" et  "Transféré". <br>
+Note : Si vous  frappez la lettre "m" pour inverser le statut du message, cette colonne doit être présente dans la liste des messages pour que le nouveau statut soit annoncé.</li>
 <li>L'extension fera en sorte que "Non lu" ne soit annoncé q'qu'une seule fois et que "Lu" ne le soit jamais.</li>
 </ul>
 <p><br>
@@ -183,7 +173,7 @@ Depuis un autre onglet ou une autre fenêtre : annonce la barre d'état.</li>
 <h3>Choix et agencement des colonnes (2023.10.31)</h3>
 <p>Cette procédure est native de Thunderbird 115 mais elle est expliquée ici car elle est mal documentée.</p>
 <ul>
-<li>Pressez Maj+tab depuis la liste de messages  pour gous placer dans la liste des entêtes de colonnes.</li>
+<li>Pressez Maj+tab depuis la liste des messages  pour vous placer dans la liste des entêtes de colonnes.</li>
 <li>Utilisez  les flèches gauche et droite  pour sélectionner une colonne.</li>
 <li>Lorsque vous atteingnez la colonne spéciale "Choisir les colonnes à afficher", pressez entrée dessus.</li>
 <li>Dans le menu, cochez ou décochez des colonnes puis pressez Echappe pour fermer ce menu. </li>
@@ -202,14 +192,14 @@ Depuis la version 2312.14.00,  le mode "Dossiers unifiés" est pris en charge. D
 <ul>
 <li>NVDA+flèche haut ou NVDA+l (portable) : annonce le nom du dossier sélectionné. NVDA ne le fait plus par lui-même.  </li>
 <li>Espace sur un dossier non lu : place le focus sur le premier message non lu dans la liste de messages.</li>
-<li>Entrée  ouAlt+flèche haut : affiche un menu de tous les dossiers du compte auquel le dossier sélectionné appartient.</li>
+<li>Entrée  ou Alt+flèche haut : affiche un menu de tous les dossiers du compte auquel le dossier sélectionné appartient.</li>
 <li>Control+Entrée ou Alt+flèche bas : affiche un menu des dossiers non lus du compte auquel le dossier sélectionné appartient.
 <br>Dans les deux cas, le dernier élément du menu permet d'afficher le menu des comptes. Vous pouvez presser la barre d'espace pour choisir un compte à partir de là.</li>
 <li>Maj+Entrée :  affiche un menu contenant tous les comptes et dossiers de l'arborescence.</li>
 <li>Maj+Control+Entrée :  affiche un menu contenant tous les comptes et dossiers non lus de l'arborescence.</li>
 </ul>
 <p>Remarques :</p>
-<p>Pour ces deux dernières commandes, un certain temps sécoulera avant l'affichage du menu car lle script doit parcourir toute l'arborescence pour construire le menu.</p>
+<p>Pour ces deux dernières commandes, un certain temps sécoulera avant l'affichage du menu car le script doit parcourir toute l'arborescence pour construire le menu.</p>
 <p>Utilisez plutôt une de ces deux  petites astuces :</p>
 <ol>
 <li>Pressez  Alt+C pour afficher le menu des comptes, 
@@ -256,17 +246,19 @@ Lorsque le focus se trouve dans la liste des pièces jointes, la touche échappe
 <p>L'extension améliore les annonces du carnet d'adresses et vous propose des commandes-clavier qui permettent   d'organiser les carnets d'adresses et les listes de diffusion via des glisser-déposer virtuels.</p>
 <h3>Annonces améliorées</h3>
 <ul>
-<li>Arborescence des carnets d'adresses et listes de diffusion :  l'extension annonce aussi le type d'un élément :carnet d'adresse ou liste du carnet d'adresses parent,</li>
-<li>liste de contacts : l'extension annonce aussi l'adresse mail du contact sélectionné.</li>
+<li>Arborescence des carnets d'adresses et listes de diffusion :  l'extension annonce aussi le type d'un élément : carnet d'adresse ou liste du carnet d'adresses parent,</li>
+<li>liste de contacts :   un appui sur espace annonce la fiche détaillé du contact, deux appuis annonce et copie la fiche dans le press-papiers.<br>
+Note : si cette  liste  est en mode "Présentation en tableau", décochez cette case via le bouton "Options d'affichage de la liste" qui se trouve au-dessus de la liste des contacts.</li>
 </ul>
 <h3>Résumé des commandes</h3>
 <ul>
-<li>Touche Tab  depuis le champ de recherche : accède directement au tableau des contacts en sautant le bouton "Options d'affichage de la liste". Celui-ci reste accessible avec maj+Tab depuis le tableau des contacts;  .  </li>
+<li>Tab  depuis l'arborescence des carnets d'adresses et listes de diffusion : accède au champ de recherche dans le carnet ou la liste sélectionnée dans l'arborescence. </li>
+<li>Tab  depuis le champ de recherche : accède directement au tableau des contacts en sautant le bouton "Options d'affichage de la liste". Celui-ci reste accessible avec maj+Tab depuis le tableau des contacts;</li>
 <li>
-<p>Touche échappe :</p>
+<p>échappe :</p>
 <ul>
-<li>Depuis l'arborescence des carnets d'adresses, amène le focus au champ de recherche;</li>
-<li>Depuis le champ de recherche, amène lle focus à l'arborescence des carnets d'adresses;</li>
+<li>Depuis l'arborescence des carnets d'adresses, amène le focus sur le bouton   "Créer un nouveau carnet d'adresses" de la   barre de boutons située au-dessus de l'arborescence. Depuis un de ces boutons, la touche échappe amène le focus à l'arborescence ;</li>
+<li>Depuis le champ de recherche, amène le focus à l'arborescence des carnets d'adresses;</li>
 <li>Depuis le tableau des contacts, amène le focus au champ de recherche;</li>
 </ul>
 </li>
@@ -276,14 +268,15 @@ Lorsque le focus se trouve dans la liste des pièces jointes, la touche échappe
 <li>lettre "a" depuis le tableau des contacts : effectue un glisser-déposer des contacts sélectionnés vers la liste de diffusion ou le carnet d'adresses défini comme destination. La première fois que vous pressez cette touche, la destination vous est demandée via un menu. Ensuite, la destination ne vous sera plus demandée tant que vous ne modifiez pas la liste ou le carnet d'adresses source.</li>
 <li>lettre "d" depuis le tableau des contacts : affiche le menu des listes et des carnets d'adresses  de destination.</li>
 </ul>
+<p>Astuce : vous pouvez aussi utiliser  les touches de navigation dans une page web.   La lettre "e" permet d'atteindre directement  le champ de recherche et la lettre "t" permet d'atteindre le tableau des contacts. </p>
 <h3>Exemple 1 : création d'une liste de diffusion dans le carnet d'adresses personnelles</h3>
 <ul>
-<li>Placez-vous dans l'arborescence des carnets d'adresses et sélectionnez "Adresses personnelles". Une novelle liste se crée uniquement dans le carnet sélectionné ;</li>
+<li>Placez-vous dans l'arborescence des carnets d'adresses et sélectionnez "Adresses personnelles". Une nouvelle liste se crée uniquement dans le carnet sélectionné ;</li>
 <li>Pressez Control+Applications ou la touche au-dessus de Tab et dans le menu, pressez Entrée sur  : Nouvelle liste;</li>
 <li>Dans le dialogue qui s'est ouvert, entrez le nom de la liste, par exemple : Ma famille. Vous pouvez ajouter des contacts via ce dialogue mais pour l'exemple,  fermez ce dialogue via le bouton OK;</li>
 <li>De retour  dans l'arborescence des carnets d'adresses et des listes, vous constatez l'apparition de : Ma famille, liste de Adresses personnelles, <br>
 Sélectionnez "Adresses personnelles" ;</li>
-<li>Pressez la touche Tab pour entrer un mot-clé de recherche  ou Tabulez  jusqu'au tableau des contacts ou utilisez   le menu Control+Applications ou touche au-dessus de Tab;</li>
+<li>Pressez la touche Tab pour entrer un mot-clé de recherche  ou Tabulez  jusqu'au tableau des contacts ou utilisez   le menu Control+Applications ou la touche au-dessus de Tab;</li>
 <li>Dans le tableau des contacts, sélectionnez un ou plusieurs contacts via la méthode standard des Control+Espace, Control+flèche vers le bas, Control+Espace, etc; </li>
 <li>Pressez la lettre a pour les glisser-déposer dans la liste de diffusion. La première fois, le menu des destinations autorisées sera affiché. Sélectionnez l'élément "Nom de la nouvelle liste" puis pressezEntrée. Lors des prochains appuis sur la lettre a, la même destination sera utilisée sans afficher ce menu. </li>
 <li>A la fin de l'opération de glisser-déposer, un bip sera joué  et le focus sera donné au champ de recherche.</li>
@@ -298,7 +291,7 @@ Sélectionnez "Adresses personnelles" ;</li>
 <li>De retour dans le tableau des contacts, pressez lalettre "a" pour effectuer le glisser-déposer;</li>
 <li>Cela fait, le focus est donné au champ de recherche. Entrez éventuellement un nom puis réitérez les opérations 2 à 5.</li>
 </ol>
-<h2>Menu de mise à jour de l'extension (v.2402.26.00)</h2>
+<h2>Menu de mise à jour de l'extension (supprimé dans la version 2411.27)</h2>
 <p>Pour accéder à ce menu, vous pouvez presser AltGr+Majuscule+touche au-dessus de la touche Tab  ou procéder comme  suit :</p>
 <ul>
 <li>Placez-vous dans la fenêtre principale de Thunderbird,</li>
@@ -307,8 +300,8 @@ Sélectionnez "Adresses personnelles" ;</li>
 <li>Un nouveau menu contextuel vous offre alors le choix entre :  Rechercher une mise à jour, Activer ou Désactiver les mise à jour automatiques et  Installer la version AAMM.JJ où AAMM.JJ est la version disponible en téléchargement. Cette dernière peut être plus récente que celle disponible en mise à jour automatique.</li>
 </ul>
 <h2>Compléments externes</h2>
-<h3>Extension Start With inbox pour Thunderbird 115 (2023.10.31)1</h3>
-<p>Au démarrage de Thunderbird, Cette extension   sélectionne   automatiquement au choix :</p>
+<h3>Extension Start With inbox pour Thunderbird 115 (2023.10.31)</h3>
+<p>Au démarrage de Thunderbird, cette extension   sélectionne   automatiquement au choix :</p>
 <ul>
 <li>le  dossier "Courrier entrant" du compte de votre choix dans larborescence des dossiers.</li>
 <li>Le dernier message du dossier courrier entrant du compte choisi. </li>

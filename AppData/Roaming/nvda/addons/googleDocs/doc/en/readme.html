@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="../style.css" media="screen">
-<title>Google Docs accessibility 1.2</title>
+<title>Google Docs accessibility 1.4.1</title>
 </head>
 <body>
 <h1>Google Docs support for NVDA</h1>
 <p>This add-on enhances compatibility with Google Docs. This add-on works in browse mode by making QuickNav commands and cursor navigation commands work properly. For example, if you use Google Docs without this add-on, then pressing <code>H</code> will take you to the next heading, but only among the ones visible on the screen. This add-on fixes this behavior and <code>H</code> command will now take you to all headings in the document.</p>
 <h2>Setup</h2>
-<p>For this add-on to work properly, we need to enable screenreader mode and Braille mode. In order to do that:
+<p>For this add-on to work properly, we need to disable default NVDA shortcut, enable screenreader mode and Braille mode.
+Step-by-step instruction:
 * Make sure that your default NVDA shortcut is either unassigned or assigned to something else rather than <code>Control+Alt+N</code>. In order to do that, edit properties of your NVDA shortcut on the desktop. This requirement comes from Google Docs.
 * Open any Google Doc.
 * Press <code>Control+Alt+Z</code> until you hear "Screenreader support enabled".
@@ -36,6 +37,7 @@
 <li><code>I</code> - next list item</li>
 <li><code>G</code> - next graphic</li>
 <li><code>T</code> - next table</li>
+<li><code>C</code> - next comment; this command doesn't work reliably - please direct concerns to Google Docs accessibility team</li>
 </ul>
 <p>Navigation commands:</p>
 <ul>

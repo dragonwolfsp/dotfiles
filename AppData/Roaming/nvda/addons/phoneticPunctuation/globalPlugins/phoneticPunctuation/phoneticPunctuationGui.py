@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-#A part of the Phonetic Punctuation addon for NVDA
+#A part of the Earcons and Speech Rules addon for NVDA
 #Copyright (C) 2019-2022 Tony Malykh
 #This file is covered by the GNU General Public License.
 #See the file COPYING.txt for more details.
@@ -44,22 +44,67 @@ import wx
 from .phoneticPunctuation import *
 from . import phoneticPunctuation as pp
 from .utils import *
-
+from . import common
 class AudioRuleDialog(wx.Dialog):
     TYPE_LABELS = {
         audioRuleBuiltInWave: _("&Built in wave"),
         audioRuleWave: _("&Wave file"),
         audioRuleBeep: _("&Beep"),
         audioRuleProsody: _("&Prosody"),
+        audioRuleNumericProsody: _("&Prosody"),
+        audioRuleTextSubstitution: _("&Text"),
+        audioRuleNoop: _("&Keep original"),
     }
-    PROSODY_LABELS = [
-        "Pitch",
-        "Volume",
-        "Rate",
-    ]
+    PROSODY_LABELS = common.PROSODY_LABELS
     TYPE_LABELS_ORDERING = audioRuleTypes
 
-    def __init__(self, parent, title=_("Edit audio rule")):
+    def __init__(
+        self,
+        parent,
+        title=_("Edit audio rule"),
+        frenzyType=None,
+        disallowedFrenzyValues=None,
+    ):
+        self.frenzyType = frenzyType
+        if frenzyType        == FrenzyType.ROLE:
+            self.possibleFrenzyValues = [controlTypes.role._roleLabels[role] for role in controlTypes.Role]
+        elif frenzyType        in [FrenzyType.STATE]:
+            possibleFrenzyValues = []
+            possibleFrenzyObjects = []
+            for state in controlTypes.State:
+                try:
+                    controlTypes.state._stateLabels[state]
+                    possibleFrenzyValues.append(state.displayString)
+                    possibleFrenzyObjects.append(state)
+                except KeyError:
+                    pass
+            self.possibleFrenzyValues = possibleFrenzyValues
+            self.possibleFrenzyObjects = possibleFrenzyObjects
+        elif frenzyType        in [FrenzyType.NEGATIVE_STATE]:
+            possibleFrenzyValues = []
+            possibleFrenzyObjects = []
+            for state in controlTypes.State:
+                try:
+                    controlTypes.state._negativeStateLabels[state]
+                    possibleFrenzyValues.append(state.negativeDisplayString)
+                    possibleFrenzyObjects.append(state)
+                except KeyError:
+                    pass
+            self.possibleFrenzyValues = possibleFrenzyValues
+            self.possibleFrenzyObjects = possibleFrenzyObjects
+        elif frenzyType        in [FrenzyType.TEXT, FrenzyType.CHARACTER]:
+            self.possibleFrenzyValues = []
+        elif frenzyType        == FrenzyType.FORMAT:
+            self.possibleFrenzyValues = [TEXT_FORMAT_NAMES[f] for f in TextFormat]
+        elif frenzyType        == FrenzyType.NUMERIC_FORMAT:
+            self.possibleFrenzyValues = [NUMERIC_TEXT_FORMAT_NAMES[f] for f in NumericTextFormat]
+        elif frenzyType        == FrenzyType.OTHER_RULE:
+            self.possibleFrenzyValues = [OTHER_RULE_NAMES[f] for f in OtherRule]
+        else:
+            raise RuntimeError
+        self.disallowedFrenzyValues = disallowedFrenzyValues
+        self.possibleTypes = common.ALLOWED_TYPES_BY_FRENZY_TYPE[frenzyType]
+        
         self.lastTestTime = 0
         super(AudioRuleDialog,self).__init__(parent,title=title)
         mainSizer=wx.BoxSizer(wx.VERTICAL)
@@ -69,9 +114,15 @@ class AudioRuleDialog(wx.Dialog):
         patternLabelText = _("&Pattern")
         self.patternTextCtrl=sHelper.addLabeledControl(patternLabelText, wx.TextCtrl)
 
-      # Translators: label for case sensitivity  checkbox in add audio rule dialog.
-        #caseSensitiveText = _("Case &sensitive")
-        #self.caseSensitiveCheckBox=sHelper.addItem(wx.CheckBox(self,label=caseSensitiveText))
+      # Translators: label for frenzyValue
+        labelText=FRENZY_NAMES_SINGULAR[self.frenzyType]
+        self.frenzyValueCategory=guiHelper.LabeledControlHelper(
+            self,
+            labelText,
+            wx.Choice,
+            choices=self.possibleFrenzyValues,
+        )
+        self.frenzyValueCategory.control.Bind(wx.EVT_CHOICE,self.onFrenzyValueCategory)
 
       # Translators: label for rule_enabled  checkbox in add audio rule dialog.
         enabledText = _("Rule enabled")
@@ -84,16 +135,19 @@ class AudioRuleDialog(wx.Dialog):
 
       # Translators:  label for type selector radio buttons in add audio rule dialog
         typeText = _("&Type")
-        typeChoices = [AudioRuleDialog.TYPE_LABELS[i] for i in AudioRuleDialog.TYPE_LABELS_ORDERING]
+        typeChoices = [AudioRuleDialog.TYPE_LABELS[i] for i in self.possibleTypes]
         self.typeRadioBox=sHelper.addItem(wx.RadioBox(self,label=typeText, choices=typeChoices))
         self.typeRadioBox.Bind(wx.EVT_RADIOBOX,self.onType)
-        self.setType(audioRuleBuiltInWave)
+        self.setType(audioRuleTextSubstitution if frenzyType == FrenzyType.NUMERIC_FORMAT else audioRuleBuiltInWave)
 
         self.typeControls = {
             audioRuleBuiltInWave: [],
             audioRuleWave: [],
             audioRuleBeep: [],
             audioRuleProsody: [],
+            audioRuleNumericProsody: [],
+            audioRuleTextSubstitution: [],
+            audioRuleNoop: [],
         }
 
       # Translators: built in wav category  combo box
@@ -164,15 +218,53 @@ class AudioRuleDialog(wx.Dialog):
             choices=self.PROSODY_LABELS,
         )
         self.typeControls[audioRuleProsody].append(self.prosodyNameCategory.control)
+        self.typeControls[audioRuleNumericProsody].append(self.prosodyNameCategory.control)
       # Translators: label for prosody offset
         prosodyOffsetLabelText = _("Prosody offset:")
         self.prosodyOffsetTextCtrl=sHelper.addLabeledControl(prosodyOffsetLabelText, wx.TextCtrl)
         self.typeControls[audioRuleProsody].append(self.prosodyOffsetTextCtrl)
-      # Translators: label for prosody multiplier
-        prosodyMultiplierLabelText = _("Prosody multiplier:")
-        self.prosodyMultiplierTextCtrl=sHelper.addLabeledControl(prosodyMultiplierLabelText, wx.TextCtrl)
-        self.typeControls[audioRuleProsody].append(self.prosodyMultiplierTextCtrl)
-
+      # Numeric prosody edit boxes
+        numericProsodyControlsData = dict(
+            minNumericValue=dict(
+                label=_("Minimum font size or heading level"),
+                min=0,
+                max=100,
+            ),
+            maxNumericValue=dict(
+                label=_("Maximum font size or heading level"),
+                min=0,
+                max=100,
+            ),
+            prosodyMinOffset=dict(
+                label=_("Minimum prosody offset"),
+                min=-100,
+                max=100,
+            ),
+            prosodyMaxOffset=dict(
+                label=_("Maximum prosody offset"),
+                min=-100,
+                max=100,
+            ),
+        )
+        self.numericProsodyControls = {
+            name: sHelper.addLabeledControl(
+                entry['label'],
+                nvdaControls.SelectOnFocusSpinCtrl,
+                min=entry['min'],
+                max=entry['max'],
+                initial=0,
+            )
+            for name, entry in numericProsodyControlsData.items()
+        }
+        self.typeControls[audioRuleNumericProsody].extend(list(self.numericProsodyControls.values()))
+      # Text replacement edit box
+        label = _("&Replacement pattern")
+        self.replacementPatternTextCtrl=sHelper.addLabeledControl(label, wx.TextCtrl)
+        self.typeControls[audioRuleTextSubstitution].append(self.replacementPatternTextCtrl)
+      # suppressStateClutter checkbox
+        labelText = _("Suppress this state in non-verbose mode.")
+        self.suppressStateClutterCheckBox=sHelper.addItem(wx.CheckBox(self,label=labelText))
+        self.suppressStateClutterCheckBox.SetValue(False)
       # Translators: label for comment edit box
         commentLabelText = _("&Comment")
         self.commentTextCtrl=sHelper.addLabeledControl(commentLabelText, wx.TextCtrl)
@@ -180,23 +272,47 @@ class AudioRuleDialog(wx.Dialog):
         self.testButton = sHelper.addItem (wx.Button (self, label = _("&Test, press twice for repeated sound")))
         self.testButton.Bind(wx.EVT_BUTTON, self.onTestClick)
 
+      # application name filter regex
+        label = _("Filter applications regex")
+        self.applicationFilterRegexTextCtrl=sHelper.addLabeledControl(label, wx.TextCtrl)
+      # Window title filter regex
+        label = _("Filter window title regex")
+        self.windowTitleRegexTextCtrl=sHelper.addLabeledControl(label, wx.TextCtrl)
+      # URL filter regex
+        label = _("Filter URL regex")
+        self.urlRegexTextCtrl=sHelper.addLabeledControl(label, wx.TextCtrl)
+      # OK Cancel buttons
         sHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK|wx.CANCEL))
-
         mainSizer.Add(sHelper.sizer,border=20,flag=wx.ALL)
         mainSizer.Fit(self)
         self.SetSizer(mainSizer)
         self.patternTextCtrl.SetFocus()
         self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
+      # Touching up
         self.onType(None)
+        if self.frenzyType in [FrenzyType.TEXT, FrenzyType.CHARACTER]:
+            self.frenzyValueCategory.control.Disable()
+        else:
+            self.patternTextCtrl.Disable()
+            self.passThroughCheckBox.Disable()
+            self.frenzyValueCategory.control.SetFocus()
+        self.suppressStateClutterCheckBox.Enable(self.frenzyType in [FrenzyType.STATE, FrenzyType.NEGATIVE_STATE])
+        for textFilterTextCtrl in [
+            self.applicationFilterRegexTextCtrl,
+            self.windowTitleRegexTextCtrl,
+            self.urlRegexTextCtrl,
+        ]:
+            textFilterTextCtrl.Enable(self.frenzyType in [FrenzyType.TEXT])
+
 
     def getType(self):
         typeRadioValue = self.typeRadioBox.GetSelection()
         if typeRadioValue == wx.NOT_FOUND:
             return audioRuleBuiltInWave
-        return AudioRuleDialog.TYPE_LABELS_ORDERING[typeRadioValue]
+        return self.possibleTypes[typeRadioValue]
 
     def setType(self, type):
-        self.typeRadioBox.SetSelection(AudioRuleDialog.TYPE_LABELS_ORDERING.index(type))
+        self.typeRadioBox.SetSelection(self.possibleTypes.index(type))
 
     def getInt(self, s):
         if len(s) == 0:
@@ -206,6 +322,26 @@ class AudioRuleDialog(wx.Dialog):
     def editRule(self, rule):
         self.commentTextCtrl.SetValue(rule.comment)
         self.patternTextCtrl.SetValue(rule.pattern)
+        if self.frenzyType != rule.getFrenzyType():
+            raise RuntimeError
+        idx = None
+        if self.frenzyType        == FrenzyType.ROLE:
+            idx = list(controlTypes.Role).index(rule.getFrenzyValue())
+        elif self.frenzyType        in [FrenzyType.STATE, FrenzyType.NEGATIVE_STATE]:
+            idx = self.possibleFrenzyObjects.index(rule.getFrenzyValue())
+        elif self.frenzyType        == FrenzyType.FORMAT:
+            idx = list(TextFormat).index(rule.getFrenzyValue())
+        elif self.frenzyType        == FrenzyType.NUMERIC_FORMAT:
+            idx = list(NumericTextFormat).index(rule.getFrenzyValue())
+        elif self.frenzyType        == FrenzyType.OTHER_RULE:
+            idx = list(OtherRule).index(rule.getFrenzyValue())
+        elif self.frenzyType        in [FrenzyType.TEXT, FrenzyType.CHARACTER]:
+            pass
+        else:
+            raise ValueError
+        if idx is not None:
+            self.frenzyValueCategory.control.SetSelection(idx)
+
         self.setType(rule.ruleType)
         self.wavName.SetValue(rule.wavFile)
         self.setBiw(rule.builtInWavFile)
@@ -221,28 +357,97 @@ class AudioRuleDialog(wx.Dialog):
             prosodyCategoryIndex = 0
         self.prosodyNameCategory.control.SetSelection(prosodyCategoryIndex)
         self.prosodyOffsetTextCtrl.SetValue(str(rule.prosodyOffset or ""))
-        self.prosodyMultiplierTextCtrl.SetValue(str(rule.prosodyMultiplier or ""))
         #self.caseSensitiveCheckBox.SetValue(rule.caseSensitive)
         self.passThroughCheckBox.SetValue(rule.passThrough)
+        for name, control in self.numericProsodyControls.items():
+            control.SetValue(getattr(rule, name))
+        self.replacementPatternTextCtrl.SetValue(rule.replacementPattern or "")
+        self.suppressStateClutterCheckBox.SetValue(rule.suppressStateClutter)
+        self.applicationFilterRegexTextCtrl.SetValue(rule.applicationFilterRegex)
+        self.windowTitleRegexTextCtrl.SetValue(rule.windowTitleRegex)
+        self.urlRegexTextCtrl.SetValue(rule.urlRegex)
         self.onType(None)
 
     def makeRule(self):
-        if not self.patternTextCtrl.GetValue():
-            # Translators: This is an error message to let the user know that the pattern field is not valid.
-            gui.messageBox(_("A pattern is required."), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
-            self.patternTextCtrl.SetFocus()
-            return
-        try:
-            r = re.compile(self.patternTextCtrl.GetValue())
-        except re.error:
-            # Translators: Invalid regular expression
-            gui.messageBox(_("Invalid regular expression."), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
-            self.patternTextCtrl.SetFocus()
-            return
-        if r.search(''):
-            gui.messageBox(_("Regular expression pattern matches empty string. This is not allowed. Please change the pattern."), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
-            self.patternTextCtrl.SetFocus()
-            return
+        if self.frenzyType == FrenzyType.TEXT:
+            if not self.patternTextCtrl.GetValue():
+                # Translators: This is an error message to let the user know that the pattern field is not valid.
+                gui.messageBox(_("A pattern is required."), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
+                self.patternTextCtrl.SetFocus()
+                return
+            try:
+                r = re.compile(self.patternTextCtrl.GetValue())
+            except sre_constants.error:
+                # Translators: Invalid regular expression
+                gui.messageBox(_("Invalid regular expression."), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
+                self.patternTextCtrl.SetFocus()
+                return
+            if r.search(''):
+                gui.messageBox(_("Regular expression pattern matches empty string. This is not allowed. Please change the pattern."), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
+                self.patternTextCtrl.SetFocus()
+                return
+            frenzyValue = None
+            
+            for textFilterTextCtrl in [
+                self.applicationFilterRegexTextCtrl,
+                self.windowTitleRegexTextCtrl,
+                self.urlRegexTextCtrl,
+            ]:
+                try:
+                    r = re.compile(textFilterTextCtrl.GetValue())
+                except sre_constants.error:
+                    # Translators: Invalid regular expression
+                    gui.messageBox(_("Invalid regular expression."), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
+                    textFilterTextCtrl.SetFocus()
+                    return
+            if len(self.urlRegexTextCtrl.GetValue()) > 0 and not isURLResolutionAvailable():
+                gui.messageBox(
+                    _(
+                        "Error: you have entered URL filter for this rule.\n"
+                        "URL detection feature requires BrowserNav v2.6.2 or later add-on to be installed.\n"
+                        "However it is either not installed, or failed to initialize.\n"
+                        "Please install the latest BrowserNav add-on from add-on store and restart NVDA.\n"
+                        "Alternatively, please clear URL regex field to enable this rule on all web sites.\n"
+                    ),
+                    _("Earcons and speech rules add-on Error"),
+                    wx.ICON_ERROR | wx.OK,
+                )
+                self.urlRegexTextCtrl.SetFocus()
+                return
+        elif self.frenzyType == FrenzyType.CHARACTER:
+            if not self.patternTextCtrl.GetValue():
+                # Translators: This is an error message to let the user know that the pattern field is not valid.
+                gui.messageBox(_("A pattern is required."), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
+                self.patternTextCtrl.SetFocus()
+                return
+            if len(self.patternTextCtrl.GetValue()) > 1:
+                gui.messageBox(_("Please enter a single character as pattern."), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
+                self.patternTextCtrl.SetFocus()
+                return
+            frenzyValue = None
+        else:
+            frenzyValueStr = self.possibleFrenzyValues[self.frenzyValueCategory.control.GetSelection()]
+            if self.frenzyType == FrenzyType.ROLE:
+                frenzyValue = [k for k, v in controlTypes.role._roleLabels.items() if v == frenzyValueStr][0]
+            elif self.frenzyType in [FrenzyType.STATE, FrenzyType.NEGATIVE_STATE]:
+                frenzyValue = self.possibleFrenzyObjects[self.frenzyValueCategory.control.GetSelection()]
+            elif self.frenzyType == FrenzyType.FORMAT:
+                frenzyValue = [value for value, name in TEXT_FORMAT_NAMES.items() if name == frenzyValueStr][0]
+            elif self.frenzyType == FrenzyType.NUMERIC_FORMAT:
+                frenzyValue = [value for value, name in NUMERIC_TEXT_FORMAT_NAMES.items() if name == frenzyValueStr][0]
+                if self.numericProsodyControls['minNumericValue'].GetValue() >= self.numericProsodyControls['maxNumericValue'].GetValue():
+                    gui.messageBox(_("Minimum numeric value must be strictly less than maximum numeric value."), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
+                    self.numericProsodyControls['minNumericValue'].SetFocus()
+                    return
+            elif self.frenzyType == FrenzyType.OTHER_RULE:
+                frenzyValue = [value for value, name in OTHER_RULE_NAMES.items() if name == frenzyValueStr][0]
+            else:
+                raise RuntimeError
+            if frenzyValue in self.disallowedFrenzyValues:
+                gui.messageBox(_("This value is already used in another rule."), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
+                self.frenzyValueCategory.control.SetFocus()
+                return
+
 
         if self.getType() == audioRuleWave:
             if not self.wavName.GetValue() or not os.path.exists(self.wavName.GetValue()):
@@ -257,6 +462,21 @@ class AudioRuleDialog(wx.Dialog):
                 gui.messageBox(_("Invalid wav file."), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
                 self.wavName.SetFocus()
                 return
+        elif self.getType() == audioRuleTextSubstitution:
+            if self.frenzyType == FrenzyType.NUMERIC_FORMAT:
+                sampleLevel = 1
+                replacementPattern = self.replacementPatternTextCtrl.GetValue()
+                try:
+                    replacementPattern.format(sampleLevel)
+                except ValueError as e:
+                    gui.messageBox(
+                        _("Invalid replacement pattern: {}\nPlesae use curly braces {} as a format placeholder; please don't use any other curly braces in replacement string.").format(str(e)), 
+                        _("Dictionary Entry Error"), 
+                        wx.OK|wx.ICON_WARNING, 
+                        self,
+                    )
+                    self.replacementPatternTextCtrl.SetFocus()
+                    return
         try:
             self.getInt(self.startAdjustmentTextCtrl.GetValue())
         except ValueError:
@@ -313,34 +533,18 @@ class AudioRuleDialog(wx.Dialog):
                 gui.messageBox(_("prosody offset must be an integer between -100 and 100"), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
                 self.prosodyOffsetTextCtrl.SetFocus()
                 return
-            good = False
-            try:
-                if len(self.prosodyMultiplierTextCtrl.GetValue()) == 0:
-                    prosodyMultiplier = None
-                    good = True
-                else:
-                    prosodyMultiplier = float(self.prosodyMultiplierTextCtrl.GetValue())
-                    if .1 <= prosodyMultiplier <= 10:
-                        good = True
-            except ValueError:
-                pass
-            if not good:
-                gui.messageBox(_("prosody multiplier must be a float between 0.1 and 10"), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
-                self.prosodyMultiplierTextCtrl.SetFocus()
-                return
-            if prosodyOffset is not None and prosodyMultiplier is not None:
-                gui.messageBox(_("You must specify either prosody offset or multiplier but not both"), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
+            if prosodyOffset is  None:
+                gui.messageBox(_("You must specify prosody offset."), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
                 self.prosodyOffsetTextCtrl.SetFocus()
                 return
-            if prosodyOffset is  None and prosodyMultiplier is  None:
-                gui.messageBox(_("You must specify either prosody offset or multiplier."), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
+            if prosodyOffset == 0:
+                gui.messageBox(_("Prosody offset cannot be zero."), _("Dictionary Entry Error"), wx.OK|wx.ICON_WARNING, self)
                 self.prosodyOffsetTextCtrl.SetFocus()
                 return
             mylog(f"prosodyOffset={prosodyOffset}")
-            mylog(f"prosodyMultiplier={prosodyMultiplier}")
 
         try:
-            return AudioRule(
+            result = AudioRule(
                 comment=self.commentTextCtrl.GetValue(),
                 pattern=self.patternTextCtrl.GetValue(),
                 ruleType=self.getType(),
@@ -353,10 +557,22 @@ class AudioRuleDialog(wx.Dialog):
                 enabled=bool(self.enabledCheckBox.GetValue()),
                 prosodyName=self.PROSODY_LABELS[self.prosodyNameCategory.control.GetSelection()],
                 prosodyOffset=prosodyOffset,
-                prosodyMultiplier=prosodyMultiplier,
+                prosodyMultiplier=None,
                 volume=self.volumeSlider.Value or 100,
                 passThrough=bool(self.passThroughCheckBox.GetValue()),
+                frenzyType=self.frenzyType,
+                frenzyValue=frenzyValue,
+                minNumericValue=self.numericProsodyControls['minNumericValue'].GetValue(),
+                maxNumericValue=self.numericProsodyControls['maxNumericValue'].GetValue(),
+                prosodyMinOffset=self.numericProsodyControls['prosodyMinOffset'].GetValue(),
+                prosodyMaxOffset=self.numericProsodyControls['prosodyMaxOffset'].GetValue(),
+                replacementPattern = self.replacementPatternTextCtrl.GetValue(),
+                suppressStateClutter=self.suppressStateClutterCheckBox.GetValue(),
+                applicationFilterRegex=self.applicationFilterRegexTextCtrl.GetValue(),
+                windowTitleRegex=self.windowTitleRegexTextCtrl.GetValue(),
+                urlRegex=self.urlRegexTextCtrl.GetValue(),
             )
+            return result
         except Exception as e:
             log.error("Could not add Audio Rule", e)
             # Translators: This is an error message to let the user know that the Audio rule is not valid.
@@ -388,14 +604,13 @@ class AudioRuleDialog(wx.Dialog):
             break
 
     def onTestClick(self, evt):
-        global rulesDialogOpen
         if time.time() - self.lastTestTime < 1:
             # Button pressed twice within a second
             repeat = True
         else:
             repeat = False
         self.lastTestTime = time.time()
-        rulesDialogOpen = False
+        common.rulesDialogOpen = False
         try:
             rule = self.makeRule()
             if rule is None:
@@ -412,7 +627,7 @@ class AudioRuleDialog(wx.Dialog):
             speech.cancelSpeech()
             speech.speak(utterance)
         finally:
-            rulesDialogOpen = True
+            common.rulesDialogOpen = True
 
     def getBiwCategories(self):
         soundsPath = getSoundsPath()
@@ -455,6 +670,7 @@ class AudioRuleDialog(wx.Dialog):
         biwIndex = self.getBuiltInWaveFilesInCategory().index(biwFile)
         self.biwList.control.SetSelection(biwIndex)
 
+
     def onBiw(self, evt):
         soundsPath = getSoundsPath()
         biw = self.getBiw()
@@ -474,18 +690,34 @@ class AudioRuleDialog(wx.Dialog):
         ct = self.getType()
         [control.Enable() for control in self.typeControls[ct]]
 
+    def onFrenzyValueCategory(self, evt):
+        pass
+
 class RulesDialog(SettingsPanel):
     # Translators: Title for the settings dialog
-    title = _("Phonetic Punctuation  rules")
+    title = _("Earcons and Speech Rules")
 
     def makeSettings(self, settingsSizer):
-        global rulesDialogOpen
-        rulesDialogOpen = True
+        common.rulesDialogOpen = True
         pp.reloadRules()
-        self.rules = pp.rules[:]
+        self.allRules = [rule for frenzyType, rules in pp.rulesByFrenzy.items() for rule in rules]
+        self.frenzyRules = []
 
         sHelper = gui.guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+      # Translators: frenzy type combo box
+        labelText=_("&Category:")
+        self.frenzyCategory=guiHelper.LabeledControlHelper(
+            self,
+            labelText,
+            wx.Choice,
+            choices=[FRENZY_NAMES[ft] for ft in FrenzyType]
+        )
+        self.frenzyCategory.control.Bind(wx.EVT_CHOICE,self.onFrenzyType)
+        self.frenzyCategory.control.SetSelection(0)
+        self.frenzyType = None
+
       # Rules table
+        self.prepareRulesForFrenzy(FrenzyType.TEXT)
         rulesText = _("&Rules")
         self.rulesList = sHelper.addLabeledControl(
             rulesText,
@@ -501,7 +733,7 @@ class RulesDialog(SettingsPanel):
         self.rulesList.InsertColumn(2, _("Type"))
         self.rulesList.InsertColumn(3, _("Effect"))
         self.rulesList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemFocused)
-        self.rulesList.ItemCount = len(self.rules)
+        self.rulesList.ItemCount = len(self.frenzyRules)
       # Buttons
         bHelper = sHelper.addItem(guiHelper.ButtonHelper(orientation=wx.HORIZONTAL))
         self.toggleButton = bHelper.addButton(self, label=_("Toggle"))
@@ -517,14 +749,19 @@ class RulesDialog(SettingsPanel):
         self.removeButton = bHelper.addButton(self, label=_("Re&move rule"))
         self.removeButton.Bind(wx.EVT_BUTTON, self.OnRemoveClick)
 
+
         self.applicationsBlacklistEdit = sHelper.addLabeledControl(_("Disable PhoneticPuntuation in applications (comma-separated list)"), wx.TextCtrl)
         self.applicationsBlacklistEdit.Value = getConfig("applicationsBlacklist")
 
     def postInit(self):
-        self.rulesList.SetFocus()
+        self.frenzyCategory.SetFocus()
+        self.frenzyCategory.control.SetSelection(1)
 
     def getItemTextForList(self, item, column):
-        rule = self.rules[item]
+        try:
+            rule = self.frenzyRules[item]
+        except IndexError:
+            return "?"
         if column == 0:
             return rule.getDisplayName()
         elif column == 1:
@@ -536,11 +773,42 @@ class RulesDialog(SettingsPanel):
         else:
             raise ValueError("Unknown column: %d" % column)
 
+    def updateAllRules(self, oldFrenzyType):
+        if self.frenzyType is not None:
+            self.allRules = sorted(
+                [
+                    rule
+                    for rule in self.allRules
+                    if rule.getFrenzyType() != oldFrenzyType
+                ] + self.frenzyRules,
+                key=lambda r:r.getFrenzyType().value,
+            )
+            self.frenzyRules = None
+            i = self.frenzyCategory.control.GetSelection()
+            self.prepareRulesForFrenzy(list(FrenzyType)[i])
+            
+        
+    def prepareRulesForFrenzy(self, frenzyType):
+        self.frenzyType = frenzyType
+        self.frenzyRules = [
+            rule
+            for rule in self.allRules
+            if rule.getFrenzyType() == self.frenzyType
+        ]
+
+    def onFrenzyType(self, evt):
+        oldFrenzyType = self.frenzyType
+        if oldFrenzyType is not None:
+            self.updateAllRules(oldFrenzyType)
+        i = self.frenzyCategory.control.GetSelection()
+        self.prepareRulesForFrenzy(list(FrenzyType)[i])
+        self.rulesList.ItemCount = len(self.frenzyRules)
+
     def onListItemFocused(self, evt):
         if self.rulesList.GetSelectedItemCount()!=1:
             return
         index=self.rulesList.GetFirstSelected()
-        rule = self.rules[index]
+        rule = self.frenzyRules[index]
         if rule.enabled:
             self.toggleButton.SetLabel(_("Disable (&toggle)"))
         else:
@@ -550,8 +818,8 @@ class RulesDialog(SettingsPanel):
         if self.rulesList.GetSelectedItemCount()!=1:
             return
         index=self.rulesList.GetFirstSelected()
-        self.rules[index].enabled = not self.rules[index].enabled
-        if self.rules[index].enabled:
+        self.frenzyRules[index].enabled = not self.frenzyRules[index].enabled
+        if self.frenzyRules[index].enabled:
             msg = _("Rule enabled")
         else:
             msg = _("Rule disabled")
@@ -559,10 +827,11 @@ class RulesDialog(SettingsPanel):
         self.onListItemFocused(None)
 
     def OnAddClick(self,evt):
-        entryDialog=AudioRuleDialog(self,title=_("Add audio rule"))
+        disallowedFrenzyValues = [rule.getFrenzyValue() for rule in self.frenzyRules]
+        entryDialog=AudioRuleDialog(self,title=_("Add audio rule"), frenzyType=self.frenzyType, disallowedFrenzyValues=disallowedFrenzyValues)
         if entryDialog.ShowModal()==wx.ID_OK:
-            self.rules.append(entryDialog.rule)
-            self.rulesList.ItemCount = len(self.rules)
+            self.frenzyRules.append(entryDialog.rule)
+            self.rulesList.ItemCount = len(self.frenzyRules)
             index = self.rulesList.ItemCount - 1
             self.rulesList.Select(index)
             self.rulesList.Focus(index)
@@ -577,10 +846,13 @@ class RulesDialog(SettingsPanel):
         editIndex=self.rulesList.GetFirstSelected()
         if editIndex<0:
             return
-        entryDialog=AudioRuleDialog(self)
-        entryDialog.editRule(self.rules[editIndex])
+        disallowedFrenzyValues = [rule.getFrenzyValue() for rule in self.frenzyRules]
+        allowedFrenzyValue = self.frenzyRules[editIndex].getFrenzyValue()
+        del disallowedFrenzyValues[disallowedFrenzyValues.index(allowedFrenzyValue)]
+        entryDialog=AudioRuleDialog(self, frenzyType=self.frenzyType, disallowedFrenzyValues=disallowedFrenzyValues)
+        entryDialog.editRule(self.frenzyRules[editIndex])
         if entryDialog.ShowModal()==wx.ID_OK:
-            self.rules[editIndex] = entryDialog.rule
+            self.frenzyRules[editIndex] = entryDialog.rule
             self.rulesList.SetFocus()
         entryDialog.Destroy()
 
@@ -591,11 +863,11 @@ class RulesDialog(SettingsPanel):
         if index<0:
             return
         newIndex = index + increment
-        if 0 <= newIndex < len(self.rules):
+        if 0 <= newIndex < len(self.frenzyRules):
             # Swap
-            tmp = self.rules[index]
-            self.rules[index] = self.rules[newIndex]
-            self.rules[newIndex] = tmp
+            tmp = self.frenzyRules[index]
+            self.frenzyRules[index] = self.frenzyRules[newIndex]
+            self.frenzyRules[newIndex] = tmp
             self.rulesList.Select(newIndex)
             self.rulesList.Focus(newIndex)
         else:
@@ -608,14 +880,14 @@ class RulesDialog(SettingsPanel):
         index=self.rulesList.GetFirstSelected()
         while index>=0:
             self.rulesList.DeleteItem(index)
-            del self.rules[index]
+            del self.frenzyRules[index]
             index=self.rulesList.GetNextSelected(index)
         self.rulesList.SetFocus()
 
     def onSave(self):
-        global rulesDialogOpen
-        rulesDialogOpen = False
-        rulesDicts = [rule.asDict() for rule in self.rules]
+        common.rulesDialogOpen = False
+        self.updateAllRules(self.frenzyType)
+        rulesDicts = [rule.asDict() for rule in self.allRules]
         rulesJson = json.dumps(rulesDicts, indent=4, sort_keys=True)
         rulesFile = open(rulesFileName, "w")
         try:
@@ -627,5 +899,4 @@ class RulesDialog(SettingsPanel):
         setConfig("applicationsBlacklist",self.applicationsBlacklistEdit.Value)
 
     def onDiscard(self):
-        global rulesDialogOpen
-        rulesDialogOpen = False
+        common.rulesDialogOpen = False

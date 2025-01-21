@@ -23,6 +23,10 @@ from virtualBuffers.gecko_ia2 import Gecko_ia2_TextInfo
 import weakref
 import ui
 import winUser
+import api
+import itertools
+from logHandler import log
+import NVDAObjects.IAccessible
 
 class FakeObjectForWeakMemoize:
     pass
@@ -158,22 +162,55 @@ class Future:
         return self.__is_set
 
 
-def getIA2Document(textInfo):
-    # IAccessibleHandler.getRecursiveTextFromIAccessibleTextObject(IAccessibleHandler.normalizeIAccessible(pacc1.accParent))
-    ia = textInfo.NVDAObjectAtStart.IAccessibleObject
-    for i in range(1000):
-        try:
-            if ROLE_DOCUMENT == IAccessibleHandler.IAccessibleRolesToNVDARoles[ia.accRole(winUser.CHILDID_SELF)]:
-                return ia
-        except KeyError:
-            pass
-        ia=IAccessibleHandler.normalizeIAccessible(ia.accParent)
-    raise Exception("Infinite loop!")
+def getIA2Document(textInfo=None):
+    focus = api.getFocusObject()
+    for obj in itertools.chain(api.getFocusAncestors(), [focus]):
+        if obj.role == controlTypes.Role.DOCUMENT:
+            return obj
+    return None
 
+def getIA2FocusedObject(obj):
+    if obj is None:
+        return None
+    tup = IAccessibleHandler.accFocus(obj.IAccessibleObject)
+    if tup is None:
+        return None
+    ia2Focus, ia2ChildId = tup
+    realObj = NVDAObjects.IAccessible.IAccessible(
+        IAccessibleObject=ia2Focus,
+        IAccessibleChildID=ia2ChildId,
+    )
+    return realObj
+
+def getIA2DocumentInThread():
+    focus = api.getFocusObject()
+    obj = NVDAObjects.IAccessible.getNVDAObjectFromEvent(focus.windowHandle, winUser.OBJID_CLIENT, 0)
+    if obj is None:
+        return None
+    if obj.role == controlTypes.Role.DOCUMENT:
+        return obj
+    else:
+        obj = getIA2FocusedObject(obj)
+        while obj is not None:
+            if obj.role == controlTypes.Role.DOCUMENT:
+                return obj
+            obj = obj.parent
+        return None
 
 class DocumentHolder:
     def __init__(self, document):
-        self.document = document
+        self.originalDocument = document
+        self.localDocument = threading.local()
+        self.localDocument.document = document
+    
+    def getDocument(self):
+        try:
+            return self.localDocument.document
+        except AttributeError:
+            document = getIA2DocumentInThread()
+            if document is not None:
+                self.localDocument.document = document
+            return document
 
 def getGeckoParagraphIndent(textInfo, documentHolder=None, oneLastAttempt=False):
     if not isinstance(textInfo, Gecko_ia2_TextInfo):
@@ -192,16 +229,16 @@ def getGeckoParagraphIndent(textInfo, documentHolder=None, oneLastAttempt=False)
         if documentHolder is None:
             document = getIA2Document(textInfo)
         else:
-            document = documentHolder.document
+            document = documentHolder.getDocument()
         offset = textInfo._startOffset
         docHandle,ID=textInfo._getFieldIdentifierFromOffset(offset)
-        location = document.accLocation(ID)
+        location = document.IAccessibleObject.accLocation(ID)
         return location[0]
     except WindowsError:
         return None
     except LookupError:
         return None
-    except _ctypes.COMError:
+    except _ctypes.COMError as e:
         if oneLastAttempt or documentHolder is None:
             return None
         # This tends to happen when page changes dynamically.

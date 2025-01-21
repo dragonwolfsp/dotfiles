@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="../style.css" media="screen">
-<title>Resource Monitor 24.06.1</title>
+<title>Resource Monitor 25.01</title>
 </head>
 <body>
 <h1>Ressourcen-Monitor</h1>
@@ -11,10 +11,10 @@
 <li>Autoren: Alex Hall, Joseph Lee, Kefas Lungu, Beqa Gozalishvili, Tuukka
   Ojala, Ethin Probst und weitere Mitwirkende aus der NVDA-Community</li>
 </ul>
-<p>Diese Erweiterung enthält Informationen über Prozessor-Auslastung,
+<p>Diese NVDA-Erweiterung enthält Informationen über Prozessor-Auslastung,
 verwendeten Arbeitsspeicher sowie andere nützliche Ressourcen.</p>
 <h1>Tastenkürzel</h1>
-<p>All commands support speech on demand mode (NVDA 2024.1 and later).</p>
+<p>All commands support speech on demand mode.</p>
 <ul>
 <li>NVDA+Umschalt+E: Zeigt den verbrauchten Arbeitsspeicher, die
   durchschnittliche Prozessorauslastungen und Akku-Informationen an, falls
@@ -52,31 +52,42 @@ Systeminformationsprogramme. Bitte beachten Sie Folgendes:</p>
   Kopieren großer Dateien stattfinden.</li>
 <li>Bei den Informationen zur Prozessorarchitektur beziehen sich "x86" und
   "AMD64" auf 32-Bit- bzw. 64-Bit-Prozessoren (x64) von Intel bzw. AMD.</li>
-<li>Für diese Erweiterung ist Windows 10 oder neuer erforderlich.</li>
+<li>Für diese NVDA-Erweiterung wird Windows 10 Version 22H2 (2022 Update /
+  Build 19045) oder neuer benötigt.</li>
+<li>Die Installation der NVDA-Erweiterung unter Windows 10/11 LTSC wird nicht
+  unterstützt.</li>
 </ul>
 <p>Hinweis zur Lizensierung: Diese Erweiterung verwendet Psutil, welches  mit
 der 3-Clause BSD Lizenz veröffentlicht wurd. Diese ist mit der General
 Public Lizenz kompatibel.</p>
+<h2>Version 24.08</h2>
+<ul>
+<li>NVDA 2024.2 or later is required. This allows psutil dependency to be
+  removed from the add-on as NVDA includes it.</li>
+<li>Updated psutil dependency to the version included with NVDA 2024.2
+  (6.0.0).</li>
+<li>Ruff replaces Flake8 as code linter.</li>
+</ul>
 <h2>Version 24.05</h2>
 <ul>
-<li>NVDA 2024.1 or later is required.</li>
-<li>NVDA will recognize wireless networks with WPA3 authentication methods
-  such as simultaneous authentication of equals (SAE).</li>
+<li>NVDA 2024.1 oder neuer ist erforderlich.</li>
+<li>NVDA erkennt WLAN-Netzwerke mit WPA3-Authentifizierungsmethoden, wie
+  z. B. die gleichzeitige Authentifizierung von Gleichgestellten (SAE).</li>
 </ul>
 <h2>Version 24.04</h2>
 <ul>
-<li>Updated psutil dependency to 5.9.8.</li>
-<li>Added support for speech on demand mode so resource information can be
-  announced in this mode.</li>
+<li>Die Python-Abhängigkeit "psutil" wurde auf 5.9.8 aktualisiert.</li>
+<li>Unterstützung für den Modus "Bei Bedarf vorlesen" wurde hinzugefügt, so
+  dass Informationen zu Ressourcen in diesem Modus mitgeteilt werden können.</li>
 </ul>
 <h2>Version 23.11</h2>
 <ul>
-<li>Downgraded psutil dependency to 5.9.4 due to problems with memory usage
-  announcements.</li>
+<li>Downgrade der Python-Abhängigkeit "psutil" auf 5.9.4 bezüglich Probleme
+  mit den Meldungen über die Speichernutzung.</li>
 </ul>
 <h2>Version 23.10</h2>
 <ul>
-<li>Updated psutil dependency to 5.9.5.</li>
+<li>Die Python-Abhängigkeit "psutil" wurde auf 5.9.5 aktualisiert.</li>
 </ul>
 <h2>Version 23.09</h2>
 <ul>
@@ -93,25 +104,27 @@ Public Lizenz kompatibel.</p>
 <p>Die NVDA-Erweiterung "wlanReporter" ist jetzt Teil dieser NVDA-Erweiterung!</p>
 <ul>
 <li>
-<p>The old way of checking for wireless connections has been replaced by the
-  windows API from wlanReporter: https://github.com/kvark128/WlanReporter/ .</p>
+<p>Die alte Methode zur Überprüfung von drahtlosen Verbindungen wurde durch
+  die Windows-API von wlanReporter ersetzt:
+  https://github.com/kvark128/WlanReporter/.</p>
 <ul>
-<li>After speaking SSID name and strength, NVDA will also now tell you the
-  security type of your network.</li>
-<li>NVDA will now alert you when you connect and disconnect from a wireless
-  network.</li>
-<li>NVDA will now alert you when wireless connections is turned on or off.</li>
+<li>Nach der Angabe von SSID-Name und Signalstärke teilt NVDA nun auch den
+  Sicherheitstyp des verbundenen WLAN-Netzwerks mit.</li>
+<li>NVDA informiert Sie jetzt darüber, wenn Sie eine Verbindung zu einem
+  WLAN-Netzwerk herstellen oder trennen.</li>
+<li>NVDA teilt nun mit, sobald ein WLAN-Netzwerk ein- oder ausgeschaltet
+  wird.</li>
 </ul>
 </li>
 </ul>
 <h2>Version 23.05</h2>
 <ul>
 <li>
-<p>added the ability to detect and present the state of the connected
-  wireless network.</p>
+<p>Status hinzugefügt, um das verbundene WLAN-Netzwerk zu erkennen und
+  anzuzeigen.</p>
 <ul>
 <li>Teilt die SSID und den Namen der WLAN-Verbindung mit.</li>
-<li>Announces the strength of the ssid</li>
+<li>Teilt die Signalstärke des WLAN-Netzwerks mit</li>
 <li>Teilt mit, sofern keine SSID im Netzwerk gefunden wurde.</li>
 </ul>
 </li>

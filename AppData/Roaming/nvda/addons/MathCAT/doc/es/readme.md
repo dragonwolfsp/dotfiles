@@ -32,7 +32,8 @@ Quién debería usar MathCat:
 * Quien necesite Braille Nemeth de alta calidad (el Nemeth de MathPlayer se
   basa en la generación Nemeth de Liblouis, que tiene una importante
   cantidad de fallos técnicamente complicados de corregir).
-* Quien necesite braille técnico UEB
+* Aquellos que necesiten braille técnico UEB, CMU (español/portugués), LaTeX
+  alemán, ASCIIMath, o braille vietnamita
 * Quien quiera probar nuevas tecnologías y esté dispuesto a ayudar
   informando de fallos
 * Quien use Eloquence como voz
@@ -40,10 +41,9 @@ Quién debería usar MathCat:
 Quién no debería usar MathCat:
 
 * Cualquiera que use Math Player en idiomas distintos al inglés (existen
-  traducciones a indonesio, vietnamita y español; las traducciones se irán
-  haciendo en el futuro).
-* Cualquiera que use MathPlayer con una salida braille sin Nemeth o UEB
-  (contacta conmigo si quieres ayudar con una traducción braille)
+  traducciones a chino (tradicional), indonesio, vietnamita y español; las
+  traducciones se irán haciendo en el futuro) y no se sienten cómodos con la
+  voz en uno de los idiomas soportados.
 * Cualquiera que prefiera Access8Math a MathPlayer (por la voz u otras
   funciones)
 
@@ -57,6 +57,63 @@ inferir la intención del autor, y esto aún no está completamente
 establecido.
 
 ## Registro de actualización de MathCat
+
+### Versión 0.6.3
+
+* Todos los archivos de idioma y reglas braille se comprimen por carpeta y
+  se descomprimen a petición.
+
+	* Se ahorran unos 5 mb cuando rules.zip está descomprimido, y ahorrará aún
+	  más según se añadan más idiomas y códigos braille.
+	* Esto se hace como preparación para incluir MathCat en NVDA 2024.3
+
+* Se añade una nueva preferencia de "separador decimal".
+
+	* El valor por defecto es `Automático`, siendo otros valores ".", ",", y
+	  "personalizado". Los primeros tres valores establecen `DecimalSeparators`
+	  y `BlockSeparators`.
+	* `Automático` establece estas preferencias en función de la preferencia
+	  `language`. En algunos idiomas, como el español, se usa ',' en algunos
+	  países y '.' en otros. En este caso, es mejor configurar el idioma para
+	  que incluya también el código del país (por ejemplo, `es-es` or `es-mx`)
+	  para garantizar que se usa el valor correcto.
+
+* Se añade el sueco a los idiomas soportados.
+* Se añaden más caracteres Unicode para incluir todos los caracteres Unicode
+  marcados como "Sm" y aquellos con una mathclass (excepto las clases
+  Alphabetic y Glyph) en el estándar Unicode.
+* Tras cambiar el funcionamiento de las preferencias en una versión
+  anterior, olvidé cambiar `MathRate` y `PauseFactor` para que sean números
+  en vez de cadenas.
+* Corregido un fallo en las reglas braille (un cambio anterior que se
+  perdió) por el que se debería haber dado un tercer argumento para decir
+  que se mire en los archivos `definitions.yaml` _Braille_ y no en los de
+  voz al buscar el valor de una definición.
+* Se limpia el uso de `definitions.yaml`.
+* Se corrigen algunos fallos en la limpieza de MathML para los separadores
+  decimales ",".
+* Se ha encontrado un fallo en el resaltado braille cuando no hay nada
+  resaltado (tal vez nunca se dio, ¿por eso no lo vi en la práctica?)
+* Corregido el modo "describir" para que funcione. Todavía está al mínimo y
+  probablemente aún no es útil
+* Se corrige la versión mínima soportada
+
+### Versión 0.5.6
+* Se ha añadido Copiar como... al diálogo de MathCat (en el panel
+  "Navegación")
+* Se corrige un fallo por el que el idioma volvía a ser inglés al cambiar
+  los estilos de habla.
+* Se corrige un fallo con la navegación y el braille
+* Se corrigen algunos problemas de espaciado de Asciimath.
+* Mejorado el reconocimiento de química
+* Se actualiza MathCat a la nueva especificación química BANA Nemeth
+  (todavía sólo una sola línea y no se manejan los casos especiales de
+  cambio de estilo/fuente)
+* Se corrige un error fatal cuando se usan dígitos no ASCII en números (por
+  ejemplo, dígitos en negrita)
+* No se usan indicadores de cursiva en los códigos braille cuando se usan
+  los caracteres de cursiva alfanuméricos de matemáticas
+* Algunas pequeñas correcciones de las que no informaron los usuarios
 
 ### Versión 0.5.0
 * Se añade código braille LaTeX en alemán. Al contrario que otros códigos
@@ -98,6 +155,7 @@ establecido.
   tokens
 * Se mejora la detección de números romanos
 
+
 ### Versión 0.3.9
 * Se añade traducción al chino tradicional (gracias a Hon-Jang Yang)
 * Se corrige un fallo con la navegación en la base de una expresión escrita
@@ -110,7 +168,9 @@ establecido.
   química
 * Correcciones en UEB al añadir paréntesis auxiliares en algunos casos
 
+
 ### Versión 0.3.8
+
 Braille:
 
 * Se ha internacionalizado el diálogo en varios idiomas (¡Muchas gracias a

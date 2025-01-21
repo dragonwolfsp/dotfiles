@@ -23,7 +23,9 @@
                     "offset": 0,
                     "pattern": "^\\d+ items? in cart$",
                     "patternMatch": 3,
-                    "snippet": ""
+                    "snippet": "",
+                    "uuid": "5aa91840-f7d6-4be1-add9-ee59c1ff5f88",
+                    "wavFileVolume": 100
                 },
                 {
                     "alsoUseDefaultQuickJump": false,
@@ -39,7 +41,9 @@
                     "offset": 0,
                     "pattern": "Your Orders",
                     "patternMatch": 1,
-                    "snippet": ""
+                    "snippet": "",
+                    "uuid": "99002181-a055-46f5-a96c-b12f1ea4852b",
+                    "wavFileVolume": 100
                 },
                 {
                     "alsoUseDefaultQuickJump": false,
@@ -55,7 +59,9 @@
                     "offset": 0,
                     "pattern": "^\\d+ orders? matching \"",
                     "patternMatch": 3,
-                    "snippet": ""
+                    "snippet": "",
+                    "uuid": "c975fec5-b698-4777-be05-e5e1488e48aa",
+                    "wavFileVolume": 100
                 },
                 {
                     "alsoUseDefaultQuickJump": false,
@@ -79,16 +85,23 @@
                     "offset": 0,
                     "pattern": "^[.\\d]+ out of 5 stars[,\\d]+ ratings?$",
                     "patternMatch": 3,
-                    "snippet": ""
+                    "snippet": "",
+                    "uuid": "1dc68f1a-9ad0-473d-8993-7c44a4292d51",
+                    "wavFileVolume": 100
                 }
             ],
             "debugBeepMode": 0,
+            "description": "",
             "domain": "amazon.com",
             "focusMode": 0,
             "liveRegionMode": 0,
             "name": "Amazon",
+            "suppressAriaLabel": false,
+            "suppressAriaLabelEditable": false,
             "suppressDescription": false,
-            "urlMatch": 2
+            "suppressTreeLevel": false,
+            "urlMatch": 2,
+            "version": ""
         },
         {
             "autoClickCategory": 5,
@@ -121,7 +134,9 @@
                     "offset": 2,
                     "pattern": "upvote",
                     "patternMatch": 1,
-                    "snippet": ""
+                    "snippet": "",
+                    "uuid": "e0e7286e-8979-40fe-83b6-de5d1f9d0e5f",
+                    "wavFileVolume": 100
                 },
                 {
                     "alsoUseDefaultQuickJump": false,
@@ -152,7 +167,9 @@
                     "offset": 2,
                     "pattern": "upvote",
                     "patternMatch": 1,
-                    "snippet": ""
+                    "snippet": "",
+                    "uuid": "a2fd9205-4c48-4795-9575-d6ef36188ed6",
+                    "wavFileVolume": 100
                 },
                 {
                     "alsoUseDefaultQuickJump": false,
@@ -176,16 +193,23 @@
                     "offset": 0,
                     "pattern": "downvote",
                     "patternMatch": 1,
-                    "snippet": ""
+                    "snippet": "",
+                    "uuid": "1367d284-aaf3-49b2-88ca-ffc03ef4b410",
+                    "wavFileVolume": 100
                 }
             ],
             "debugBeepMode": 0,
+            "description": "",
             "domain": "news.ycombinator.com",
             "focusMode": 0,
             "liveRegionMode": 0,
             "name": "Hacker news",
+            "suppressAriaLabel": false,
+            "suppressAriaLabelEditable": false,
             "suppressDescription": false,
-            "urlMatch": 2
+            "suppressTreeLevel": false,
+            "urlMatch": 2,
+            "version": ""
         },
         {
             "autoClickCategory": 5,
@@ -218,7 +242,9 @@
                     "offset": 1,
                     "pattern": "^\\[\u2013\\].* points\\d+ (hours?|minutes?|seconds?|days?|weeks?|months?|years?) ago",
                     "patternMatch": 3,
-                    "snippet": ""
+                    "snippet": "",
+                    "uuid": "d1bdafcd-d203-4d92-8462-455878298f1e",
+                    "wavFileVolume": 100
                 },
                 {
                     "alsoUseDefaultQuickJump": false,
@@ -242,16 +268,23 @@
                     "offset": 0,
                     "pattern": "load more comments\u00a0\\(\\d+ (reply|replies)\\)",
                     "patternMatch": 3,
-                    "snippet": ""
+                    "snippet": "",
+                    "uuid": "370c49fa-73cb-4d4f-bec8-6a58cd922e5b",
+                    "wavFileVolume": 100
                 }
             ],
             "debugBeepMode": 0,
+            "description": "",
             "domain": "old.reddit.com",
             "focusMode": 0,
             "liveRegionMode": 0,
             "name": "Reddit old",
+            "suppressAriaLabel": false,
+            "suppressAriaLabelEditable": false,
             "suppressDescription": false,
-            "urlMatch": 2
+            "suppressTreeLevel": false,
+            "urlMatch": 2,
+            "version": ""
         },
         {
             "autoClickCategory": 5,
@@ -284,7 +317,9 @@
                     "offset": 0,
                     "pattern": "Play (k)",
                     "patternMatch": 1,
-                    "snippet": ""
+                    "snippet": "",
+                    "uuid": "71a53e9a-48cf-48e0-9a45-d084c849d4a1",
+                    "wavFileVolume": 100
                 },
                 {
                     "alsoUseDefaultQuickJump": false,
@@ -308,7 +343,9 @@
                     "offset": 0,
                     "pattern": "Pause (k)",
                     "patternMatch": 1,
-                    "snippet": ""
+                    "snippet": "",
+                    "uuid": "177ad86b-dcec-44bd-9fa1-065b15ec89ca",
+                    "wavFileVolume": 100
                 },
                 {
                     "alsoUseDefaultQuickJump": false,
@@ -332,16 +369,23 @@
                     "offset": 0,
                     "pattern": "Seconds$",
                     "patternMatch": 3,
-                    "snippet": ""
+                    "snippet": "",
+                    "uuid": "b290544c-7b3d-4e1b-a4f5-5acbaae0a29e",
+                    "wavFileVolume": 100
                 }
             ],
             "debugBeepMode": 0,
+            "description": "",
             "domain": "youtube.com",
             "focusMode": 0,
             "liveRegionMode": 0,
             "name": "Youtube",
+            "suppressAriaLabel": false,
+            "suppressAriaLabelEditable": false,
             "suppressDescription": false,
-            "urlMatch": 2
+            "suppressTreeLevel": false,
+            "urlMatch": 2,
+            "version": ""
         },
         {
             "autoClickCategory": 5,
@@ -570,16 +614,23 @@
                     "offset": 0,
                     "pattern": "^\\s*$",
                     "patternMatch": 3,
-                    "snippet": ""
+                    "snippet": "",
+                    "uuid": "2f1e1e15-a087-4231-81b6-89e17ba3296c",
+                    "wavFileVolume": 100
                 }
             ],
             "debugBeepMode": 0,
+            "description": "",
             "domain": "",
             "focusMode": 0,
             "liveRegionMode": 0,
             "name": "All sites",
+            "suppressAriaLabel": false,
+            "suppressAriaLabelEditable": false,
             "suppressDescription": false,
-            "urlMatch": 0
+            "suppressTreeLevel": false,
+            "urlMatch": 0,
+            "version": ""
         }
     ]
 }

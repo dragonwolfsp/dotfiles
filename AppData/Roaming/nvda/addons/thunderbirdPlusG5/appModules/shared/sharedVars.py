@@ -1,12 +1,12 @@
 #-*- coding:utf-8 -*
 debug = False
 TBMajor = 0
-objLooping = False
+objLooping = menuClosing =  False
 speechOff = False
 gTimer = None
 lastKey = ""
 oCurFrame = None
-groupingIdx = 25 # index of child object of role grouping in the foregroundObject children  
+groupingIdx = 0 # computed index of child object of role grouping in the foregroundObject children  
 curFrame = curWinTitle = ""
 curTab = "init2"
 curTTRow = ""  # current thread tree row
@@ -22,7 +22,7 @@ scriptCategory = "Thunderbird+G5"
 virtualSpellChk = False
 delayFocusDoc = 20
 testMode = False
-debugLog = ""
+debugLog = "" 
 
 import quoteNav
 def initQuoteNav() :

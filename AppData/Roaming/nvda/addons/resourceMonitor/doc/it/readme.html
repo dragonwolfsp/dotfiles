@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="../style.css" media="screen">
-<title>Resource Monitor 24.06.1</title>
+<title>Resource Monitor 25.01</title>
 </head>
 <body>
 <h1>Resource Monitor</h1>
@@ -14,7 +14,7 @@
 <p>Questo componente aggiuntivo fornisce informazioni sulle prestazioni di
 sistema, quali carico della CPU, utilizzo della memoria e molto altro.</p>
 <h1>Tasti rapidi</h1>
-<p>All commands support speech on demand mode (NVDA 2024.1 and later).</p>
+<p>All commands support speech on demand mode.</p>
 <ul>
 <li>NVDA+Shift+E: fornisce informazioni sulla quantità di ram utilizzata, sul
   carico medio della cpu e sulla batteria, se disponibile.</li>
@@ -51,10 +51,19 @@ si tenga presente che:</p>
   informazioni sull'utilizzo del disco.</li>
 <li>When announcing processor architecture information, "x86" and "AMD64"
   refer to 32-bit and 64-bit (x64) Intel and AMD processors, respectively.</li>
-<li>This add-on requires Windows 10 or later.</li>
+<li>This add-on requires Windows 10 22H2 (2022 Update/build 19045) or later.</li>
+<li>Installing the add-on on Windows 10/11 LTSC is not supported.</li>
 </ul>
 <p>Nota sulla licenza: questo componente aggiuntivo utilizza Psutil, concesso
 con licenza 3-Clause BSD compatibile con GNU General Public License.</p>
+<h2>Version 24.08</h2>
+<ul>
+<li>NVDA 2024.2 or later is required. This allows psutil dependency to be
+  removed from the add-on as NVDA includes it.</li>
+<li>Updated psutil dependency to the version included with NVDA 2024.2
+  (6.0.0).</li>
+<li>Ruff replaces Flake8 as code linter.</li>
+</ul>
 <h2>Version 24.05</h2>
 <ul>
 <li>NVDA 2024.1 or later is required.</li>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="../style.css" media="screen">
-<title>Resource Monitor 24.06.1</title>
+<title>Resource Monitor 25.01</title>
 </head>
 <body>
 <h1>Resurssienvalvonta</h1>
@@ -14,8 +14,7 @@
 <p>Tämä lisäosa antaa tietoja suorittimen kuormituksesta sekä muistin ja muiden
 resurssien käytöstä.</p>
 <h1>Pikanäppäimet</h1>
-<p>Kaikki komennot tukevat pyydettäessä-puhetilaa (NVDA 2024.1 ja sitä
-uudemmat).</p>
+<p>Kaikki komennot tukevat pyydettäessä-puhetilaa.</p>
 <ul>
 <li>NVDA+Vaihto+E: Lukee käytetyn RAM-muistin määrän, suorittimen
   keskimääräisen kuormituksen sekä akun tiedot, mikäli sellainen on
@@ -52,11 +51,21 @@ järjestelmätietoja näyttäviä ohjelmia. Huomaa lisäksi seuraavat seikat:</p
   kuten suurten tiedostojen kopiointia, on runsaasti.</li>
 <li>Suorittimen arkkitehtuuritietoja ilmoitettaessa "x86" ja "AMD64"
   viittaavat 32- ja 64-bittisiin (x64) Intel- ja AMD-suorittimiin.</li>
-<li>Tämä lisäosa edellyttää Windows 10:tä tai uudempaa.</li>
+<li>Tämä lisäosa edellyttää Windows 10 22H2:ta (2022-päivitys/koontiversio
+  19045) tai uudempaa.</li>
+<li>Tämän lisäosan asentamista ei tueta Windows 10:n/11:n LTSC-versioissa.</li>
 </ul>
 <p>Huomautus lisenssistä: tämä lisäosa käyttää Psutil-riippuvuutta, joka on
 kolmilausekkeisen BSD-lisenssin alainen, joka on yhteensopiva GNU GPL
 -lisenssin kanssa.</p>
+<h2>Versio 24.08</h2>
+<ul>
+<li>Edellyttää NVDA 2024.2:ta tai uudempaa. Tämä mahdollistaa
+  psutil-riippuvuuden poistamisen lisäosasta, koska NVDA sisältää sen.</li>
+<li>Päivitetty psutil-riippuvuus NVDA 2024.2:n mukana tulevaan versioon
+  (6.0.0).</li>
+<li>Ruff korvaa Flake8:n koodin tarkastimena.</li>
+</ul>
 <h2>Versio 24.05</h2>
 <ul>
 <li>Edellyttää NVDA 2024.1:tä tai uudempaa.</li>

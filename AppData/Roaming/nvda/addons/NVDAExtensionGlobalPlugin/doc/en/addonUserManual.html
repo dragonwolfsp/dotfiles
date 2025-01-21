@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <link rel="stylesheet" type="text/css" href="../style_t2t.css" media="screen"/>
-<title>NVDA global commands extension 13.3</title>
+<title>NVDA global commands extension 13.4.5</title>
 </head>
 <BODY BGCOLOR="white" TEXT="black">
 <P ALIGN="center"><CENTER><H1>NVDA global commands extension - user's manual</H1>
@@ -20,7 +20,7 @@ URL: <A HREF="https://github.com/paulber19/NVDAExtensionGlobalPlugin.git">https:
 Download:
 </P>
 <UL>
-<LI><A HREF="https://github.com/paulber007/AllMyNVDAAddons/raw/master/NVDAExtensionGlobalPlugin/NVDAExtensionGlobalPlugin-13.3.nvda-addon">stable version 13.3</A>
+<LI><A HREF="https://github.com/paulber007/AllMyNVDAAddons/raw/master/NVDAExtensionGlobalPlugin/NVDAExtensionGlobalPlugin-13.4.5.nvda-addon">stable version 13.4.5</A>
 <LI><A HREF="https://github.com/paulber007/AllMyNVDAAddons/tree/master/NVDAExtensionGlobalPlugin/dev">developpement's version</A>
 </UL>
 
@@ -29,7 +29,7 @@ Compatibility:
 </P>
 <UL>
 <LI>Nminimum supported NVDA version : 2022.1
-<LI>last tested NVDA version: 2024.1
+<LI>last tested NVDA version: 2024.4
 </UL>
 
 <P>
@@ -74,118 +74,121 @@ Traductor (s): based on automatic translation from french language
       <LI><A HREF="#toc24">2.4.2. Announcement of the version number of the application under the focus</A>
       <LI><A HREF="#hdr4-2">2.4.3. Display information about the application under the focus</A>
       <LI><A HREF="#hdr4-3">2.4.4. Display of the name and version number of the add-on</A>
-      <LI><A HREF="#hdr5-1">2.4.5. New navigation commands</A>
-      <LI><A HREF="#hdr5-2">2.4.6. New element types for "NVDA + f7" script</A>
-      <LI><A HREF="#hdr5-3">2.4.7. Scripts for tables</A>
-      <LI><A HREF="#hdr5-4">2.4.8. Announcement of the document address</A>
-      <LI><A HREF="#hdr5-5">2.4.9. Loop navigation</A>
       </UL>
-    <LI><A HREF="#hdr7">2.5. Announcement of the function associated with the "copy", "Paste" style editing commands</A>
+    <LI><A HREF="#hdr5">2.5. Enhancement of virtual buffer features</A>
       <UL>
-      <LI><A HREF="#hdr7-1">2.5.1. Add selected text to clipboard</A>
-      <LI><A HREF="#hdr7-2">2.5.2. Report text on Windows clipboard</A>
-      <LI><A HREF="#hdr7-3">2.5.3. Empty the clipboard</A>
+      <LI><A HREF="#hdr5-1">2.5.1. New navigation commands</A>
+      <LI><A HREF="#hdr5-2">2.5.2. New element types for "NVDA + f7" script</A>
+      <LI><A HREF="#hdr5-3">2.5.3. Scripts for tables</A>
+      <LI><A HREF="#hdr5-4">2.5.4. Announcement of the document address</A>
+      <LI><A HREF="#hdr5-5">2.5.5. Loop navigation</A>
       </UL>
-    <LI><A HREF="#hdr8">2.6. Announcement of the selected folder in the "Open", "Save", "Save as" style dialog boxes</A>
-    <LI><A HREF="#hdr9">2.7. NVDA logs</A>
+    <LI><A HREF="#hdr7">2.6. Announcement of the function associated with the "copy", "Paste" style editing commands</A>
       <UL>
-      <LI><A HREF="#hdr9-1">2.7.1. Management of NVDA logs</A>
-      <LI><A HREF="#hdr9-2">2.7.2. Opening NVDA logs</A>
+      <LI><A HREF="#hdr7-1">2.6.1. Add selected text to clipboard</A>
+      <LI><A HREF="#hdr7-2">2.6.2. Report text on Windows clipboard</A>
+      <LI><A HREF="#hdr7-3">2.6.3. Empty the clipboard</A>
       </UL>
-    <LI><A HREF="#hdr10">2.8. Speech history</A>
+    <LI><A HREF="#hdr8">2.7. Announcement of the selected folder in the "Open", "Save", "Save as" style dialog boxes</A>
+    <LI><A HREF="#hdr9">2.8. NVDA logs</A>
       <UL>
-      <LI><A HREF="#toc41">2.8.1. Announcement of the previous recording</A>
-      <LI><A HREF="#toc42">2.8.2. Announcement of the next recording</A>
-      <LI><A HREF="#toc43">2.8.3. Re-announce the last recording announced</A>
-      <LI><A HREF="#hdr10-1">2.8.4. Show speech history</A>
-      <LI><A HREF="#toc45">2.8.5. Technical details</A>
+      <LI><A HREF="#hdr9-1">2.8.1. Management of NVDA logs</A>
+      <LI><A HREF="#hdr9-2">2.8.2. Opening NVDA logs</A>
       </UL>
-    <LI><A HREF="#hdr12">2.9. Keyboard keys renaming</A>
-    <LI><A HREF="#hdr13">2.10. Selective announcement of command keys</A>
+    <LI><A HREF="#hdr10">2.9. Speech history</A>
       <UL>
-      <LI><A HREF="#toc48">2.10.1. Technical details</A>
+      <LI><A HREF="#toc42">2.9.1. Announcement of the previous recording</A>
+      <LI><A HREF="#toc43">2.9.2. Announcement of the next recording</A>
+      <LI><A HREF="#toc44">2.9.3. Re-announce the last recording announced</A>
+      <LI><A HREF="#hdr10-1">2.9.4. Show speech history</A>
+      <LI><A HREF="#toc46">2.9.5. Technical details</A>
       </UL>
-    <LI><A HREF="#hdr14">2.11. Minute timer</A>
-    <LI><A HREF="#hdr15">2.12. NVDA restarting</A>
-    <LI><A HREF="#hdr16">2.13. Displaying of visible elements of the object in the foreground</A>
+    <LI><A HREF="#hdr12">2.10. Keyboard keys renaming</A>
+    <LI><A HREF="#hdr13">2.11. Selective announcement of command keys</A>
       <UL>
-      <LI><A HREF="#toc52">2.13.1. Display of visible elements of the object under focus</A>
-      <LI><A HREF="#toc53">2.13.2. Announcement or display of visible elements of the object under focus</A>
+      <LI><A HREF="#toc49">2.11.1. Technical details</A>
       </UL>
-    <LI><A HREF="#hdr17">2.14. Fast voice profile switching</A>
+    <LI><A HREF="#hdr14">2.12. Minute timer</A>
+    <LI><A HREF="#hdr15">2.13. NVDA restarting</A>
+    <LI><A HREF="#hdr16">2.14. Displaying of visible elements of the object in the foreground</A>
       <UL>
-      <LI><A HREF="#hdr17-1">2.14.1. Management of voice profile selectors</A>
-      <LI><A HREF="#hdr17-2">2.14.2. "Voice profile switching" mode</A>
-      <LI><A HREF="#toc57">2.14.3. Choice of previous voice profile selector</A>
-      <LI><A HREF="#toc58">2.14.4. Choice of the next voice profile selector</A>
-      <LI><A HREF="#toc59">2.14.5. Choice of voice profile selector by number</A>
-      <LI><A HREF="#hdr17-6">2.14.6. Report or display of current speech settings</A>
-      <LI><A HREF="#hdr17-7">2.14.7. Autosave voice settings when switching profiles</A>
+      <LI><A HREF="#toc53">2.14.1. Display of visible elements of the object under focus</A>
+      <LI><A HREF="#toc54">2.14.2. Announcement or display of visible elements of the object under focus</A>
       </UL>
-    <LI><A HREF="#hdr18">2.15. NVDA and modifier keys's remanence</A>
+    <LI><A HREF="#hdr17">2.15. Fast voice profile switching</A>
       <UL>
-      <LI><A HREF="#hdr18-1">2.15.1. Specific remanence for the gmail.com site</A>
+      <LI><A HREF="#hdr17-1">2.15.1. Management of voice profile selectors</A>
+      <LI><A HREF="#hdr17-2">2.15.2. "Voice profile switching" mode</A>
+      <LI><A HREF="#toc58">2.15.3. Choice of previous voice profile selector</A>
+      <LI><A HREF="#toc59">2.15.4. Choice of the next voice profile selector</A>
+      <LI><A HREF="#toc60">2.15.5. Choice of voice profile selector by number</A>
+      <LI><A HREF="#hdr17-6">2.15.6. Report or display of current speech settings</A>
+      <LI><A HREF="#hdr17-7">2.15.7. Autosave voice settings when switching profiles</A>
       </UL>
-    <LI><A HREF="#hdr19">2.16. Computer shutdown</A>
-    <LI><A HREF="#hdr20">2.17. Management of user input gestures</A>
-    <LI><A HREF="#hdr21">2.18. Volume control</A>
+    <LI><A HREF="#hdr18">2.16. NVDA and modifier keys's remanence</A>
       <UL>
-      <LI><A HREF="#hdr21-1">2.18.1. Manually set main audio and NVDA audio stream</A>
-      <LI><A HREF="#hdr21-2">2.18.2. Mute or establish the volume of the audio stream of the application placed under the focus</A>
-      <LI><A HREF="#hdr21-3">2.18.3. Modify the volume of the audio stream of the application under the focus</A>
-      <LI><A HREF="#hdr21-8">2.18.4. Modify the volume of NVDA</A>
-      <LI><A HREF="#hdr21-4">2.18.5. Modify main volume</A>
-      <LI><A HREF="#hdr21-5">2.18.6. Return to previous level</A>
-      <LI><A HREF="#hdr21-6">2.18.7. Announcement of level changes</A>
-      <LI><A HREF="#hdr21-7">2.18.8. Automatically restore main sound and NVDA when plugin loads</A>
-      <LI><A HREF="#hdr24-1">2.18.9. Copy date and time to clipboard</A>
-      <LI><A HREF="#hdr24-2">2.18.10. Script to replace the base script "NVDA + f12"</A>
+      <LI><A HREF="#hdr18-1">2.16.1. Specific remanence for the gmail.com site</A>
       </UL>
-    <LI><A HREF="#hdr25">2.19. Emulation of the "Applications" key</A>
-    <LI><A HREF="#hdr26">2.20. Close all windows</A>
-    <LI><A HREF="#hdr27">2.21. List of running add-on</A>
-    <LI><A HREF="#hdr22">2.22. Development tools</A>
+    <LI><A HREF="#hdr19">2.17. Computer shutdown</A>
+    <LI><A HREF="#hdr20">2.18. Management of user input gestures</A>
+    <LI><A HREF="#hdr21">2.19. Volume control</A>
       <UL>
-      <LI><A HREF="#toc81">2.22.1. Notions</A>
-      <LI><A HREF="#hdr22-1">2.22.2. Creation of the buildVars.py file</A>
-      <LI><A HREF="#hdr22-2">2.22.3. Updating version of the add-on</A>
-      <LI><A HREF="#hdr22-3">2.22.4. Updating manifest.ini</A>
-      <LI><A HREF="#hdr22-4">2.22.5. Creation of localization "manifest.ini" file</A>
-      <LI><A HREF="#hdr22-5">2.22.6. Create HTML documentation</A>
-      <LI><A HREF="#hdr22-6">2.22.7. Creation of the catalog file</A>
-      <LI><A HREF="#hdr22-7">2.22.8. Preparation of the add-on</A>
-      <LI><A HREF="#hdr22-8">2.22.9. Exploration of the add-on</A>
+      <LI><A HREF="#hdr21-1">2.19.1. Manually set main audio and NVDA audio stream</A>
+      <LI><A HREF="#hdr21-2">2.19.2. Mute or establish the volume of the audio stream of the application placed under the focus</A>
+      <LI><A HREF="#hdr21-3">2.19.3. Modify the volume of the audio stream of the application under the focus</A>
+      <LI><A HREF="#hdr21-8">2.19.4. Modify the volume of NVDA</A>
+      <LI><A HREF="#hdr21-4">2.19.5. Modify main volume</A>
+      <LI><A HREF="#hdr21-5">2.19.6. Return to previous level</A>
+      <LI><A HREF="#hdr21-6">2.19.7. Announcement of level changes</A>
+      <LI><A HREF="#hdr21-7">2.19.8. Automatically restore main sound and NVDA when plugin loads</A>
+      <LI><A HREF="#hdr24-1">2.19.9. Copy date and time to clipboard</A>
+      <LI><A HREF="#hdr24-2">2.19.10. Script to replace the base script "NVDA + f12"</A>
       </UL>
-    <LI><A HREF="#hdr30">2.23. User configuration management</A>
+    <LI><A HREF="#hdr25">2.20. Emulation of the "Applications" key</A>
+    <LI><A HREF="#hdr26">2.21. Close all windows</A>
+    <LI><A HREF="#hdr27">2.22. List of running add-on</A>
+    <LI><A HREF="#hdr22">2.23. Development tools</A>
       <UL>
-      <LI><A HREF="#toc91">2.23.1. Presentation</A>
-      <LI><A HREF="#hdr30-1">2.23.2. Manage user configuration folders</A>
-      <LI><A HREF="#toc93">2.23.3. Examples of use</A>
+      <LI><A HREF="#toc82">2.23.1. Notions</A>
+      <LI><A HREF="#hdr22-1">2.23.2. Creation of the buildVars.py file</A>
+      <LI><A HREF="#hdr22-2">2.23.3. Updating version of the add-on</A>
+      <LI><A HREF="#hdr22-3">2.23.4. Updating manifest.ini</A>
+      <LI><A HREF="#hdr22-4">2.23.5. Creation of localization "manifest.ini" file</A>
+      <LI><A HREF="#hdr22-5">2.23.6. Create HTML documentation</A>
+      <LI><A HREF="#hdr22-6">2.23.7. Creation of the catalog file</A>
+      <LI><A HREF="#hdr22-7">2.23.8. Preparation of the add-on</A>
+      <LI><A HREF="#hdr22-8">2.23.9. Exploration of the add-on</A>
       </UL>
-    <LI><A HREF="#hdr31">2.24. Text analysis</A>
+    <LI><A HREF="#hdr30">2.24. User configuration management</A>
       <UL>
-      <LI><A HREF="#hdr31-1">2.24.1. Activation / deactivation of the analyzer</A>
-      <LI><A HREF="#hdr31-2">2.24.2. Analyze configuration</A>
-      <LI><A HREF="#hdr31-3">2.24.3. On-demand scan</A>
-      <LI><A HREF="#hdr31-4">2.24.4. Move cursor to next/previous irregularity</A>
+      <LI><A HREF="#toc92">2.24.1. Presentation</A>
+      <LI><A HREF="#hdr30-1">2.24.2. Manage user configuration folders</A>
+      <LI><A HREF="#toc94">2.24.3. Examples of use</A>
       </UL>
-    <LI><A HREF="#hdr32">2.25. Announcement of cursor position in edit boxes</A>
-    <LI><A HREF="#hdr33">2.26. Temporary audio output device</A>
+    <LI><A HREF="#hdr31">2.25. Text analysis</A>
       <UL>
-      <LI><A HREF="#hdr33-1">2.26.1. Temporary audio device manager</A>
-      <LI><A HREF="#hdr33-2">2.26.2. Temporary audio device change</A>
-      <LI><A HREF="#hdr33-3">2.26.3. Leave up the Temporary audio device</A>
-      <LI><A HREF="#hdr33-4">2.26.4. Set or leave up temporary audio device</A>
-      <LI><A HREF="#toc105">2.26.5. Technical details</A>
+      <LI><A HREF="#hdr31-1">2.25.1. Activation / deactivation of the analyzer</A>
+      <LI><A HREF="#hdr31-2">2.25.2. Analyze configuration</A>
+      <LI><A HREF="#hdr31-3">2.25.3. On-demand scan</A>
+      <LI><A HREF="#hdr31-4">2.25.4. Move cursor to next/previous irregularity</A>
       </UL>
-    <LI><A HREF="#hdr34">2.27. NVDA audio output orientation</A>
+    <LI><A HREF="#hdr32">2.26. Announcement of cursor position in edit boxes</A>
+    <LI><A HREF="#hdr33">2.27. Temporary audio output device</A>
       <UL>
-      <LI><A HREF="#hdr34-1">2.27.1. Audio source manager</A>
-      <LI><A HREF="#toc108">2.27.2. Technical details</A>
+      <LI><A HREF="#hdr33-1">2.27.1. Temporary audio device manager</A>
+      <LI><A HREF="#hdr33-2">2.27.2. Temporary audio device change</A>
+      <LI><A HREF="#hdr33-3">2.27.3. Leave up the Temporary audio device</A>
+      <LI><A HREF="#hdr33-4">2.27.4. Set or leave up temporary audio device</A>
+      <LI><A HREF="#toc106">2.27.5. Technical details</A>
       </UL>
-    <LI><A HREF="#hdr35">2.28. Quick activation or deactivation of add-ons</A>
+    <LI><A HREF="#hdr34">2.28. NVDA audio output orientation</A>
+      <UL>
+      <LI><A HREF="#hdr34-1">2.28.1. Audio source manager</A>
+      <LI><A HREF="#toc109">2.28.2. Technical details</A>
+      </UL>
+    <LI><A HREF="#hdr35">2.29. Quick activation or deactivation of add-ons</A>
     </UL>
-  <LI><A HREF="#toc110">3. Options</A>
+  <LI><A HREF="#toc111">3. Options</A>
     <UL>
     <LI><A HREF="#hdr100">3.1. Removed the announcement of the description of objects in Windows ribbons</A>
     <LI><A HREF="#hdr102">3.2. Automatic window maximization</A>
@@ -194,7 +197,7 @@ Traductor (s): based on automatic translation from french language
     <LI><A HREF="#hdr105">3.5. Blocking "Insert" and "Capslock" keys</A>
     <LI><A HREF="#hdr106">3.6. Pronunciation of non-alphanumeric characters when per-character keyboard echo is disabled</A>
     </UL>
-  <LI><A HREF="#toc117">4. Advanced options</A>
+  <LI><A HREF="#toc118">4. Advanced options</A>
     <UL>
     <LI><A HREF="#hdr300">4.1. Signaling by sound of an error in the NVDA log</A>
     <LI><A HREF="#hdr302">4.2. Titling of dialog boxes with the name of the add-on</A>
@@ -202,50 +205,50 @@ Traductor (s): based on automatic translation from french language
     <LI><A HREF="#hdr304">4.4. Standard use of the numeric keypad</A>
     <LI><A HREF="#hdr305">4.5. Num lock management</A>
       <UL>
-      <LI><A HREF="#toc123">4.5.1. reporting enabled numeric lock state when starting NVDA</A>
-      <LI><A HREF="#toc124">4.5.2. Automatic activation/deactivation when activating a configuration profile</A>
+      <LI><A HREF="#toc124">4.5.1. reporting enabled numeric lock state when starting NVDA</A>
+      <LI><A HREF="#toc125">4.5.2. Automatic activation/deactivation when activating a configuration profile</A>
       </UL>
     <LI><A HREF="#hdr306">4.6. Caps lock</A>
     <LI><A HREF="#hdr307">4.7. Key repeat limitation</A>
     </UL>
-  <LI><A HREF="#toc127">5. Other improvements</A>
+  <LI><A HREF="#toc128">5. Other improvements</A>
     <UL>
     <LI><A HREF="#hdr202">5.1. Exploring the user configuration folder or nvda program folder</A>
     <LI><A HREF="#hdr203">5.2. Presentation of text formatting in a dialog</A>
     <LI><A HREF="#hdr204">5.3. Announcement of the text of confirmation style dialog boxes</A>
     <LI><A HREF="#hdr205">5.4. Running scripts in the "Input gestures" dialog</A>
       <UL>
-      <LI><A HREF="#toc132">5.4.1. Technical details</A>
+      <LI><A HREF="#toc133">5.4.1. Technical details</A>
       </UL>
     <LI><A HREF="#hdr206">5.5. Automatic selection of the category in the "Input gestures" dialog</A>
       <UL>
-      <LI><A HREF="#toc134">5.5.1. Technical details</A>
+      <LI><A HREF="#toc135">5.5.1. Technical details</A>
       </UL>
     <LI><A HREF="#hdr207">5.6. Selection of the last setting used in the synthesizer settings ring</A>
     <LI><A HREF="#hdr208">5.7. Enhancements for Windows Explorer</A>
       <UL>
-      <LI><A HREF="#toc137">5.7.1. Announcement of folder or file path under cursor</A>
-      <LI><A HREF="#toc138">5.7.2. Announcement, going up the folder tree, of the names of the folders making up the path of the folder containing the element under the cursor</A>
+      <LI><A HREF="#toc138">5.7.1. Announcement of folder or file path under cursor</A>
+      <LI><A HREF="#toc139">5.7.2. Announcement, going up the folder tree, of the names of the folders making up the path of the folder containing the element under the cursor</A>
       </UL>
     </UL>
-  <LI><A HREF="#toc139">6. Summary of the commands provided by this add-on</A>
+  <LI><A HREF="#toc140">6. Summary of the commands provided by this add-on</A>
     <UL>
-    <LI><A HREF="#toc140">6.1. input gestures installed systematically</A>
-    <LI><A HREF="#toc141">6.2. Interpreter commands</A>
+    <LI><A HREF="#toc141">6.1. input gestures installed systematically</A>
+    <LI><A HREF="#toc142">6.2. Interpreter commands</A>
       <UL>
-      <LI><A HREF="#toc142">6.2.1. Display of the list of icons in the notification area and windows of the applications launched</A>
-      <LI><A HREF="#toc143">6.2.2. Help with the composition of complex symbols</A>
-      <LI><A HREF="#toc144">6.2.3. Information on the application under the focus</A>
-      <LI><A HREF="#toc145">6.2.4. Extension of virtual buffer functionality</A>
-      <LI><A HREF="#toc146">6.2.5. Announcement of the folder preselect dialog boxes of the style Open, save, save as</A>
-      <LI><A HREF="#toc147">6.2.6. NVDA logs</A>
-      <LI><A HREF="#toc148">6.2.7. Speech history</A>
-      <LI><A HREF="#toc149">6.2.8. Timer</A>
-      <LI><A HREF="#toc150">6.2.9. Restarting NVDA</A>
-      <LI><A HREF="#toc151">6.2.10. Display of visible elements composing the object in the foreground</A>
-      <LI><A HREF="#toc152">6.2.11. Voice profile switching</A>
-      <LI><A HREF="#toc153">6.2.12. Date and time - additions</A>
-      <LI><A HREF="#toc154">6.2.13. Text analysis</A>
+      <LI><A HREF="#toc143">6.2.1. Display of the list of icons in the notification area and windows of the applications launched</A>
+      <LI><A HREF="#toc144">6.2.2. Help with the composition of complex symbols</A>
+      <LI><A HREF="#toc145">6.2.3. Information on the application under the focus</A>
+      <LI><A HREF="#toc146">6.2.4. Extension of virtual buffer functionality</A>
+      <LI><A HREF="#toc147">6.2.5. Announcement of the folder preselect dialog boxes of the style Open, save, save as</A>
+      <LI><A HREF="#toc148">6.2.6. NVDA logs</A>
+      <LI><A HREF="#toc149">6.2.7. Speech history</A>
+      <LI><A HREF="#toc150">6.2.8. Timer</A>
+      <LI><A HREF="#toc151">6.2.9. Restarting NVDA</A>
+      <LI><A HREF="#toc152">6.2.10. Display of visible elements composing the object in the foreground</A>
+      <LI><A HREF="#toc153">6.2.11. Voice profile switching</A>
+      <LI><A HREF="#toc154">6.2.12. Date and time - additions</A>
+      <LI><A HREF="#toc155">6.2.13. Text analysis</A>
       </UL>
     </UL>
   </UL>
@@ -331,7 +334,7 @@ This add-on adds to NVDA's global commands:
  <UL>
  <LI><A HREF="#hdr300">Signaling by a sound of the entry of an error in the log of NVDA</A>,
  <LI><A HREF="#hdr302">Title of the add-on's dialog boxes with the add-on's summary</A>,
- <LI><A HREF="#hdr303">configuration of the wait time delay for repeating the same input gesture</A>,
+ <LI><A HREF="#hdr303">configuration of the wait time delay for repeating the same input gesture</A> (for NVDA versions lower than 2024,
  <LI><A HREF="#hdr304">possible use of numeric keypad keys as standard</A>.
  <LI><A HREF="#hdr306">possibility to limit the repetition of keys</A>,
  </UL>
@@ -871,21 +874,22 @@ The description of this script is: "Announce the name and version number of the 
 <P>
 By default, no input gesture is assigned to it, nor any interpreter command.
 </P>
+<A NAME="hdr5"></A>
+<H3>2.5. Enhancement of virtual buffer features</H3>
 <P>
-é++ Enhancement of virtual buffer features ++[hdr5]
 This feature is installed by default.
 </P>
 <P>
 It concerns Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Microsoft Edge (partially) browsers and provides:
 </P>
 <A NAME="hdr5-1"></A>
-<H4>2.4.5. New navigation commands</H4>
+<H4>2.5.1. New navigation commands</H4>
 <P>
 This add-on adds the following commands for the browse mode:
 </P>
 <UL>
-<LI>"p" to go to the next paragraph,
-<LI>Shift + p "to go to the previous paragraph,
+<LI>"j" ("p"until NVDA versions 2024.1) to go to the next paragraph,
+<LI>"shift + j" ("shift + p" until NVDA versions 2024.1) to go to the previous paragraph,
 <LI>";" to go to the next main region,
 <LI>"uppercase +;" to go to the previous main region,
 <LI>"y" to go to the next division,
@@ -900,7 +904,7 @@ This add-on adds the following commands for the browse mode:
 Except for the first four, these commands are not implemented in the Microsoft Edge browser.
 </P>
 <A NAME="hdr5-2"></A>
-<H4>2.4.6. New element types for "NVDA + f7" script</H4>
+<H4>2.5.2. New element types for "NVDA + f7" script</H4>
 <P>
 Basically, the script integrated into NVDA and triggered by the "NVDA + f7" input gesture, allows you to display the "List of elements" dialog box presenting the list of certain elements found in a Web page.
 This add-on increases the number of item types that can be chosen and displayed in the title of the dialog,the selected type.
@@ -969,7 +973,7 @@ The "edit" type gives the list of the document's edit zones, and each element is
 Likewise, each form field is presented vocally according to its type.
 </P>
 <A NAME="hdr5-3"></A>
-<H4>2.4.7. Scripts for tables</H4>
+<H4>2.5.3. Scripts for tables</H4>
 <P>
 For Microsoft Internet Explorer, Microsoft Edge, Mozilla Firefox, GoogleChrome browsers, it is possible when the cursor is on a table cell of:
 </P>
@@ -1003,12 +1007,12 @@ This add-on also moves NVDA base scripts that used to be under the "Miscellaneou
 </UL>
 
 <A NAME="hdr5-4"></A>
-<H4>2.4.8. Announcement of the document address</H4>
+<H4>2.5.4. Announcement of the document address</H4>
 <P>
 The input gesture "NVDA+a", (desktop computer) or "NVDA+shift+a" (laptop) typed in Mozilla FireFox, Microsoft Internet Explorer, Microsoft Edge or Gooble Chrome browsers, announces the address (URL) of the document. With a double press, this address is copied to the clipboard.
 </P>
 <A NAME="hdr5-5"></A>
-<H4>2.4.9. Loop navigation</H4>
+<H4>2.5.5. Loop navigation</H4>
 <P>
 In browse mode, the search for the next or previous item stops at the end or the beginning of the document.
 </P>
@@ -1033,7 +1037,7 @@ This option is only shown if the "Extend virtual buffer functionality" feature i
 By default, this option is not checked. The basic operation of NVDA is retained.
 </P>
 <A NAME="hdr7"></A>
-<H3>2.5. Announcement of the function associated with the "copy", "Paste" style editing commands</H3>
+<H3>2.6. Announcement of the function associated with the "copy", "Paste" style editing commands</H3>
 <P>
 This feature is installed by default.
 </P>
@@ -1059,7 +1063,7 @@ It is strongly advised not to install add-on that provide the same kind of funct
 If this feature is installed, the following scripts are installed.
 </P>
 <A NAME="hdr7-1"></A>
-<H4>2.5.1. Add selected text to clipboard</H4>
+<H4>2.6.1. Add selected text to clipboard</H4>
 <P>
 This feature adds the script that allows you to add the selected text to the clipboard.
 </P>
@@ -1085,7 +1089,7 @@ A confirmation request will be displayed before proceeding with the addition if 
 Note: this script is taken from the "ClipContentsDesigner" add-on (Authors Noelia, Abdel) which also provides other interesting features regarding the clipboard. It was put in this add-on on request of users who wanted at the same time the announcement of the functions "copy" and "paste".
 </P>
 <A NAME="hdr7-2"></A>
-<H4>2.5.2. Report text on Windows clipboard</H4>
+<H4>2.6.2. Report text on Windows clipboard</H4>
 <P>
 This script replaces the base NVDA script ("NVDA+c") to complete it by telling the user who ran the command that:
 </P>
@@ -1101,7 +1105,7 @@ the number of characters read is no longer limited to 1024.
 This maximum number can be configured using the "Maximum reported characters" choice in the "Clipboard" group of the "NVDA enhancements" category.
 </P>
 <A NAME="hdr7-3"></A>
-<H4>2.5.3. Empty the clipboard</H4>
+<H4>2.6.3. Empty the clipboard</H4>
 <P>
 This script is installed without a input gesture, but it is possible to assign one using NVDA's "Input gestures" dialog.
 </P>
@@ -1115,7 +1119,7 @@ Its function is to completely erase the contents of the Windows clipboard. Atten
 It is launched using the "contrôle+x" interpreter command.
 </P>
 <A NAME="hdr8"></A>
-<H3>2.6. Announcement of the selected folder in the "Open", "Save", "Save as" style dialog boxes</H3>
+<H3>2.7. Announcement of the selected folder in the "Open", "Save", "Save as" style dialog boxes</H3>
 <P>
 This feature is installed by default without input gesture.
 </P>
@@ -1139,7 +1143,7 @@ No input gesture is associated with the last two scripts, but it is possible to 
 Please note, these scripts only work in dialog boxes conforming to the Windows standard.
 </P>
 <A NAME="hdr9"></A>
-<H3>2.7. NVDA logs</H3>
+<H3>2.8. NVDA logs</H3>
 <P>
 This feature is by default, installed without input gesture.
 </P>
@@ -1155,7 +1159,7 @@ It adds the scripts:
 These Scripts are stored in the "Tools" category of the NVDA "input gestures" dialog.
 </P>
 <A NAME="hdr9-1"></A>
-<H4>2.7.1. Management of NVDA logs</H4>
+<H4>2.8.1. Management of NVDA logs</H4>
 <P>
 The description of this script is: "Open a dialog to manage NVDA logs".
 </P>
@@ -1188,7 +1192,7 @@ To solve this problem pending a future correction from Microsoft, you must ask W
 </UL>
 
 <A NAME="hdr9-2"></A>
-<H4>2.7.2. Opening NVDA logs</H4>
+<H4>2.8.2. Opening NVDA logs</H4>
 <P>
 The description of this script is: "Open current NVDA log file. Pressing this key twice, open the old NVDA log file. Pressing third, copy current log path to the clipboard".
 </P>
@@ -1209,7 +1213,7 @@ The journal is not directly opened. It is previously copied to a temporary NVDAL
 This temporary file then opens in the program associated with the .txt extension. Default is notepad.
 </P>
 <A NAME="hdr10"></A>
-<H3>2.8. Speech history</H3>
+<H3>2.9. Speech history</H3>
 <P>
 This feature is installed by default without input gesture.
 In order to be able to listen to voice announcements that are poorly understood or heard badly, this add-on records a limited history of speech strings sent to the synthesizer.
@@ -1218,24 +1222,24 @@ The number of records is limited to 200.
 <P>
 To listen to these recordings again, the following scripts, placed in the "Speech" category of the NVDA "input gestures" dialog, are provided by this functionality:
 </P>
-<A NAME="toc41"></A>
-<H4>2.8.1. Announcement of the previous recording</H4>
+<A NAME="toc42"></A>
+<H4>2.9.1. Announcement of the previous recording</H4>
 <P>
 This script is started using the input gesture, "NVDA+control+f8" assigned by default.
 </P>
 <P>
 The input gesture triggers the announcement of the previous recording compared to the last announced recording.
 </P>
-<A NAME="toc42"></A>
-<H4>2.8.2. Announcement of the next recording</H4>
+<A NAME="toc43"></A>
+<H4>2.9.2. Announcement of the next recording</H4>
 <P>
 This script is launched using the input gesture, "NVDA+control+f10" assigned by default.
 </P>
 <P>
 The input gesture triggers the announcement of the next recording compared to the last announced recording.
 </P>
-<A NAME="toc43"></A>
-<H4>2.8.3. Re-announce the last recording announced</H4>
+<A NAME="toc44"></A>
+<H4>2.9.3. Re-announce the last recording announced</H4>
 <P>
 The description of this script is: "Report current record of the speech history and copy it to clipboard. Twice: display speech history".
 </P>
@@ -1252,7 +1256,7 @@ A double press, triggers the copy of the recording to the clipboard.
 A triple press, displays the entire history.
 </P>
 <A NAME="hdr10-1"></A>
-<H4>2.8.4. Show speech history</H4>
+<H4>2.9.4. Show speech history</H4>
 <P>
 The description of this script is: "display speech history records".
 </P>
@@ -1270,8 +1274,8 @@ By default:
 <LI>the records are presented in descending order. The "Display records in ascending order" option for this same grouping allows you to display them in reverse order.
 </UL>
 
-<A NAME="toc45"></A>
-<H4>2.8.5. Technical details</H4>
+<A NAME="toc46"></A>
+<H4>2.9.5. Technical details</H4>
 <P>
 To achieve this functionality, the "speak" and "speakSpelling" functions of the NVDA "speech.speech.py" module have been replaced. Replacement functions are common with the "Temporary audio output device " feature.
 </P>
@@ -1282,7 +1286,7 @@ This may cause problems if other add-ons have also done this.
 To keep the other add-ons working properly, you must uninstall these two features.
 </P>
 <A NAME="hdr12"></A>
-<H3>2.9. Keyboard keys renaming</H3>
+<H3>2.10. Keyboard keys renaming</H3>
 <P>
 This feature is installed by default.
 </P>
@@ -1322,7 +1326,7 @@ To display this dialog, three possibilities:
 It is possible to not install this feature by selecting, in the "Installed features" category and for the "Keyboard keys renaming" feature, the "Do not install" status.
 </P>
 <A NAME="hdr13"></A>
-<H3>2.10. Selective announcement of command keys</H3>
+<H3>2.11. Selective announcement of command keys</H3>
 <P>
 This feature is installed by default.
 </P>
@@ -1397,8 +1401,8 @@ In the lists, the "F2" key and the "shift + F2" key combination allow you to mov
 <P>
 It is possible to not install this functionality by selecting, in the "Installed functionalities" category and for the "Selective announcement of command keys" functionality, the "Do not install" status.
 </P>
-<A NAME="toc48"></A>
-<H4>2.10.1. Technical details</H4>
+<A NAME="toc49"></A>
+<H4>2.11.1. Technical details</H4>
 <P>
 To achieve this functionality, the "executeGesture" function of "inputCore.manager" has been replaced. This change is common with the “NVDA and modifier keys's remanence ” feature.
 </P>
@@ -1406,7 +1410,7 @@ To achieve this functionality, the "executeGesture" function of "inputCore.manag
 If this change causes a conflict with other add-ons, both features should be uninstalled.
 </P>
 <A NAME="hdr14"></A>
-<H3>2.11. Minute timer</H3>
+<H3>2.12. Minute timer</H3>
 <P>
 This feature is installed by default.
 </P>
@@ -1447,7 +1451,7 @@ The duration is refreshed every 5 seconds and is announced when the focus is in 
 This dialog box closes automatically when the timer expires.
 </P>
 <A NAME="hdr15"></A>
-<H3>2.12. NVDA restarting</H3>
+<H3>2.13. NVDA restarting</H3>
 <P>
 This feature is not installed by default.
 </P>
@@ -1470,15 +1474,15 @@ A simple press of this gesture triggers a restart of NVDA with the logging level
 Double pressing of this input gesture restarts NVDA with the debug logging level without changing the logging level configured in NVDA general preferences.
 </P>
 <A NAME="hdr16"></A>
-<H3>2.13. Displaying of visible elements of the object in the foreground</H3>
+<H3>2.14. Displaying of visible elements of the object in the foreground</H3>
 <P>
 By default, this feature is installed with input gesture.
 </P>
 <P>
 It installs two scripts stored in the "System focus" category of the NVDA "input gestures" dialog:
 </P>
-<A NAME="toc52"></A>
-<H4>2.13.1. Display of visible elements of the object under focus</H4>
+<A NAME="toc53"></A>
+<H4>2.14.1. Display of visible elements of the object under focus</H4>
 <P>
 The description of this script is: "Display the list's visible items making up current foreground object".
 </P>
@@ -1535,8 +1539,8 @@ For an element of type:
 <LI>edit box: read-only status is indicated.
 </UL>
 
-<A NAME="toc53"></A>
-<H4>2.13.2. Announcement or display of visible elements of the object under focus</H4>
+<A NAME="toc54"></A>
+<H4>2.14.2. Announcement or display of visible elements of the object under focus</H4>
 <P>
 The description of this script is: "Reads all controls in the active window. If pressed twice: display the list's visible items making up it".
 </P>
@@ -1550,7 +1554,7 @@ A single press launches the basic NVDA script which announces all objects of the
 Pressing twice launches the previous script "Display of visible elements of the object in the foreground".
 </P>
 <A NAME="hdr17"></A>
-<H3>2.14. Fast voice profile switching</H3>
+<H3>2.15. Fast voice profile switching</H3>
 <P>
 This feature is installed by default without input gesture.
 </P>
@@ -1569,7 +1573,7 @@ A voice profile is defined by:
 It installs the following scripts under the "Voice Profile Switching" category of the NVDA "input gestures" dialog:
 </P>
 <A NAME="hdr17-1"></A>
-<H4>2.14.1. Management of voice profile selectors</H4>
+<H4>2.15.1. Management of voice profile selectors</H4>
 <P>
 The description of this script is: "Display dialog to manage voice profile selectors".
 </P>
@@ -1640,7 +1644,7 @@ This mode activated,the right or left arrows are used to move to the first next 
 The selectors taken into account are the selectors from the "Selectors" list which are associated with a voice profile.
 </P>
 <A NAME="hdr17-2"></A>
-<H4>2.14.2. "Voice profile switching" mode</H4>
+<H4>2.15.2. "Voice profile switching" mode</H4>
 <P>
 To quickly change voice profile, the "Voice profile switching" mode is set up and a script is used to activate or deactivate it.
 </P>
@@ -1661,8 +1665,8 @@ When this mode is activated, the right or left arrows are used to move to the fi
 <P>
 The selectors taken into account are the selectors from the "Selectors" list which are associated with a voice profile.
 </P>
-<A NAME="toc57"></A>
-<H4>2.14.3. Choice of previous voice profile selector</H4>
+<A NAME="toc58"></A>
+<H4>2.15.3. Choice of previous voice profile selector</H4>
 <P>
 The description of this script is: "Go backward to the first selector associated to a voice profile and set this voice profile as current voice profile".
 </P>
@@ -1672,8 +1676,8 @@ It is launched using the "nvda+shift+control+left arrow" input gesture which is 
 <P>
 The script searches for, in the "Selectors" list, the first selector preceding the current selector associated with a voice profile. Then he positions this voice profile as the current voice profile.
 </P>
-<A NAME="toc58"></A>
-<H4>2.14.4. Choice of the next voice profile selector</H4>
+<A NAME="toc59"></A>
+<H4>2.15.4. Choice of the next voice profile selector</H4>
 <P>
 The description of this script is: "Go to forward to the first selector associated to a voice profile and set this voice profile as current voice profile".
 </P>
@@ -1683,8 +1687,8 @@ It is launched using the "nvda+shift+control+right arrow" input gesture which is
 <P>
 The script searches for, in the "Selectors" list, the first voice profile selector following the current selector associated with a voice profile. Then he positions this voice profile as the current voice profile.
 </P>
-<A NAME="toc59"></A>
-<H4>2.14.5. Choice of voice profile selector by number</H4>
+<A NAME="toc60"></A>
+<H4>2.15.5. Choice of voice profile selector by number</H4>
 <P>
 8 scripts are installed.
 The description of these scripts is: "Set selector x as current selector and Sets , if possible, it associated voice profile as current voice profile" (where x is the number of the selector).
@@ -1696,7 +1700,7 @@ Each script is launched using the "nvda+shift+control+selector number" input ges
 The script selects the selector x and if it is associated with a voice profile, positions this voice profile as the current voice profile.
 </P>
 <A NAME="hdr17-6"></A>
-<H4>2.14.6. Report or display of current speech settings</H4>
+<H4>2.15.6. Report or display of current speech settings</H4>
 <P>
 The following 3 scripts allow you to know the current speech settings without having to use the "Speech" NVDA menu.
 </P>
@@ -1716,7 +1720,7 @@ Their descriptions are:
 </UL>
 
 <A NAME="hdr17-7"></A>
-<H4>2.14.7. Autosave voice settings when switching profiles</H4>
+<H4>2.15.7. Autosave voice settings when switching profiles</H4>
 <P>
 Current voice settings can be automatically saved for the current selector when switching voice profiles.
 </P>
@@ -1733,7 +1737,7 @@ This feature is configurable and is not enabled by default.
 To activate it, you must check the option "Automatically save current voice settings for the current selector before switching" which is in the "Advanced" category of the global settings of the add-on.
 </P>
 <A NAME="hdr18"></A>
-<H3>2.15. NVDA and modifier keys's remanence</H3>
+<H3>2.16. NVDA and modifier keys's remanence</H3>
 <P>
 This feature is not installed by default.
 </P>
@@ -1788,7 +1792,7 @@ You have to wait for the end of afterglow to have any new key treated individual
 It is however possible to stop the remanence before the end of the time delay, by re-entering the last key in remanence.
 </P>
 <A NAME="hdr18-1"></A>
-<H4>2.15.1. Specific remanence for the gmail.com site</H4>
+<H4>2.16.1. Specific remanence for the gmail.com site</H4>
 <P>
 This remanence is specifically set up for the gmail.com site and is only active in the "<A HREF="https://mail.google.com/mail/#i">https://mail.google.com/mail/#i</A>" page.
 </P>
@@ -1813,7 +1817,7 @@ Typing the second letter within the configured remanence delay will send both le
 In order for NVDA to send the letters to the browser, it is necessary to switch to form mode first.
 </P>
 <A NAME="hdr19"></A>
-<H3>2.16. Computer shutdown</H3>
+<H3>2.17. Computer shutdown</H3>
 <P>
 This feature cannot be uninstalled.
 </P>
@@ -1857,7 +1861,7 @@ The "Announce the remaining waiting time" button allows you to read the waiting 
 All scripts are placed in the "NVDA global commands extension" category of the NVDA "Input gestures" dialog, but no gestures are assigned to them.
 </P>
 <A NAME="hdr20"></A>
-<H3>2.17. Management of user input gestures</H3>
+<H3>2.18. Management of user input gestures</H3>
 <P>
 This feature cannot be uninstalled.
 </P>
@@ -1903,7 +1907,7 @@ As for the classic "input gestures" dialog, it is only by pressing the "OK" butt
 Cancellation of all changes using the "Delete all" button is subject to confirmation. Upon acceptance, all changes are canceled and the dialogue closes.
 </P>
 <A NAME="hdr21"></A>
-<H3>2.18. Volume control</H3>
+<H3>2.19. Volume control</H3>
 <P>
 By default, this feature is installed without input gesture.
 </P>
@@ -1917,7 +1921,7 @@ If it is installed with or without a input gesture, it places the "Volume contro
 It installs the following scripts stored under the "Volume control" category in the "input gestures" NVDA dialog:
 </P>
 <A NAME="hdr21-1"></A>
-<H4>2.18.1. Manually set main audio and NVDA audio stream</H4>
+<H4>2.19.1. Manually set main audio and NVDA audio stream</H4>
 <P>
 This script is launched:
 </P>
@@ -1930,7 +1934,7 @@ This script is launched:
 It sets the volumes of the audio output device that NVDA uses and that of the audio stream from NVDA and forces the levels of each to the values ​​of the undo levels configured in the "Sound Control" group of the "Computer" category of the add-on settings.
 </P>
 <A NAME="hdr21-2"></A>
-<H4>2.18.2. Mute or establish the volume of the audio stream of the application placed under the focus</H4>
+<H4>2.19.2. Mute or establish the volume of the audio stream of the application placed under the focus</H4>
 <P>
 This script is launched:
 </P>
@@ -1943,7 +1947,7 @@ This script is launched:
 This command mutes the volume of the audio stream of the focused application if it is established or restores it if it is muted.
 </P>
 <A NAME="hdr21-3"></A>
-<H4>2.18.3. Modify the volume of the audio stream of the application under the focus</H4>
+<H4>2.19.3. Modify the volume of the audio stream of the application under the focus</H4>
 <P>
 These scripts are used to increase, decrease or fix the volume of the audio stream of the focused application.
 </P>
@@ -1973,7 +1977,7 @@ Size 1 is the smallest step, size 20 is the largest step. The size is set to 5 b
 By default, the app volume level cannot exceed the master volume level. But this limitation can be overridden if the option "Increase speakers volume if necessary" is checked. This option can be found in the "Volume modification" group of the "Computer" category of the global settings of the add-on.
 </P>
 <A NAME="hdr21-8"></A>
-<H4>2.18.4. Modify the volume of NVDA</H4>
+<H4>2.19.4. Modify the volume of NVDA</H4>
 <P>
 These scripts allow you to increase, decrease, or fix the volume of NVDA.
 </P>
@@ -2006,7 +2010,7 @@ NVDA volume cannot fall below the configured recovery threshold.
 By default, it cannot be greater than the primary volume, but this limitation can be overridden if the option "Increase speakers volume if necessary" is checked. This option can be found in the "Volume modification" group of the "Computer" category of the global settings of the add-on.
 </P>
 <A NAME="hdr21-4"></A>
-<H4>2.18.5. Modify main volume</H4>
+<H4>2.19.5. Modify main volume</H4>
 <P>
 These scripts allow to increase, decrease, or fix the main volume of the audio output device used by the application under focus (including NVDA) or the Windows default one if the application under focus does not use one .
 </P>
@@ -2036,7 +2040,7 @@ Size 1 is the smallest step, size 20 is the largest step. By default, the size i
 The primary volume cannot fall below the configured recovery threshold.
 </P>
 <A NAME="hdr21-5"></A>
-<H4>2.18.6. Return to previous level</H4>
+<H4>2.19.6. Return to previous level</H4>
 <P>
 When using the preceding commands, the volume level is saved before each command is executed, for the audio device, for NVDA, and for each application.
 </P>
@@ -2055,7 +2059,7 @@ The previous level is also saved when these commands are executed.
 These records are not kept when restarting NVDA.
 </P>
 <A NAME="hdr21-6"></A>
-<H4>2.18.7. Announcement of level changes</H4>
+<H4>2.19.7. Announcement of level changes</H4>
 <P>
 Volume level changes are announced by default. The name of the audio output device is also announced on the first volume change for that device.
 </P>
@@ -2063,7 +2067,7 @@ Volume level changes are announced by default. The name of the audio output devi
 But it is possible to disable this announcement using the "Announce volume changes" option in the "Volume change" group of the "Computer" category.
 </P>
 <A NAME="hdr21-7"></A>
-<H4>2.18.8. Automatically restore main sound and NVDA when plugin loads</H4>
+<H4>2.19.8. Automatically restore main sound and NVDA when plugin loads</H4>
 <P>
 This feature allows you to restore, when loading this add-on, the volume of the NVDA audio source and that of the audio output device it uses by setting the level of each to a value defined by configuration in the event that it is lower than the minimum threshold defined by configuration.
 </P>
@@ -2088,7 +2092,7 @@ If this is not the case, this add-on then fixes the volume level to the value of
 When installing this add-on, the current NVDA volume levels and the audio output device used by NVDA are taken into account to set the values ​​of the levels to be restored.
 </P>
 <A NAME="hdr24-1"></A>
-<H4>2.18.9. Copy date and time to clipboard</H4>
+<H4>2.19.9. Copy date and time to clipboard</H4>
 <P>
 The description of this script is: "Copy date and time to clipboard".
 This script is stored in the "System Status" category of the NVDA "input gestures" dialog.
@@ -2101,7 +2105,7 @@ No input gesture is attributed to it.
 As its description indicates, it allows you to copy the date and time to the clipboard.
 </P>
 <A NAME="hdr24-2"></A>
-<H4>2.18.10. Script to replace the base script "NVDA + f12"</H4>
+<H4>2.19.10. Script to replace the base script "NVDA + f12"</H4>
 <P>
 The add-on installs a script whose description is: "Reports the current time. Twice, reports the current date. Third: copy date and time to the clipboard".
 </P>
@@ -2129,14 +2133,14 @@ This script allows:
 <P>
 It also brings:
 </P>
-<H5>2.18.10.1. Announcement of the hour independent of the punctuation level</H5>
+<H5>2.19.10.1. Announcement of the hour independent of the punctuation level</H5>
 <P>
 The basic input gesture "NVDA + f12" gives the time with a simple press, but the time is not announced in the same way depending on the Level of punctuation and symbols selected in the voice parameters.
 </P>
 <P>
 This script corrects this small flaw by announcing the time with the Level of punctuation and symbols forced to "None" without modifying the level defined in the "Speech" category's parameters.
 </P>
-<H5>2.18.10.2. Announcement of the time with seconds</H5>
+<H5>2.19.10.2. Announcement of the time with seconds</H5>
 <P>
 By default, NVDA's input gesture "nvda + f12" announces the time without the seconds.
 </P>
@@ -2150,7 +2154,7 @@ All you have to do is check the "Report windows clock's time with seconds" check
 This option is not present if the installation status of the feature is "Do not install".
 </P>
 <A NAME="hdr25"></A>
-<H3>2.19. Emulation of the "Applications" key</H3>
+<H3>2.20. Emulation of the "Applications" key</H3>
 <P>
 To compensate for the absence of the "Applications" key on some computers and not knowing whether the "upper case + f10" shortcut fulfills the same function, the add-on installs a script without a input gesture in the "Emulated keys of the keyboard" category system "with the description"Emulate key press: applications".
 </P>
@@ -2158,7 +2162,7 @@ To compensate for the absence of the "Applications" key on some computers and no
 To use it, all you need to do is assign it a input gesture or a keyboard key that is rarely used, such as the "print screen" key, the "Pause" key.
 </P>
 <A NAME="hdr26"></A>
-<H3>2.20. Close all windows</H3>
+<H3>2.21. Close all windows</H3>
 <P>
 The add-on installs a script to close all open windows.
 </P>
@@ -2169,7 +2173,7 @@ This script is placed in the add-on scripts category and under the description "
 It is started with the command "k" from the command interpreter. No control gesture is assigned to it by default.
 </P>
 <A NAME="hdr27"></A>
-<H3>2.21. List of running add-on</H3>
+<H3>2.22. List of running add-on</H3>
 <P>
 The add-on manager or Add-on store displays the list of installed add-on and their status: activated or deactivated.
 </P>
@@ -2197,7 +2201,7 @@ add-on are listed by type:
 </UL>
 
 <A NAME="hdr22"></A>
-<H3>2.22. Development tools</H3>
+<H3>2.23. Development tools</H3>
 <P>
 This feature is not installed by default.
 </P>
@@ -2226,8 +2230,8 @@ Activating this script brings up a dialog presenting:
 <LI>a button to open the folder of the selected add-on in the explorer.
 </UL>
 
-<A NAME="toc81"></A>
-<H4>2.22.1. Notions</H4>
+<A NAME="toc82"></A>
+<H4>2.23.1. Notions</H4>
 <P>
 To package an add-on (create the add-on installation file), we recommend that you use the "nvda adon scons template".
 This model uses a "buildVars.py" file which defines, for an add-on, all the necessary information such as: its internal name, its version, its name and its description to be translated into each language supported by it.
@@ -2253,7 +2257,7 @@ When we create an add-on, there is nothing. You must create the "manifest.ini" f
 </UL>
 
 <A NAME="hdr22-1"></A>
-<H4>2.22.2. Creation of the buildVars.py file</H4>
+<H4>2.23.2. Creation of the buildVars.py file</H4>
 <P>
 The first step is to create the "buildVars.py" file from the information in the "manifest.ini" file that we created for the development of the add-on.
 </P>
@@ -2267,7 +2271,7 @@ It is only this file that we will then modify to update the "manifest.ini" file 
 To be used with the "adon scons template", it will have to be completed by filling in the information which is not found in the "manifest.ini" file.
 </P>
 <A NAME="hdr22-2"></A>
-<H4>2.22.3. Updating version of the add-on</H4>
+<H4>2.23.3. Updating version of the add-on</H4>
 <P>
 The "Update add-on version" button allows you to modify the version defined in the buildVars.py file of the selected add-on.
 </P>
@@ -2278,7 +2282,7 @@ It presents a dialog box containing an edit zone initialized with the current ve
 Pressing the "OK" button saves the new version in the file.
 </P>
 <A NAME="hdr22-3"></A>
-<H4>2.22.4. Updating manifest.ini</H4>
+<H4>2.23.4. Updating manifest.ini</H4>
 <P>
 The "manifest.ini" file must be updated as soon as the "buildVars.py" file is modified.
 </P>
@@ -2286,7 +2290,7 @@ The "manifest.ini" file must be updated as soon as the "buildVars.py" file is mo
 Use the "Update manifest.ini file" button for this.
 </P>
 <A NAME="hdr22-4"></A>
-<H4>2.22.5. Creation of localization "manifest.ini" file</H4>
+<H4>2.23.5. Creation of localization "manifest.ini" file</H4>
 <P>
 Any modification of the "addon_summary" or "addon_description" information of the "buildVars.py" file requires the translation of this description into each language supported by the add-on (taken into account in the nvda.po file and compilation of this file) .
 </P>
@@ -2297,7 +2301,7 @@ In order for the add-ons' Manager to present this information to the user for th
 The button "Create the localization manifest.ini file" allows this. It is possible to update the file for the selected language or for all languages.
 </P>
 <A NAME="hdr22-5"></A>
-<H4>2.22.6. Create HTML documentation</H4>
+<H4>2.23.6. Create HTML documentation</H4>
 <P>
 Add-oon documentation files can be either in "markdown" (. Md) or "txt2tags" (.t2t) format.
 </P>
@@ -2311,7 +2315,7 @@ This is possible simply using the "Create HTML documentation files" button after
 Opened in the browser, these HTML files need style files (style.css for Markdown files and style_t2t.css for txt2tags files) placed in the add-on's "doc" folder.
 </P>
 <A NAME="hdr22-6"></A>
-<H4>2.22.7. Creation of the catalog file</H4>
+<H4>2.23.7. Creation of the catalog file</H4>
 <P>
 The "Create POT file" button is used to create the catalog file for the selected add-on.
 </P>
@@ -2319,7 +2323,7 @@ The "Create POT file" button is used to create the catalog file for the selected
 Once created, this file is placed in the add-on's "locale\en" folder and is named "version-name.pot" where "name" is the name of the add-on and "version" is its version.
 </P>
 <A NAME="hdr22-7"></A>
-<H4>2.22.8. Preparation of the add-on</H4>
+<H4>2.23.8. Preparation of the add-on</H4>
 <P>
 The "Prepare add-on" button launches, for the selected add-on, the execution of the following actions:
 </P>
@@ -2331,14 +2335,14 @@ The "Prepare add-on" button launches, for the selected add-on, the execution of 
 </UL>
 
 <A NAME="hdr22-8"></A>
-<H4>2.22.9. Exploration of the add-on</H4>
+<H4>2.23.9. Exploration of the add-on</H4>
 <P>
 The "Explore add-on folder" button opens Windows Explorer in the selected add-on folder.
 </P>
 <A NAME="hdr30"></A>
-<H3>2.23. User configuration management</H3>
-<A NAME="toc91"></A>
-<H4>2.23.1. Presentation</H4>
+<H3>2.24. User configuration management</H3>
+<A NAME="toc92"></A>
+<H4>2.24.1. Presentation</H4>
 <P>
 The purpose of this feature is to allow the user to restart NVDA with the user configuration of his choice.
 </P>
@@ -2382,7 +2386,7 @@ This functionality therefore provides the means to:
 </UL>
 
 <A NAME="hdr30-1"></A>
-<H4>2.23.2. Manage user configuration folders</H4>
+<H4>2.24.2. Manage user configuration folders</H4>
 <P>
 First of all, you must define the configurations that will be used.
 </P>
@@ -2436,7 +2440,7 @@ An NVDA configuration folder is characterized by its content. It must contain, i
 The "modify this folder" button is not present if the selected folder is the active configuration folder.
 </P>
 <A NAME="hdr30-1-1"></A>
-<H5>2.23.2.1. Adding a folder</H5>
+<H5>2.24.2.1. Adding a folder</H5>
 <P>
 The "Add a new folder" and "Add an existing folder" buttons allow you to add a folder to the list of configuration folders.
 </P>
@@ -2468,7 +2472,7 @@ Pressing the second button brings up the "Add an existing folder" dialog which p
 </UL>
 
 <A NAME="hdr30-1-2"></A>
-<H5>2.23.2.2. Deletion of folder</H5>
+<H5>2.24.2.2. Deletion of folder</H5>
 <P>
 The "Delete this folder" button allows you to remove the selected folder from the list and erase it from the drive.
 </P>
@@ -2479,7 +2483,7 @@ This button is not available if the folder is the folder of the active configura
 Confirmation of deletion for this action will be requested.
 </P>
 <A NAME="hdr30-1-3"></A>
-<H5>2.23.2.3. Preparation or modification of the folder</H5>
+<H5>2.24.2.3. Preparation or modification of the folder</H5>
 <P>
 Depending on whether the folder is a configuration folder or not, the dialog shows respectively:
 </P>
@@ -2522,7 +2526,7 @@ For the import of add-ons, it is possible to import all or part of the add-ons o
 Importing the entire configuration allows you to completely duplicate the selected folder and thus have an identical copy of the configuration of this folder.
 </P>
 <A NAME="hdr30-1-4"></A>
-<H5>2.23.2.4. Restarting NVDA with another configuration</H5>
+<H5>2.24.2.4. Restarting NVDA with another configuration</H5>
 <P>
 The "Restart NVDA with this folder" button allows you to restart NVDA with the configuration of the selected folder.
 </P>
@@ -2549,13 +2553,13 @@ This registration is done in the "NVDAExtensionGlobalPlugin-userConfigs.ini" fil
 </UL>
 
 <A NAME="hdr30-1-5"></A>
-<H5>2.23.2.5. Exploration of the configuration file</H5>
+<H5>2.24.2.5. Exploration of the configuration file</H5>
 <P>
 The "Explore this folder" button opens the configuration folder selected in the explorer.
 </P>
-<A NAME="toc93"></A>
-<H4>2.23.3. Examples of use</H4>
-<H5>2.23.3.1. Starting NVDA with a new blank configuration</H5>
+<A NAME="toc94"></A>
+<H4>2.24.3. Examples of use</H4>
+<H5>2.24.3.1. Starting NVDA with a new blank configuration</H5>
 <UL>
 <LI>type "NVDA + j" followed by "n" to display the dialog.
 <LI>press the "Add a new folder" button.
@@ -2568,7 +2572,7 @@ The "Explore this folder" button opens the configuration folder selected in the 
 <P>
 NVDA reboots and initializes the configuration as during a post install boot.
 </P>
-<H5>2.23.3.2. Start NVDA with identical configuration</H5>
+<H5>2.24.3.2. Start NVDA with identical configuration</H5>
 <P>
 After the first 5 steps:
 </P>
@@ -2578,7 +2582,7 @@ After the first 5 steps:
 <LI>press the button "Restart NVDA with this folder".
 </UL>
 
-<H5>2.23.3.3. Start NVDA with an existing configuration</H5>
+<H5>2.24.3.3. Start NVDA with an existing configuration</H5>
 <UL>
 <LI>type "NVDA + j" followed by "n" to display the dialog.
 <LI>press the "Add an existing folder" button.
@@ -2591,7 +2595,7 @@ After the first 5 steps:
 By combining the previous example and this one and using a USB drive as a medium, you can find the same configuration on different machines.
 </P>
 <A NAME="hdr31"></A>
-<H3>2.24. Text analysis</H3>
+<H3>2.25. Text analysis</H3>
 <P>
 This functionality is currently being tested.
 </P>
@@ -2623,7 +2627,7 @@ To do this, the "Text analysis" category is added in the add-on settings dialog.
 The settings in this category are specific to the active profile that is announced when the category is selected.
 </P>
 <A NAME="hdr31-1"></A>
-<H4>2.24.1. Activation / deactivation of the analyzer</H4>
+<H4>2.25.1. Activation / deactivation of the analyzer</H4>
 <P>
 The analyzer can be turned on or off in three ways:
 </P>
@@ -2657,9 +2661,9 @@ The result of the analysis is indicated according to the choice made, by:
 For the alert configuration, see the "Alert" group of the "Text analysis" category.
 </P>
 <A NAME="hdr31-2"></A>
-<H4>2.24.2. Analyze configuration</H4>
+<H4>2.25.2. Analyze configuration</H4>
 <A NAME="hdr31-2-1"></A>
-<H5>2.24.2.1. Checking for symbol mismatches</H5>
+<H5>2.25.2.1. Checking for symbol mismatches</H5>
 <P>
 It is enabled by default.
 </P>
@@ -2679,7 +2683,7 @@ Each symbol may or may not be part of the search depending on whether it is chec
 The symbols in the list depend on the language chosen for NVDA. They are defined in the "textAnalyzer.ini" file placed in the folder associated with the language of the "locale" folder.
 </P>
 <A NAME="hdr31-2-2"></A>
-<H5>2.24.2.2. Finding anomalies</H5>
+<H5>2.25.2.2. Finding anomalies</H5>
 <P>
 It is enabled by default.
 </P>
@@ -2707,7 +2711,7 @@ In the list, these are checked boxes. By default, they are all checked. By unche
 For anomalies concerning spaces around a symbol, the symbols involved are indicated by checked in the list containing all the symbols provided. Depending on the need, it is possible to check or uncheck a particular symbol. The symbols checked by default are defined for each NVDA language requiring it in the "textAnalysis.ini" file placed in the language folder of the "locale" folder.
 </P>
 <A NAME="hdr31-2-3"></A>
-<H5>2.24.2.3. Search for formatting change</H5>
+<H5>2.25.2.3. Search for formatting change</H5>
 <P>
 It is disabled by default.
 Formatting changes can be signaled by the analyzer depending on the status of the "Report changes" checkbox in the "Formatting" group of the "Text Analysis" category.
@@ -2727,7 +2731,7 @@ The formatting changes concern:
 They can be included or excluded individually from the search by checking or unchecking them in the "Types" list of the same group.
 </P>
 <A NAME="hdr31-3"></A>
-<H4>2.24.3. On-demand scan</H4>
+<H4>2.25.3. On-demand scan</H4>
 <P>
 The add-on installs scripts to analyze text at the cursor position on demand.
 These scripts are:
@@ -2740,7 +2744,7 @@ These scripts are:
 </UL>
 
 <A NAME="hdr31-4"></A>
-<H4>2.24.4. Move cursor to next/previous irregularity</H4>
+<H4>2.25.4. Move cursor to next/previous irregularity</H4>
 <P>
 The following scripts allow to move the cursor to the next/previous irregularity:
 </P>
@@ -2756,7 +2760,7 @@ The search for the irregularity is carried out in a range of 100 lines. If no ir
 These two scripts have no input gesture associated with them, but it is possible to do so using the "Input gestures" dialog. They are placed in the "NVDA global commands extension" category.
 </P>
 <A NAME="hdr32"></A>
-<H3>2.25. Announcement of cursor position in edit boxes</H3>
+<H3>2.26. Announcement of cursor position in edit boxes</H3>
 <P>
 The script "Toggle reporting of current caret position in edit box" allows you to have the cursor position announced or not when it is in an edit zone.
 </P>
@@ -2773,7 +2777,7 @@ The script is installed without a input gesture and with the "f7" interpreter co
 If desired, NVDA's "input gesture" dialog allows you to assign an input gesture to it.
 </P>
 <A NAME="hdr33"></A>
-<H3>2.26. Temporary audio output device</H3>
+<H3>2.27. Temporary audio output device</H3>
 <P>
 This feature is installed by default.
 </P>
@@ -2802,7 +2806,7 @@ To return to normal operation, ie the use of the audio output devices of the con
 To achieve all this, the add-on installs several scripts.
 </P>
 <A NAME="hdr33-1"></A>
-<H4>2.26.1. Temporary audio device manager</H4>
+<H4>2.27.1. Temporary audio device manager</H4>
 <P>
 This script has the description "Display the temporary audio device manager" and is placed in the "Speech" category of NVDA's "Input gestures" dialog.
 </P>
@@ -2864,7 +2868,7 @@ To return to normal operation, ie without a temporary audio device, all you have
 In the list of audio output devices, it is possible to check certain devices. These devices will be used for the script "Define, as temporary audio device, the following device in the list of checked devices of the manager of the temporary audio device" (see below).
 </P>
 <A NAME="hdr33-2"></A>
-<H4>2.26.2. Temporary audio device change</H4>
+<H4>2.27.2. Temporary audio device change</H4>
 <P>
 There are two ways to change the device:
 </P>
@@ -2892,7 +2896,7 @@ This device is chosen from the devices that were previously checked in the list 
 After changing the device, no confirmation is requested.
 </P>
 <A NAME="hdr33-3"></A>
-<H4>2.26.3. Leave up the Temporary audio device</H4>
+<H4>2.27.3. Leave up the Temporary audio device</H4>
 <P>
 This script has the description "Leave up Temporary Audio Device" and is placed in the "Speech" category of the "Input gestures" dialog.
 </P>
@@ -2909,7 +2913,7 @@ The script has no effect if no temporary audio device is active.
 Otherwise, NVDA's audio output is then routed to the audio output device of the active configuration profile.
 </P>
 <A NAME="hdr33-4"></A>
-<H4>2.26.4. Set or leave up temporary audio device</H4>
+<H4>2.27.4. Set or leave up temporary audio device</H4>
 <P>
 This script has the description "Set, as temporary audio device, the next device in the list of checked devices of the temporary audio device manager" and is placed in the "Speech" category of the "Input gestures" dialog.
 </P>
@@ -2928,8 +2932,8 @@ The first press of the input gesture launches the script "Set, as temporary audi
 <P>
 The second press in a short time, launches the script "Leave up the temporary audio device".
 </P>
-<A NAME="toc105"></A>
-<H4>2.26.5. Technical details</H4>
+<A NAME="toc106"></A>
+<H4>2.27.5. Technical details</H4>
 <P>
 To achieve this functionality, the "speak" and "speakSpelling" functions of the NVDA "speech.speech.py" module have been replaced. The replacement functions are common with the “Speech history” feature.
 This may cause problems if other add-ons have also done this.
@@ -2944,7 +2948,7 @@ Finally, to achieve this functionality, the functions "initialize" of the "tones
 In case these modifications cause problems or conflict with other add-ons, you must uninstall this feature.
 </P>
 <A NAME="hdr34"></A>
-<H3>2.27. NVDA audio output orientation</H3>
+<H3>2.28. NVDA audio output orientation</H3>
 <P>
 This feature makes it possible to separate the sound from NVDA from the sound emitted by the other audio sources and thus to hear in one ear, the sound from NVDA and in the other ear, the sound from the other audio sources.
 </P>
@@ -2987,7 +2991,7 @@ No input gestures are assigned to them. But it is still possible to do this usin
 The "control+shift+espace" command is operational even if the feature is not installed in order, possibly, to be able to rebalance the audio of certain applications that remained unbalanced after uninstalling the feature.
 </P>
 <A NAME="hdr34-1"></A>
-<H4>2.27.1. Audio source manager</H4>
+<H4>2.28.1. Audio source manager</H4>
 <P>
 The "Audio Source Manager" dialog allows, besides NVDA sound orientation, to:
 </P>
@@ -3061,7 +3065,7 @@ In this list, the following commands are available:
 </UL>
 
 <A NAME="hdr34-2"></A>
-<H5>2.27.1.1. Changed gain of NVDA and add-on sound files</H5>
+<H5>2.28.1.1. Changed gain of NVDA and add-on sound files</H5>
 <P>
 When the NVDA source is selected, the "Change Sound Files Gain"button is then activated.
 Pressing this button opens the "NVDA Sound Files's gain modification" dialog which shows:
@@ -3102,8 +3106,8 @@ If there are no already modified sounds in the list of sounds, the "Reset all so
 <P>
 NVDA's startup sound cannot be changed because it is played before the add-on loads.It is possible to not authorize the modification of the gain of the sounds by unchecking the checkbox "Allow the modification of the gain" found in the "Advanced" category. This box is checked by default.
 </P>
-<A NAME="toc108"></A>
-<H4>2.27.2. Technical details</H4>
+<A NAME="toc109"></A>
+<H4>2.28.2. Technical details</H4>
 <P>
 To achieve the functionality of adjusting the volume of NVDA tonalities when Wasapi is not used, the add-on has changed the operation of the "beep" function of the "tones" module of NVDA.
 This can be a problem if another add-on has also modified it.
@@ -3122,7 +3126,7 @@ In order for the modified sound files to be played instead of the original sound
 If modifying this function is a problem, you must both uncheck the "Allow gain modification" option and uninstall the "Temporary Audio Device" feature.
 </P>
 <A NAME="hdr35"></A>
-<H3>2.28. Quick activation or deactivation of add-ons</H3>
+<H3>2.29. Quick activation or deactivation of add-ons</H3>
 <P>
 To activate or deactivate add-on, NVDA natively offers the add-ons manager or, since NVDA 2023.2, the Add-on Store.
 </P>
@@ -3168,7 +3172,7 @@ To change the activation status of an add-on, all you have to do is check it to 
 <P>
 The changes will only be taken into account when the "Save and restart NVDA" button is pressed.
 </P>
-<A NAME="toc110"></A>
+<A NAME="toc111"></A>
 <H2>3. Options</H2>
 <A NAME="hdr100"></A>
 <H3>3.1. Removed the announcement of the description of objects in Windows ribbons</H3>
@@ -3274,7 +3278,7 @@ It is configured using the "Speak non-alphanumeric characters anyway when keyboa
 <P>
 By default, it is unchecked.
 </P>
-<A NAME="toc117"></A>
+<A NAME="toc118"></A>
 <H2>4. Advanced options</H2>
 <A NAME="hdr300"></A>
 <H3>4.1. Signaling by sound of an error in the NVDA log</H3>
@@ -3365,7 +3369,7 @@ This feature is partly taken from the "sharedComputer" add-on (authors "Robert H
 <P>
 It consists of:
 </P>
-<A NAME="toc123"></A>
+<A NAME="toc124"></A>
 <H4>4.5.1. reporting enabled numeric lock state when starting NVDA</H4>
 <P>
 By default and in "Desktop" keyboard layout, the add-on reports that Numeric Lock is enabled when starting NVDA.
@@ -3373,7 +3377,7 @@ By default and in "Desktop" keyboard layout, the add-on reports that Numeric Loc
 <P>
 But this can be disabled, as is the default for the "laptop" keyboard layout, using the "Report enabled state when NVDA starts" option in the "Numeric Lock" group of the "Keyboard" category of the add-on settings.
 </P>
-<A NAME="toc124"></A>
+<A NAME="toc125"></A>
 <H4>4.5.2. Automatic activation/deactivation when activating a configuration profile</H4>
 <P>
 Each time a configuration profile is activated, it is possible to automatically enable or disable the numeric lock.
@@ -3429,7 +3433,7 @@ It is not possible to keep only the first key press because the delay with the f
 <P>
 Modifier keys are not affected by this limitation.
 </P>
-<A NAME="toc127"></A>
+<A NAME="toc128"></A>
 <H2>5. Other improvements</H2>
 <A NAME="hdr202"></A>
 <H3>5.1. Exploring the user configuration folder or nvda program folder</H3>
@@ -3506,7 +3510,7 @@ The script can be executed using one of the following three actions:
 <P>
 By repeating the action several times quickly, the script will be executed as many times.
 </P>
-<A NAME="toc132"></A>
+<A NAME="toc133"></A>
 <H4>5.4.1. Technical details</H4>
 <P>
 To achieve this functionality, the "onInputGesturesCommand" function of "gui.mainFrame" and the action triggered by the "Input Gestures" submenu have been replaced (Common change with the next functionality). It is not possible to prevent this.
@@ -3528,7 +3532,7 @@ It does this by looking for the category among the categories that provide scrip
 <P>
 This category will then be automatically selected and expanded.
 </P>
-<A NAME="toc134"></A>
+<A NAME="toc135"></A>
 <H4>5.5.1. Technical details</H4>
 <P>
 To achieve this functionality, the "onInputGesturesCommand" function of "gui.mainFrame" and the action triggered by the "Input Gestures" submenu have been replaced (Common change with the previous functionality). It is not possible to prevent this.
@@ -3558,7 +3562,7 @@ Warning: like all NVDA parameters, it is necessary that the NVDA configuration i
 <P>
 The add-on brings the following scripts When the cursor is in the folder tree:
 </P>
-<A NAME="toc137"></A>
+<A NAME="toc138"></A>
 <H4>5.7.1. Announcement of folder or file path under cursor</H4>
 <P>
 This script allows, when the cursor is positioned on one of the elements of the folder n of the Windows explorer tree, to:
@@ -3584,7 +3588,7 @@ It is possible to associate a input gesture to it using this dialog.
 <P>
 The number of folders to keep for the reduced path is configurable (see the "Windows Explorer" group of the "Computer" category of the add-on's global settings. By default, this number is 4).
 </P>
-<A NAME="toc138"></A>
+<A NAME="toc139"></A>
 <H4>5.7.2. Announcement, going up the folder tree, of the names of the folders making up the path of the folder containing the element under the cursor</H4>
 <P>
 This script, like the one announcing the reduced path, allows you to locate the element under the cursor without having to hear all the names of the folders that make up the full path.
@@ -3621,9 +3625,9 @@ It is stored under the "NVDA global commands extension" section of the "Input Ge
 <P>
 It is possible to associate a input gesture to it using this dialog.
 </P>
-<A NAME="toc139"></A>
-<H2>6. Summary of the commands provided by this add-on</H2>
 <A NAME="toc140"></A>
+<H2>6. Summary of the commands provided by this add-on</H2>
+<A NAME="toc141"></A>
 <H3>6.1. input gestures installed systematically</H3>
 <TABLE BORDER="1" CELLPADDING="4">
 <TR>
@@ -3652,7 +3656,7 @@ It is possible to associate a input gesture to it using this dialog.
 </TR>
 </TABLE>
 
-<A NAME="toc141"></A>
+<A NAME="toc142"></A>
 <H3>6.2. Interpreter commands</H3>
 <TABLE BORDER="1" CELLPADDING="4">
 <TR>
@@ -3940,7 +3944,7 @@ It is possible to associate a input gesture to it using this dialog.
 <P>
 2++ input gestures installed by the functionalities ++
 </P>
-<A NAME="toc142"></A>
+<A NAME="toc143"></A>
 <H4>6.2.1. Display of the list of icons in the notification area and windows of the applications launched</H4>
 <TABLE BORDER="1" CELLPADDING="4">
 <TR>
@@ -3957,7 +3961,7 @@ It is possible to associate a input gesture to it using this dialog.
 </TR>
 </TABLE>
 
-<A NAME="toc143"></A>
+<A NAME="toc144"></A>
 <H4>6.2.2. Help with the composition of complex symbols</H4>
 <TABLE BORDER="1" CELLPADDING="4">
 <TR>
@@ -3974,7 +3978,7 @@ It is possible to associate a input gesture to it using this dialog.
 </TR>
 </TABLE>
 
-<A NAME="toc144"></A>
+<A NAME="toc145"></A>
 <H4>6.2.3. Information on the application under the focus</H4>
 <TABLE BORDER="1" CELLPADDING="4">
 <TR>
@@ -3997,7 +4001,7 @@ It is possible to associate a input gesture to it using this dialog.
 </TR>
 </TABLE>
 
-<A NAME="toc145"></A>
+<A NAME="toc146"></A>
 <H4>6.2.4. Extension of virtual buffer functionality</H4>
 <TABLE BORDER="1" CELLPADDING="4">
 <TR>
@@ -4080,7 +4084,7 @@ It is possible to associate a input gesture to it using this dialog.
 </TR>
 </TABLE>
 
-<A NAME="toc146"></A>
+<A NAME="toc147"></A>
 <H4>6.2.5. Announcement of the folder preselect dialog boxes of the style Open, save, save as</H4>
 <TABLE BORDER="1" CELLPADDING="4">
 <TR>
@@ -4097,7 +4101,7 @@ It is possible to associate a input gesture to it using this dialog.
 </TR>
 </TABLE>
 
-<A NAME="toc147"></A>
+<A NAME="toc148"></A>
 <H4>6.2.6. NVDA logs</H4>
 <TABLE BORDER="1" CELLPADDING="4">
 <TR>
@@ -4114,7 +4118,7 @@ It is possible to associate a input gesture to it using this dialog.
 </TR>
 </TABLE>
 
-<A NAME="toc148"></A>
+<A NAME="toc149"></A>
 <H4>6.2.7. Speech history</H4>
 <TABLE BORDER="1" CELLPADDING="4">
 <TR>
@@ -4143,7 +4147,7 @@ It is possible to associate a input gesture to it using this dialog.
 </TR>
 </TABLE>
 
-<A NAME="toc149"></A>
+<A NAME="toc150"></A>
 <H4>6.2.8. Timer</H4>
 <TABLE BORDER="1" CELLPADDING="4">
 <TR>
@@ -4160,7 +4164,7 @@ It is possible to associate a input gesture to it using this dialog.
 </TR>
 </TABLE>
 
-<A NAME="toc150"></A>
+<A NAME="toc151"></A>
 <H4>6.2.9. Restarting NVDA</H4>
 <TABLE BORDER="1" CELLPADDING="4">
 <TR>
@@ -4177,7 +4181,7 @@ It is possible to associate a input gesture to it using this dialog.
 </TR>
 </TABLE>
 
-<A NAME="toc151"></A>
+<A NAME="toc152"></A>
 <H4>6.2.10. Display of visible elements composing the object in the foreground</H4>
 <TABLE BORDER="1" CELLPADDING="4">
 <TR>
@@ -4194,7 +4198,7 @@ It is possible to associate a input gesture to it using this dialog.
 </TR>
 </TABLE>
 
-<A NAME="toc152"></A>
+<A NAME="toc153"></A>
 <H4>6.2.11. Voice profile switching</H4>
 <TABLE BORDER="1" CELLPADDING="4">
 <TR>
@@ -4235,7 +4239,7 @@ It is possible to associate a input gesture to it using this dialog.
 </TR>
 </TABLE>
 
-<A NAME="toc153"></A>
+<A NAME="toc154"></A>
 <H4>6.2.12. Date and time - additions</H4>
 <TABLE BORDER="1" CELLPADDING="4">
 <TR>
@@ -4252,7 +4256,7 @@ It is possible to associate a input gesture to it using this dialog.
 </TR>
 </TABLE>
 
-<A NAME="toc154"></A>
+<A NAME="toc155"></A>
 <H4>6.2.13. Text analysis</H4>
 <TABLE BORDER="1" CELLPADDING="4">
 <TR>

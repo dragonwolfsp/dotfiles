@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-#A part of the Phonetic Punctuation addon for NVDA
+#A part of the Earcons and Speech Rules addon for NVDA
 #Copyright (C) 2019-2022 Tony Malykh
 #This file is covered by the GNU General Public License.
 #See the file COPYING.txt for more details.
@@ -149,6 +149,7 @@ class PpChainCommand(PpSynchronousCommand):
         return sum([subcommand.getDuration() for subcommand in self.subcommands])
 
     def threadFunc(self):
+        global currentChain
         timestamp = time.time()
         for subcommand in self.subcommands:
             if self.terminated:
@@ -156,8 +157,10 @@ class PpChainCommand(PpSynchronousCommand):
             threadPool.add_task(subcommand.run)
             timestamp += subcommand.getDuration() / 1000
             sleepTime = timestamp - time.time()
-            time.sleep(sleepTime)
+            if sleepTime > 0:
+                time.sleep(sleepTime)
         currentChain = None
+        
 
     def __repr__(self):
         return f"PpChainCommand({self.subcommands})"
@@ -168,4 +171,3 @@ class PpChainCommand(PpSynchronousCommand):
         for subcommand in self.subcommands:
             subcommand.terminate()
         currentChain = None
-

@@ -8,7 +8,7 @@ outras informacións de uso dos recursos.
 
 # Atallos de teclado
 
-All commands support speech on demand mode (NVDA 2024.1 and later).
+All commands support speech on demand mode.
 
 * NVDA+Shift+E: presenta a ram utilizada, a carga media do procesador, e
   información da batería se está dispoñible.
@@ -46,10 +46,19 @@ información do sistema para Windows. Ademais, ten en conta o seguinte:
 * Ó anunciar a información sobre a arquitectura do procesador, "x86" e
   "AMD64" refírense a procesadores Intel e AMD de, respectivamente, 32 e 64
   bits.
-* Este complemento require Windows 10 ou posterior.
+* This add-on requires Windows 10 22H2 (2022 Update/build 19045) or later.
+* Installing the add-on on Windows 10/11 LTSC is not supported.
 
 Nota sobre a licenza: este complemento utiliza Psutil, licenciado baixo a
 3-Clause BSD License que é compatible coa GNU General Public License.
+
+## Version 24.08
+
+* NVDA 2024.2 or later is required. This allows psutil dependency to be
+  removed from the add-on as NVDA includes it.
+* Updated psutil dependency to the version included with NVDA 2024.2
+  (6.0.0).
+* Ruff replaces Flake8 as code linter.
 
 ## Version 24.05
 

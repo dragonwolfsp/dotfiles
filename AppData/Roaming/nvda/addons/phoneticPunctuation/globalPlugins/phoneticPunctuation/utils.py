@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-#A part of the Phonetic Punctuation addon for NVDA
+#A part of the Earcons and Speech Rules addon for NVDA
 #Copyright (C) 2019-2022 Tony Malykh
 #This file is covered by the GNU General Public License.
 #See the file COPYING.txt for more details.
@@ -40,7 +40,8 @@ import tones
 import ui
 import wave
 import wx
-
+from . import common
+import speech
 
 debug = False
 if debug:
@@ -71,7 +72,7 @@ class Worker(Thread):
                 func(*args, **kargs)
             except Exception as e:
                 # An exception happened in this thread
-                log.error("Error in ThreadPool ", e)
+                log.exception("Error in ThreadPool ", e)
             finally:
                 # Mark this task as done, whether an exception happened or not
                 self.tasks.task_done()
@@ -112,6 +113,7 @@ def initConfiguration():
         "enabled" : "boolean( default=True)",
         "rules" : "string( default='')",
         "applicationsBlacklist" : "string( default='')",
+        "stateVerbose" : "boolean( default=True)",
     }
     config.conf.spec[phoneticPunctuationConfigKey] = confspec
 
@@ -121,3 +123,45 @@ def getSoundsPath():
     addonPath = os.path.split(addonPath)[0]
     soundsPath = os.path.join(addonPath, "sounds")
     return soundsPath
+
+def isAppBlacklisted():
+    focus = api.getFocusObject()
+    appName = focus.appModule.appName
+    if appName.lower() in getConfig("applicationsBlacklist").lower().strip().split(","):
+        return True
+    return False
+
+def isPhoneticPunctuationEnabled():
+    return not isAppBlacklisted() and  getConfig("enabled") and not  common.rulesDialogOpen
+
+def isURLResolutionAvailable():
+    try:
+        api.getCurrentURL
+        return True
+    except AttributeError:
+        return False
+
+def getCurrentURLSafe():
+    try:
+        return api.getCurrentURL()
+    except AttributeError:
+        return ""
+
+def getCurrentContext():
+    url = getCurrentURLSafe()
+    fg = api.getForegroundObject()
+    try:
+        appName = fg.appModule.appName
+    except AttributeError:
+        appName = ''
+    try:
+        windowTitle = fg.name or ""
+    except AttributeError:
+        windowTitle = ""
+    return appName, windowTitle, url
+
+def getProsodyClass(prosodyName):
+    className = prosodyName
+    className = className[0].upper() + className[1:] + 'Command'
+    classClass = getattr(speech.commands, className)
+    return classClass

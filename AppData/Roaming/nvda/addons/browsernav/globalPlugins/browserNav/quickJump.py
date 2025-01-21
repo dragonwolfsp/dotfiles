@@ -37,6 +37,11 @@ import ui
 import weakref
 import wx
 import addonHandler
+from .addonConfig import getConfig
+import uuid
+import requests
+import scriptHandler
+
 addonHandler.initTranslation()
 
 sonifyTextInfo = None # Due to import error we set this value from __init__
@@ -223,8 +228,8 @@ autoSpeakModeNames = {
     AutoSpeakMode.CHIME_ON_ADD: _("Play chime when bookmark appears on the page"),
     AutoSpeakMode.CHIME_ON_REMOVE: _("Play chime when bookmark disappears from the page"),
     AutoSpeakMode.CHIME_ON_CHANGE: _("Play chime when text matched by bookmark changes"),
-
 }
+
 class QJImmutable:
     def __init__(self):
         object.__setattr__(self, 'frozen', False)
@@ -441,6 +446,8 @@ class QJBookmark(QJImmutable):
     enableAutoSpeak: bool
     autoSpeakMode: AutoSpeakMode
     builtInWavFile: str
+    wavFileVolume: int
+    uuid: str
 
     def __init__(self, d):
         object.__setattr__(self, 'enabled', d['enabled'])
@@ -477,6 +484,11 @@ class QJBookmark(QJImmutable):
         object.__setattr__(self, 'enableAutoSpeak', d.get('enableAutoSpeak', False))
         object.__setattr__(self, 'autoSpeakMode', AutoSpeakMode(d.get('autoSpeakMode', AutoSpeakMode.OFF.value)))
         object.__setattr__(self, 'builtInWavFile', d.get('builtInWavFile', None))
+        volume = d.get('wavFileVolume', 100)
+        if volume is None:
+            volume = 100.0
+        object.__setattr__(self, 'wavFileVolume', volume)
+        object.__setattr__(self, 'uuid', d.get('uuid', None) or str(uuid.uuid4()))
 
     def asDict(self):
         return {
@@ -497,6 +509,8 @@ class QJBookmark(QJImmutable):
             'enableAutoSpeak': self.enableAutoSpeak,
             'autoSpeakMode': self.autoSpeakMode.value,
             'builtInWavFile': self.builtInWavFile,
+            'wavFileVolume': self.wavFileVolume,
+            'uuid': self.uuid,
         }
 
     def getDisplayName(self):
@@ -532,6 +546,11 @@ class QJSite(QJImmutable):
     autoSpeak: bool
     autoSpeakCategory: BookmarkCategory
     suppressDescription: bool
+    suppressAriaLabel: bool
+    suppressAriaLabelEditable: bool
+    suppressTreeLevel: bool
+    description: str
+    version: str
 
     def __init__(self, d):
         super().__init__()
@@ -553,6 +572,11 @@ class QJSite(QJImmutable):
         self.autoSpeak = d.get('autoSpeak', False)
         self.autoSpeakCategory = BookmarkCategory(d.get('autoSpeakCategory', BookmarkCategory.QUICK_SPEAK.value))
         self.suppressDescription = d.get('suppressDescription', False)
+        self.suppressAriaLabel = d.get('suppressAriaLabel', False)
+        self.suppressAriaLabelEditable = d.get('suppressAriaLabelEditable', False)
+        self.suppressTreeLevel = d.get('suppressTreeLevel', False)
+        self.description = d.get('description', "")
+        self.version= d.get('version', "")
         self.freeze()
 
     def asDict(self):
@@ -572,6 +596,11 @@ class QJSite(QJImmutable):
             'autoSpeak': self.autoSpeak,
             'autoSpeakCategory': self.autoSpeakCategory.value,
             'suppressDescription': self.suppressDescription,
+            'suppressAriaLabel': self.suppressAriaLabel,
+            'suppressAriaLabelEditable': self.suppressAriaLabelEditable,
+            'suppressTreeLevel': self.suppressTreeLevel,
+            'description': self.description,
+            'version': self.version,
         }
 
 
@@ -638,12 +667,15 @@ def loadConfig():
     except FileNotFoundError:
         rulesConfig = open(defaultRulesFileName, "r").read()
         mylog(defaultRulesFileName)
-    return QJConfig(json.loads(rulesConfig))
+    result = QJConfig(json.loads(rulesConfig))
+    saveConfig(result)
+    return result
 
 
-def saveConfig():
+def saveConfig(config=None):
     global globalConfig
-    configDict = globalConfig.asDict()
+    config = config or globalConfig
+    configDict = config.asDict()
     rulesJson = json.dumps(configDict, indent=4, sort_keys=True)
     rulesFile = open(rulesFileName, "w")
     try:
@@ -746,6 +778,19 @@ def getDebugBeepModes(url, config):
         for site in sites
     }
 
+def getSuppressOptions(url, config):
+    sites = findSites(url, config)
+    if len(sites) == 0:
+        return False
+    options ={
+        option: max([
+            getattr(site, option)
+            for site in sites
+        ])
+        for option in ['suppressDescription','suppressAriaLabel','suppressAriaLabelEditable','suppressTreeLevel']
+    }
+    return options
+
 def getSuppressDescription(url, config):
     sites = findSites(url, config)
     if len(sites) == 0:
@@ -756,50 +801,38 @@ def getSuppressDescription(url, config):
     ])
     return mode
 
-def getUrlFromObject(object):
-    while object is not None:
-        try:
-            interceptor = object.treeInterceptor
-        except AttributeError:
-            pass
-        if interceptor is not None:
-            url = interceptor._get_documentConstantIdentifier()
-            if url is not None and len(url) > 0:
-                return url
-        object = object.simpleParent
-urlCache = weakref.WeakKeyDictionary()
-def getUrl(self, onlyFromCache=False):
-    t0 = time.time()
-    urlFromObject = False
-    if not onlyFromCache and not isinstance(threading.currentThread(), threading._MainThread):
-        raise RuntimeError("Impossible: URL can only be determined from the main thread.")
-    if self is None:
-        return ""
-    if onlyFromCache:
-        try:
-            return urlCache[self]
-        except KeyError:
-            return ""
-    try:
-        try:
-            url = self._get_documentConstantIdentifier()
-        except AttributeError:
-            return ""
-        if url is None or len(url) == 0:
-            urlFromObject = True
-            url = getUrlFromObject(self.currentNVDAObject)
-    finally:
-        t1 = time.time()
-        tt = int(1000 * (t1-t0))
-        #mylog(f"getUrl {tt} ms = {url} {urlFromObject}")
-        #mylog(str(threading.currentThread()))
-    urlCache[self] = url
-    if url is None or len(url) == 0:
-        return ""
-        #future.set("")
-    else:
-        return url
-        #future.set(url)
+def getSuppressAriaLabel(url, config):
+    sites = findSites(url, config)
+    if len(sites) == 0:
+        return False
+    mode = max([
+        site.suppressAriaLabel
+        for site in sites
+    ])
+    return mode
+
+def getSuppressAriaLabelEditable(url, config):
+    sites = findSites(url, config)
+    if len(sites) == 0:
+        return False
+    mode = max([
+        site.suppressAriaLabelEditable
+        for site in sites
+    ])
+    return mode
+
+def getSuppressTreeLevel(url, config):
+    sites = findSites(url, config)
+    if len(sites) == 0:
+        return False
+    mode = max([
+        site.suppressTreeLevel
+        for site in sites
+    ])
+    return mode
+
+def getUrl(self=None, onlyFromCache=False):
+    return api.getCurrentURL() or ""
 
 @functools.lru_cache()
 def getBookmarksWithKeystrokesForUrl(url, config, keystroke, category=None):
@@ -938,71 +971,43 @@ class AutoSpeakCacheEntry:
         self.lines = lines
         self.enabled = True
 
-browseMonitorThreadShutdownRequested = False
 AutoSpeakCache = weakref.WeakKeyDictionary()
-def browseMonitorThreadFunc():
-    while not browseMonitorThreadShutdownRequested:
+def onVirtualBufferUpdate(browse):
+    url = getUrl(browse, onlyFromCache=True)
+    if url is None:
+        return
+    bookmarks = getAutoSpeakBookmarksForUrl(url, globalConfig)
+    if len(bookmarks) == 0:
+        return
+    launchAutoSpeak = False
+    with AutoSpeakStatesLock:
         try:
-            time.sleep(0.5)
-            focus = api.getFocusObject()
-            try:
-                browse = focus.treeInterceptor
-                if browse is None:
-                    continue
-            except AttributeError:
-                continue
-            url = getUrl(browse, onlyFromCache=True)
-            if url is None:
-                continue
-            bookmarks = getAutoSpeakBookmarksForUrl(url, globalConfig)
+            state = AutoSpeakStates[browse]
+        except KeyError:
+            state = AutoSpeakState(isVirtualBufferUpdated=False, isAutoSpeakHandlerRunning=False)
+            AutoSpeakStates[browse] = state
+        flag = state.isVirtualBufferUpdated
+        isRunning = state.isAutoSpeakHandlerRunning
+        state.isVirtualBufferUpdated = True
+        if isRunning:
+            # Currently running autoSpeak function will pick up this update eventually
+            return
+        else:
+            # Launch autoSpeak function
             try:
                 cacheEntry = AutoSpeakCache[browse]
             except KeyError:
                 cacheEntry = {}
                 AutoSpeakCache[browse] = cacheEntry
-            processAutoSpeakEntry(browse, bookmarks, cacheEntry)
-            try:
-                #processWholePageDiff(browse, url)
-                pass
-            except OSError:
-                pass
-        except Exception as e:
-            #mylog(e)
-            #core.callLater(50, ui.message, _("Warning: BrowserNav browse monitor thread crashed: %s") % str(e))
-            log.error("Exception in BrowserNav monitor thread", e)
-
-def processAutoSpeakEntry(browse, bookmarks, cacheEntry):
-    if len(bookmarks) == 0:
-        return
-    newLinesByBookmark = _autoClick(browse, gesture=None, category=BookmarkCategory.QUICK_SPEAK, bookmarks=bookmarks,  automated=True)
-    for bookmark in bookmarks:
-        textToSpeak = newLinesByBookmark.get(bookmark, [])
-        try:
-            cachedLines = cacheEntry[bookmark]
-        except KeyError:
-            cachedLines = AutoSpeakCacheEntry([])
-            cacheEntry[bookmark] = cachedLines
-        processAutoSpeakbookmark(browse, bookmark, textToSpeak, cachedLines)
+            state.isAutoSpeakHandlerRunning = True
+            launchAutoSpeak = True
+    if launchAutoSpeak:
+        utils.executeAsynchronously(_autoSpeak(browse, gesture=None, category=BookmarkCategory.QUICK_SPEAK, bookmarks=bookmarks,  automated=True, cacheEntry=cacheEntry))
 
 def processAutoSpeakbookmark(browse, bookmark, textToSpeak, cachedLines):
     if not cachedLines.enabled:
         return
-    if False:
-        api.c = cachedLines
-        api.t = textToSpeak
-        mylog(f'asdf {cachedLines.lines == textToSpeak}')
-        mylog(f"l={len(cachedLines.lines)}")
-        if len(cachedLines.lines)>0:
-            mylog(f" 0={cachedLines.lines[0]}")
-        mylog(f"l={len(textToSpeak)}")
-        if len(textToSpeak) > 0:
-            mylog(f" 0={textToSpeak[0]}")
 
-    if False:
-        if cachedLines.lines == textToSpeak:
-            tones.beep(500, 50)
-        else:
-            tones.beep(1000, 100)
     firstUtterance = True
     if bookmark.autoSpeakMode == AutoSpeakMode.PARAGRAPH_DIFF:
         for line in diffAndExtractInterestingLines(cachedLines.lines, textToSpeak):
@@ -1043,8 +1048,14 @@ def diffAndExtractInterestingLines(s1, s2):
         elif mode == 'old' and len(line) > 0 and line[0] in {'-'}:
             yield line
 
-def playBiw(bookmark=None, earcon=None):
-    volume = 100.0
+def playBiw(bookmark=None, earcon=None, volume=None):
+    thread = threading.Thread(target=lambda: playBiwInThread(bookmark, earcon, volume))
+    thread.start()
+
+def playBiwInThread(bookmark=None, earcon=None, volume=None):
+    if volume is None:
+        volume = bookmark.wavFileVolume if bookmark is not None else 100
+    volume = 1.0 * volume
     absPath = os.path.join(
         utils.getSoundsPath(),
         earcon or bookmark.builtInWavFile,
@@ -1066,7 +1077,6 @@ def playBiw(bookmark=None, earcon=None):
     fileWavePlayer.stop()
     fileWavePlayer.feed(buf)
     fileWavePlayer.idle()
-
 
 def getTextFast(info):
     fields = info.getTextWithFields()
@@ -1094,14 +1104,6 @@ def processWholePageDiff(browse, url):
             counter = kinds.get(kind, 0)
             kinds[kind] = counter + 1
         if len(linesToSpeak) > 0:
-            if False:
-                api.t .append(len(newText))
-                api.d.append(len(linesToSpeak))
-                api.c.append(c2-c1)
-                global debugi
-                with open(f"H:\\bn{debugi}.txt", 'w', encoding='utf-8') as f:
-                    print(newText, file=f)
-                debugi += 1
 
             def speakLines(lines):
                 speech.speakText("\n".join(lines))
@@ -1128,24 +1130,52 @@ def playDiffEarcons(delete, modify, add):
             playBiw(earcon=earconAdd)
 
 
-originalBrowseModeReport = None
-def preBrowseModeReport(self,readUnit=None):
-    url = getUrl(self.document)
-    suppress = getSuppressDescription(url, globalConfig)
-    originalValue = config.conf["presentation"]["reportObjectDescriptions"]
-    if suppress:
-        config.conf["presentation"]["reportObjectDescriptions"] = False
-    try:
-        result = originalBrowseModeReport(self,readUnit)
-    finally:
-        config.conf["presentation"]["reportObjectDescriptions"] = originalValue
-    return result
+class AdjustedTextInfo:
+    def __init__(self, textInfo, suppressAriaLabel=False, suppressAriaLabelEditable=False, suppressTreeLevel=False, suppressDescription=False):
+        self.textInfo = textInfo
+        self.suppressAriaLabel = suppressAriaLabel
+        self.suppressAriaLabelEditable = suppressAriaLabelEditable
+        self.suppressTreeLevel = suppressTreeLevel
+        self.suppressDescription = suppressDescription
+
+    def getTextWithFields(self, formatConfig=None):
+        ff = self.textInfo.getTextWithFields(formatConfig)
+        for field in ff:
+            if isinstance(field, textInfos.FieldCommand) and field.command in ("controlStart"):
+                if self.suppressAriaLabel and field.field['role'] in (
+                    controlTypes.Role.GROUPING,
+                    controlTypes.Role.PROPERTYPAGE,
+                    controlTypes.Role.LANDMARK,
+                    controlTypes.Role.REGION,
+                ):
+                    field.field['name'] = ""
+                
+                if self.suppressAriaLabelEditable and field.field['role'] in (
+                    controlTypes.Role.EDITABLETEXT,
+                    controlTypes.Role.COMBOBOX,
+                ):
+                    field.field['name'] = ""
+                
+                if self.suppressTreeLevel and 'level' in field.field and field.field['role'] in [
+                    controlTypes.Role.TREEVIEWITEM
+                ]:
+                    del field.field['level']
+                
+                if self.suppressDescription and 'description' in field.field:
+                    del field.field['description']
+        return ff
+
+    def __getattr__(self, name):
+        return getattr(self.textInfo, name)
+
+    def __dir__(self):
+        return dir(self.textInfo)
+
 
 original_event_treeInterceptor_gainFocus = None
 def pre_event_treeInterceptor_gainFocus(self):
+    onVirtualBufferUpdate(self)
     if not self._hadFirstGainFocus:
-        #tones.beep(1000, 100)
-        #utils.executeAsynchronously(asyncBrowseMonitor(self))
         url = getUrl(self)
         sites = findSites(url, globalConfig)
         autoClickSites = [site for site in sites if site.autoClickOnFocus]
@@ -1175,9 +1205,6 @@ def postGetAlternativeScript(self,gesture,script):
         return result
     bookmarks = getBookmarksWithKeystrokesForUrl(url, globalConfig, keystroke)
     mylog(f"{keystroke} >> {url} b={len(bookmarks)}")
-    if '8' in keystroke:
-        import api
-        api.g=gesture
     if "shift+" in keystroke:
         quickJumpKeystroke = keystroke.replace('shift+', '')
         quickJumpDirection = -1
@@ -1416,7 +1443,7 @@ def shouldSkipClutter(textInfo, allBookmarks):
             bookmarksZero = []
         bookmarksOther = allBookmarks
     for match in matchTextAndAttributes(bookmarks0, textInfo):
-        scriptMatch, message = runScriptAndApplyOffset(textInfo, match, skipClutterBookmarks=[])
+        scriptMatch, message, __ = runScriptAndApplyOffset(textInfo, match, skipClutterBookmarks=[])
         if scriptMatch is not None:
             return True
     for _offset, bookmarks in bookmarksOther.items():
@@ -1460,6 +1487,7 @@ def runScriptAndApplyOffset(textInfo, match, skipClutterBookmarks=None, level=No
         Returns tuple
             0-th element represents matched textInfo or None if there was no match.
             1-st element is either string or textInfo to announce prior to match, or None if nothing to announce.
+            2nd element is either int representing x coordinate or textInfo from which to extract said x coordinate - only used for hierarchical bookmarks
     """
     bookmark = match.bookmark
     textInfo = textInfo.copy()
@@ -1471,13 +1499,13 @@ def runScriptAndApplyOffset(textInfo, match, skipClutterBookmarks=None, level=No
             textInfo.collapse()
             textInfo.move(textInfos.UNIT_CHARACTER, match.start)
             textInfo.move(textInfos.UNIT_CHARACTER, len(match.text), endPoint='end')
-            return (textInfo, bookmark.message)
+            return (textInfo, bookmark.message, textInfo)
         else:
             mylog("q3")
             result = moveParagraphWithSkipClutter(None, textInfo, offset, skipClutterBookmarks=skipClutterBookmarks)
             mylog(f"q4 {result}")
             if result == offset:
-                return (textInfo, bookmark.message)
+                return (textInfo, bookmark.message, textInfo)
 
     else:
         if bookmark.offset != 0:
@@ -1493,12 +1521,14 @@ def runScriptAndApplyOffset(textInfo, match, skipClutterBookmarks=None, level=No
         t = textInfo.copy()
         _offset = None
         _message = None
-        def match(offset=None, message=None):
-            nonlocal _offset, _message
+        _xLocation = None
+        def match(offset=None, message=None, xLocation=None):
+            nonlocal _offset, _message, _xLocation
             if offset is None:
                 offset = 0
             _offset = offset
             _message = message
+            _xLocation = xLocation
             raise QuickJumpMatchPerformedException
         execLocals = {
             'p': p,
@@ -1520,10 +1550,11 @@ def runScriptAndApplyOffset(textInfo, match, skipClutterBookmarks=None, level=No
                     raise RuntimeError("This script is a generator function; it is only allowed for bookmark type Script and Numeric Script.")
                 utils.executeAsynchronously(result)
             elif isinstance(result, tuple):
+                #match(*result)
                 match(*result)
             elif isinstance(result, dict):
                 match(**result)
-            elif result is not None:
+            elif (result is not None) and (result is not False):
                 match(result)
         except QuickJumpMatchPerformedException:
             # Script called match function!
@@ -1547,6 +1578,14 @@ def runScriptAndApplyOffset(textInfo, match, skipClutterBookmarks=None, level=No
                 log.error(e)
                 raise e
 
+            if not (
+                _xLocation is None
+                or isinstance(_xLocation, (int, textInfos.TextInfo, Paragraph))
+            ):
+                e = QuickJumpScriptException(f"Third argument of match() function (message) must be either None, or int, or textInfo, or Paragraph, but got: {type(_message)}. Please fix your quickJump script for bookmark {bookmark.getDisplayName()}.")
+                log.error(e)
+                raise e
+
             if _offset is None:
                 _offset = 0
             elif isinstance(_offset, Paragraph):
@@ -1562,13 +1601,16 @@ def runScriptAndApplyOffset(textInfo, match, skipClutterBookmarks=None, level=No
                 raise e
 
             message = _message or bookmark.message
+            xLocation = _xLocation or _offset
+            if isinstance(xLocation, Paragraph):
+                xLocation = xLocation.textInfo
 
             if isinstance(_offset, int):
                 result = moveParagraphWithSkipClutter(None, textInfo, _offset, skipClutterBookmarks=skipClutterBookmarks)
                 if result == _offset:
-                    return (textInfo, message)
+                    return (textInfo, message, xLocation)
             else:
-                return (_offset, message)
+                return (_offset, message, xLocation)
         except ScriptError as e:
             message = str(e)
             log.error("ScriptError: {}", e)
@@ -1577,19 +1619,19 @@ def runScriptAndApplyOffset(textInfo, match, skipClutterBookmarks=None, level=No
         #    e2 = QuickJumpScriptException(f"Exception while running script for bookmark '{bookmark.getDisplayName()}'.", e)
         #    log.error(e2)
         #    raise e
-    return (None, None)
+    return (None, None, None)
 
 def matchAndScript(bookmarks, skipClutterBookmarks, textInfo):
     #mylog("matchAndScript start")
     for match in matchTextAndAttributes(bookmarks, textInfo):
         #mylog("q1")
-        result, message = runScriptAndApplyOffset(textInfo, match, skipClutterBookmarks)
+        result, message, xLocation = runScriptAndApplyOffset(textInfo, match, skipClutterBookmarks)
         #mylog("q2")
         if result  is not None:
             #mylog("matchAndScript Result is not None :(")
-            return result, message, match
+            return result, message, xLocation, match
     #mylog("matchAndScript Result is  None :(")
-    return None, None, None
+    return None, None, None, None
 
 def isMatchInRightDirection(oldSelection, direction, textInfo):
     origin = oldSelection.copy()
@@ -1628,7 +1670,7 @@ def _quickJump(self, gesture, bookmarks, direction, errorMsg):
         distance += 1
         adjustedDistance += 1
 
-        matchInfo, message, dummyMatch = matchAndScript(bookmarks, [], textInfo)
+        matchInfo, message, __, dummyMatch = matchAndScript(bookmarks, [], textInfo)
         if matchInfo is not None:
             if not isMatchInRightDirection(oldSelection, direction, matchInfo):
                 continue
@@ -1642,8 +1684,20 @@ def _quickJump(self, gesture, bookmarks, direction, errorMsg):
             sonifyTextInfo(self.selection, oldTextInfo=oldSelection, includeCrackle=True)
             return
 
+def isSkipClutterEnabledForThisUnit(unit):
+    return (
+        (
+            getConfig("skipEmptyParagraphs")
+            and unit == textInfos.UNIT_PARAGRAPH
+        ) or  (
+            getConfig("skipEmptyLines")
+            and unit == textInfos.UNIT_LINE
+        )
+    )
+
 def caretMovementWithAutoSkip(self, gesture,unit, direction=None,posConstant=textInfos.POSITION_SELECTION, *args, **kwargs):
-    bookmarks = findApplicableBookmarksOrderedByOffset(globalConfig, getUrl(self), BookmarkCategory.SKIP_CLUTTER)
+    url = getUrl(self)
+    bookmarks = findApplicableBookmarksOrderedByOffset(globalConfig, url, BookmarkCategory.SKIP_CLUTTER)
     skipped = False
     oldInfo=self.makeTextInfo(posConstant)
     info=oldInfo.copy()
@@ -1660,18 +1714,29 @@ def caretMovementWithAutoSkip(self, gesture,unit, direction=None,posConstant=tex
         expandInfo = info.copy()
         expandInfo.expand(unit)
         expandText = expandInfo.text
-        if shouldSkipClutter(expandInfo, bookmarks):
+        if isSkipClutterEnabledForThisUnit(unit) and shouldSkipClutter(expandInfo, bookmarks):
             skipped = True
             continue
         break
     selection = info.copy()
     info.expand(unit)
-    speech.speakTextInfo(info, unit=unit, reason=REASON_CARET)
+    infoToSpeak = info
+    speech.speakTextInfo(infoToSpeak, unit=unit, reason=REASON_CARET)
     if not oldInfo.isCollapsed:
         speech.speakSelectionChange(oldInfo, selection)
     self.selection = selection
     if skipped:
         skippedParagraphChime()
+
+def adjustTextInfoForSpeech(info):
+    url = getUrl()
+    if url is None:
+        return info
+    suppressOptions = getSuppressOptions(url, globalConfig)
+    if not any(suppressOptions.values()):
+        return info
+    else:
+        return AdjustedTextInfo(info, **suppressOptions)
 
 
 def autoClick(self, gesture, category, site=None, automated=False):
@@ -1679,13 +1744,15 @@ def autoClick(self, gesture, category, site=None, automated=False):
         bookmarks = findApplicableBookmarks(globalConfig, getUrl(self), category)
     else:
         bookmarks = findApplicableBookmarks(category=category, site=site)
-    mylog(f"asdf {category}")
     return _autoClick(self, gesture, bookmarks, site, automated, category=category)
 
 AutoSpeakTextCache = weakref.WeakKeyDictionary()
 def _autoClick(self, gesture, bookmarks, site=None, automated=False, category=None):
     """
+        Sorry for confusing name.
         This function handles both quick_click and quick_speak bookmarks.
+        But not autospeak bookmarks - these are handled in _autoSpeak.
+        Also AutoClick kind of has been deprecated.
     """
     isSpeak = category == BookmarkCategory.QUICK_SPEAK
     isClick = category.name.startswith("QUICK_CLICK")
@@ -1710,13 +1777,13 @@ def _autoClick(self, gesture, bookmarks, site=None, automated=False, category=No
     textToSpeak = []
     textToSpeakByBookmark = {}
     while True:
-        matchInfo, thisMessage, match = matchAndScript(bookmarks, skipClutterBookmarks=[], textInfo=textInfo)
+        matchInfo, thisMessage, __, match = matchAndScript(bookmarks, skipClutterBookmarks=[], textInfo=textInfo)
         if matchInfo is not None:
             thisInfo = matchInfo
             if isClick:
                 mylog(f"Autoclick Match {distance} {thisInfo.text}")
                 focusable = thisInfo.focusableNVDAObjectAtStart
-                if focusable.role in {ROLE_DOCUMENT, ROLE_DIALOG}:
+                if focusable is None or focusable.role in {ROLE_DOCUMENT, ROLE_DIALOG}:
                     if focusableErrorMsg is None:
                         mylog("Bookmark points to non-focusable NVDA object, cannot click it.")
                         focusableErrorMsg = _("Bookmark points to non-focusable NVDA object, cannot click it.")
@@ -1785,11 +1852,136 @@ def _autoClick(self, gesture, bookmarks, site=None, automated=False, category=No
     else:
         error
 
+@dataclass
+class AutoSpeakState:
+    isVirtualBufferUpdated: bool
+    isAutoSpeakHandlerRunning: bool
+
+AutoSpeakStates = weakref.WeakKeyDictionary()
+AutoSpeakStatesLock = threading.Lock()
+
+def _autoSpeak(self, gesture, bookmarks, site=None, automated=True, category=None, cacheEntry=None):
+    """
+        Async generator for handling autoSpeak.
+    """
+    isSpeak = category == BookmarkCategory.QUICK_SPEAK
+    isClick = category.name.startswith("QUICK_CLICK")
+    if isSpeak == isClick:
+        raise RuntimeError(f"Invalid category {category.name}")
+    if not (isSpeak and not isClick):
+        raise RuntimeError("This function only supports autoSpeak bookmarks")
+    try:
+        while True:
+            with AutoSpeakStatesLock:
+                flag = AutoSpeakStates[self].isVirtualBufferUpdated
+                if not flag:
+                    return
+                AutoSpeakStates[self].isVirtualBufferUpdated = False
+    
+            textInfo = self.makeTextInfo(textInfos.POSITION_ALL)
+            textInfo.collapse()
+            textInfo.expand(textInfos.UNIT_PARAGRAPH)
+            distance = 0
+            message = None
+            focusableErrorMsg = None
+            focusables = []
+            textToSpeak = []
+            textToSpeakByBookmark = {}
+            while True:
+                if scriptHandler.isScriptWaiting():
+                    # User must have pressed a button.
+                    # Return control and continue later so that NVDA is as snappy as ever.
+                    yield 1
+                matchInfo, thisMessage, __, match = matchAndScript(bookmarks, skipClutterBookmarks=[], textInfo=textInfo)
+                if matchInfo is not None:
+                    thisInfo = matchInfo
+                    if isClick:
+                        mylog(f"Autoclick Match {distance} {thisInfo.text}")
+                        focusable = thisInfo.focusableNVDAObjectAtStart
+                        if focusable is None or focusable.role in {ROLE_DOCUMENT, ROLE_DIALOG}:
+                            if focusableErrorMsg is None:
+                                mylog("Bookmark points to non-focusable NVDA object, cannot click it.")
+                                focusableErrorMsg = _("Bookmark points to non-focusable NVDA object, cannot click it.")
+                        else:
+                            mylog("Verification skipped since offset is non-zero")
+                            focusables.append(focusable)
+                            if message is None and thisMessage  is not None and len(thisMessage) > 0:
+                                message = thisMessage
+                    elif isSpeak:
+                        entries = []
+                        if thisMessage is not None and len(thisMessage) > 0:
+                            entries.append(thisMessage)
+                        entries.append(thisInfo.text)
+                        textToSpeak.extend(entries)
+                        try:
+                            ttsb = textToSpeakByBookmark[match.bookmark]
+                        except KeyError:
+                            ttsb = []
+                            textToSpeakByBookmark[match.bookmark] = ttsb
+                        ttsb.extend(entries)
+        
+                    else:
+                        error_hahaha
+                distance += 1
+                result = moveParagraph(textInfo, 1)
+                if result == 0:
+                    break
+            newLinesByBookmark = textToSpeakByBookmark
+            for bookmark in bookmarks:
+                textToSpeak = newLinesByBookmark.get(bookmark, [])
+                try:
+                    cachedLines = cacheEntry[bookmark]
+                except KeyError:
+                    cachedLines = AutoSpeakCacheEntry([])
+                    cacheEntry[bookmark] = cachedLines
+                processAutoSpeakbookmark(self, bookmark, textToSpeak, cachedLines)
+    except Exception as e:
+        log.exception("Exception during virtual buffer update processing in BrowserNav QuickJump", e)
+    finally:
+        with AutoSpeakStatesLock:
+            AutoSpeakStates[self].isAutoSpeakHandlerRunning = False
+
 
 class HierarchicalLevelsInfo:
     offsets: List[int]
+    bracketLows: list[int]
+    bracketHighs: list[int]
     def __init__(self, offsets):
         self.offsets = offsets
+        self.computeBrackets()
+    
+    def computeBrackets(self):
+        offsets = sorted(list(set(self.offsets)))
+        margin = getConfig('verticalAlignmentMargin')
+        self.    bracketLows = []
+        self.    bracketHighs = []
+        currentLow = currentHigh = None
+        for offset in offsets:
+            if currentLow is None:
+                currentLow = currentHigh = offset
+            elif offset <= currentHigh + margin:
+                currentHigh = offset
+            else:
+                self.bracketLows.append(currentLow)
+                self.bracketHighs.append(currentHigh)
+                currentLow = currentHigh = offset
+        if currentLow is not None:
+            self.bracketLows.append(currentLow)
+            self.bracketHighs.append(currentHigh)
+        n = len(self.bracketLows)
+        if (
+            (len(self.bracketLows) != len(self.bracketHighs))
+            or not all([self.bracketLows[i] <= self.bracketHighs[i] for i in range(n)])
+            or not all([self.bracketHighs[i] < self.bracketLows[i+1] for i in range(n-1)])
+        ):
+            raise RuntimeError
+    
+    def index(self, offset):
+        n = len(self.bracketLows)
+        for i in range(n):
+            if self.bracketLows[i] <= offset <= self.bracketHighs[i]:
+                return i
+        return None
 
 hierarchicalCache = weakref.WeakKeyDictionary()
 def getIndentFunc(textInfo, documentHolder, future):
@@ -1799,8 +1991,7 @@ def getIndentFunc(textInfo, documentHolder, future):
     except Exception as e:
         future.setException(e)
 
-def scanLevelsThreadFunc(self, config, future, bookmarks):
-    #mylog("sltf begin")
+def scanLevelsSync(self, config, bookmarks):
     futures = []
     direction = 1
     try:
@@ -1817,14 +2008,18 @@ def scanLevelsThreadFunc(self, config, future, bookmarks):
         distance = 0
         #mylog(f"loop:sltf->matchTextAndAttributes({len(bookmarks)})")
         while True:
-            matchInfo, message, dummyMatch = matchAndScript(bookmarks, skipClutterBookmarks=[], textInfo=textInfo)
+            matchInfo, message, xLocation, dummyMatch = matchAndScript(bookmarks, skipClutterBookmarks=[], textInfo=textInfo)
             if matchInfo is not None:
                 # We compute x screen coordinate of the match
                 # Computing it in thread pool for performance reasons.
                 innerFuture = utils.Future()
-                utils.threadPool.add_task(getIndentFunc, matchInfo, documentHolder, innerFuture)
+                if isinstance(xLocation, textInfos.TextInfo):
+                    utils.threadPool.add_task(getIndentFunc, xLocation, documentHolder, innerFuture)
+                elif isinstance(xLocation, int):
+                    innerFuture.set(xLocation)
+                else:
+                    raise RuntimeError(f"Invalid type of xLocation: {type(xLocation)}")
                 futures.append(innerFuture)
-
             distance += 1
             result = moveParagraph(textInfo, direction)
             if result == 0:
@@ -1833,27 +2028,14 @@ def scanLevelsThreadFunc(self, config, future, bookmarks):
                     inner.get()
                     for inner in futures
                 })))
-                future.set(result)
-                #mylog("sltf success")
-                #mylog(f"sltf result={result.offsets}")
-                return
+                return result
     except Exception as e:
-        #mylog("sltf fail")
-        future.setException(e)
-
+        raise e
 
 def scanLevels(self, bookmarks):
     global globalConfig, hierarchicalCache
-    config = globalConfig
-    future = utils.Future()
-    utils.threadPool.add_task(scanLevelsThreadFunc, self, config, future, bookmarks)
-    try:
-        innerDict = hierarchicalCache[self]
-    except KeyError:
-        innerDict = {}
-        hierarchicalCache[self] = innerDict
-    innerDict[config] = future
-    return future
+    result = scanLevelsSync(self, globalConfig, bookmarks)
+    return result
 
 def hierarchicalQuickJump(self, gesture, category, direction, level, unbounded, errorMsg):
     url = getUrl(self)
@@ -1871,6 +2053,7 @@ def hierarchicalQuickJump(self, gesture, category, direction, level, unbounded, 
             return endOfDocument(_('No hierarchical quickJump bookmarks or numeric script bookmarks configured for current website. Please add QuickJump bookmarks in BrowserNav settings in NVDA settings window.'))
 
 def _hierarchicalQuickJump(self, gesture, category, direction, level, unbounded, errorMsg):
+    global hierarchicalCache
     oldSelection = self.selection
     url = getUrl(self)
     bookmarks = findApplicableBookmarks(globalConfig, url, category)
@@ -1879,12 +2062,16 @@ def _hierarchicalQuickJump(self, gesture, category, direction, level, unbounded,
     if len(bookmarks) == 0:
         return endOfDocument(_('No hierarchical quickJump bookmarks configured for current website. Please add QuickJump bookmarks in BrowserNav settings in NVDA settings window.'))
     try:
-        levelsInfo = hierarchicalCache[self][globalConfig].get()
+        levelsInfo = hierarchicalCache[self][globalConfig]
     except KeyError:
         levelsInfo = None
-        scanLevels(self, bookmarks)
-        mylog(f"levelsInfo is None")
-        levelsInfo = hierarchicalCache[self][globalConfig].get()
+        levelsInfo = scanLevels(self, bookmarks)
+        try:
+            innerDict = hierarchicalCache[self]
+        except KeyError:
+            innerDict = {}
+            hierarchicalCache[self] = innerDict
+        innerDict[globalConfig] = levelsInfo
     mylog(f"level={level} levelsInfo={levelsInfo.offsets}")
     textInfo = self.makeTextInfo(textInfos.POSITION_CARET)
     textInfo.collapse()
@@ -1905,22 +2092,27 @@ def _hierarchicalQuickJump(self, gesture, category, direction, level, unbounded,
         adjustedDistance += 1
         #mylog("hqj->matchTextAndAttributes2")
         mylog("HQJ calling matchAndScript")
-        mylog(f"asdf {textInfo.text}")
-        matchInfo, message, dummyMatch = matchAndScript(bookmarks, [], textInfo)
-        mylog(f"asdf2 {textInfo.text}")
+        matchInfo, message, xLocation, dummyMatch = matchAndScript(bookmarks, [], textInfo)
         if matchInfo is not None:
             if not isMatchInRightDirection(oldSelection, direction, matchInfo):
                 continue
             thisInfo = matchInfo
-            offset = utils.getGeckoParagraphIndent(thisInfo, documentHolder)
+            if isinstance(xLocation, textInfos.TextInfo):
+                offset = utils.getGeckoParagraphIndent(xLocation, documentHolder)
+            elif isinstance(xLocation, int):
+                offset = xLocation
+            else:
+                raise RuntimeError(f"Invalid type of xLocation: {type(xLocation)}")
             mylog(f"thisInfo={thisInfo.text}")
             mylog(f"offset={offset}")
+            currentLevel = levelsInfo.index(offset)
             if (
                 levelsInfo is None
                 or level is None
                 or (
-                    offset in levelsInfo.offsets
-                    and levelsInfo.offsets.index(offset) == level
+                    #offset in levelsInfo.offsets
+                    #and levelsInfo.offsets.index(offset) == level
+                    currentLevel == level
                 )
             ):
                 mylog("Perfect")
@@ -1929,7 +2121,7 @@ def _hierarchicalQuickJump(self, gesture, category, direction, level, unbounded,
                     and levelsInfo is not None
                     and offset in levelsInfo.offsets
                 ):
-                    announceLevel = levelsInfo.offsets.index(offset) + 1
+                    announceLevel = levelsInfo.index(offset) + 1
                     ui.message(_("Level {announceLevel}").format(announceLevel=announceLevel))
                 if message is not None and len(message) > 0:
                     ui.message(message)
@@ -1940,16 +2132,19 @@ def _hierarchicalQuickJump(self, gesture, category, direction, level, unbounded,
                 self.selection = thisInfo
                 sonifyTextInfo(self.selection, oldTextInfo=oldSelection, includeCrackle=True)
                 return
-            elif offset not in levelsInfo.offsets:
+            #elif offset not in levelsInfo.offsets:
+            elif currentLevel is None:
                 # Something must have happened that current level is not recorded in the previous scan. Rescan after this script.
                 mylog("offset not in levelsInfo")
                 scanLevels(self, bookmarks)
                 endOfDocument(_("BrowserNav error: inconsistent indents in the document. Recomputing indents, please try again."))
                 return
-            elif levelsInfo.offsets.index(offset) > level:
+            #elif levelsInfo.offsets.index(offset) > level:            
+            elif currentLevel > level:
                 #mylog("levelsInfo.offsets.index(offset) > level")
                 continue
-            elif levelsInfo.offsets.index(offset) < level:
+            #elif levelsInfo.offsets.index(offset) < level:
+            elif currentLevel < level:
                 #mylog("levelsInfo.offsets.index(offset) < level")
                 if unbounded:
                     continue
@@ -2408,6 +2603,11 @@ class EditBookmarkDialog(wx.Dialog):
         )
         self.biwList.control.Bind(wx.EVT_CHOICE,self.onBiw)
         self.setBiw(self.bookmark.builtInWavFile)
+      # Volume slider
+        label = _("Volume")
+        self.volumeSlider = sHelper.addLabeledControl(label, wx.Slider, minValue=0,maxValue=100)
+        self.volumeSlider.SetValue(100)
+        self.volumeSlider.SetValue(self.bookmark.wavFileVolume)
       # Edit script button
         self.editScriptButton = sHelper.addItem (wx.Button (self, label = _("Edit &script in new window; press Control+Enter when Done.")))
         self.editScriptButton.Bind(wx.EVT_BUTTON, self.OnEditScriptClick)
@@ -2489,6 +2689,7 @@ class EditBookmarkDialog(wx.Dialog):
             #'enableAutoSpeak': self.autoSpeakEnabledCheckBox.Value,
             'autoSpeakMode': self.getAutoSpeakMode(),
             'builtInWavFile': self.getBiw(),
+            'wavFileVolume': self.volumeSlider.GetValue(),
         })
         return bookmark
 
@@ -2497,6 +2698,16 @@ class EditBookmarkDialog(wx.Dialog):
             return self.oldSite
         newSite = self.config.sites[self.siteComboBox.control.GetSelection()]
         if newSite != self.oldSite:
+            existingUuids = [bookmark.uuid for bookmark in newSite.bookmarks]
+            if self.bookmark.uuid in existingUuids:
+                result = gui.messageBox(
+                    _("Warning: you are trying to  move this bookmark to site %(new_site)s. "
+                    "However it already contains a bookmark with the same UUID. This is not supported. Please create a new bookmark instead.") % {"new_site": newSite.getDisplayName(), "old_site": self.oldSite.getDisplayName()},
+                    _("Bookmark Entry error"),
+                    wx.OK|wx.ICON_ERROR,
+                    self
+                )
+                return None
             result = gui.messageBox(
                 _("Warning: you are about to move this bookmark to site %(new_site)s. "
                 "This bookmark will disappear from the old site %(old_site)s. Would you like to proceed?") % {"new_site": newSite.getDisplayName(), "old_site": self.oldSite.getDisplayName()},
@@ -2571,12 +2782,13 @@ class EditBookmarkDialog(wx.Dialog):
     def onAutoSpeakMode(self, event):
         asm = self.getAutoSpeakMode()
         biwControls = [
-            self.biwCategory,
-            self.biwList,
+            self.biwCategory.control,
+            self.biwList.control,
+            self.volumeSlider,
         ]
-        [biw.control.Enable() for biw in biwControls] if (
+        [biw.Enable() for biw in biwControls] if (
             asm.value.startswith("chime")
-        ) else [biw.control.Disable() for biw in biwControls]
+        ) else [biw.Disable() for biw in biwControls]
 
     def OnEditScriptClick(self,evt):
         _snippet = self.snippet
@@ -2631,7 +2843,6 @@ class EditBookmarkDialog(wx.Dialog):
     blackListedKeystrokes = "escape enter numpadenter space nvda+space nvda+n nvda+q nvda+j j tab uparrow downarrow leftarrow rightarrow home end control+home control+end delete".split()
 
     def _addCaptured(self, gesture):
-        api.g = gesture
         g = getKeystrokeFromGesture(gesture)
         if g in ["escape", "delete"]:
             self.keystroke = None
@@ -2693,8 +2904,9 @@ class EditBookmarkDialog(wx.Dialog):
     def onBiw(self, evt):
         soundsPath = utils.getSoundsPath()
         biw = self.getBiw()
-        fullPath = os.path.join(soundsPath, biw)
-        nvwave.playWaveFile(fullPath)
+        #fullPath = os.path.join(soundsPath, biw)
+        #nvwave.playWaveFile(fullPath)
+        playBiw(None, biw, self.volumeSlider.GetValue())
 
     def getBiwCategory(self):
         return   self.getBiwCategories()[self.biwCategory.control.GetSelection()]
@@ -2885,12 +3097,20 @@ class EditSiteDialog(wx.Dialog):
                 'autoClickContinuous': False,
                 'autoClickContinuousDelay': 500,
             })
+        self.description  = self.site.description
         self.config = config
         self.knownSites = knownSites
       # Translators: label for comment edit box
-        commentLabelText = _("&Display name (optional)")
+        commentLabelText = _("&Website name")
         self.commentTextCtrl=sHelper.addLabeledControl(commentLabelText, wx.TextCtrl)
         self.commentTextCtrl.SetValue(self.site.name)
+      # Edit description button
+        self.editDescription = sHelper.addItem (wx.Button (self, label = _("Edit &Description")))
+        self.editDescription.Bind(wx.EVT_BUTTON, self.OnEditDescriptionClick)
+      # Version edit box
+        label = _("&Version (optional for exported bookmarks)")
+        self.versionTextCtrl=sHelper.addLabeledControl(label, wx.TextCtrl)
+        self.versionTextCtrl.SetValue(self.site.version)
       # Translators: domain
         patternLabelText = _("&URL")
         self.patternTextCtrl=sHelper.addLabeledControl(patternLabelText, wx.TextCtrl)
@@ -2933,6 +3153,7 @@ class EditSiteDialog(wx.Dialog):
             ],
         )
         self.liveRegionModeCategory.control.SetSelection(list(LiveRegionMode).index(self.site.liveRegionMode))
+        
       # Translators: Debug Beep  comboBox
         labelText=_("Debug &beep mode")
         self.debugBeepModeCategory=guiHelper.LabeledControlHelper(
@@ -3006,10 +3227,25 @@ class EditSiteDialog(wx.Dialog):
             self.autoSpeakComboBox.control.SetSelection(self.autoClickOptions.index(
                 self.site.autoSpeakCategory if self.    site.autoSpeak else None
             ))
-      # Translators: label for enable recurrent auto click checkbox
+      # Suppress descriptions checkbox
         Text = _("Suppress descriptions")
         self.suppressDescriptionCheckBox=sHelper.addItem(wx.CheckBox(self,label=Text))
         self.suppressDescriptionCheckBox.SetValue(self.site.suppressDescription)
+      # Checkbox suppress aria label announcements
+        Text = _("Suppress aria label announcements for landmarks and regions")
+        self.suppressAriaLabelCheckBox=sHelper.addItem(wx.CheckBox(self,label=Text))
+        self.suppressAriaLabelCheckBox.SetValue(self.site.suppressAriaLabel)
+      # Checkbox suppress aria name announcements for editables and comboboxes
+        Text = _("Suppress aria name announcements for editables and combo boxes")
+        self.suppressAriaLabelEditableCheckBox=sHelper.addItem(wx.CheckBox(self,label=Text))
+        self.suppressAriaLabelEditableCheckBox.SetValue(self.site.suppressAriaLabelEditable)
+      # Checkbox suppress tree level announcements
+        Text = _("Suppress tree level announcements")
+        self.suppresstreeLevelCheckBox=sHelper.addItem(wx.CheckBox(self,label=Text))
+        self.suppresstreeLevelCheckBox.SetValue(self.site.suppressTreeLevel)
+      # Export button
+        self.exportButton = sHelper.addItem (wx.Button (self, label = _("E&xport site and all bookmarks")))
+        self.exportButton.Bind(wx.EVT_BUTTON, self.OnExportButtonClick)
       #  OK/cancel buttons
         sHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK|wx.CANCEL))
 
@@ -3058,6 +3294,13 @@ class EditSiteDialog(wx.Dialog):
             return
         if urlMatch in {URLMatch.DOMAIN, URLMatch.SUBDOMAIN}:
             domain = domain.lower()
+        name = self.commentTextCtrl.Value
+        if len(name) > 0 and name in [site.name for site in self.knownSites]:
+            errorMsg = _("Another website with this name already exists. Please choose a different name.")
+            gui.messageBox(errorMsg, _("Site Entry Error"), wx.OK|wx.ICON_ERROR, self)
+            self.commentTextCtrl.SetFocus()
+            return
+
         site = QJSite({
             'domain':domain,
             'urlMatch':urlMatch,
@@ -3077,6 +3320,11 @@ class EditSiteDialog(wx.Dialog):
             #'autoSpeak': self.getAutoSpeakCombo() is not None,
             #'autoSpeakCategory': (self.getAutoSpeakCombo() or BookmarkCategory.QUICK_SPEAK).value,
             'suppressDescription': self.suppressDescriptionCheckBox.Value,
+            'suppressAriaLabel': self.suppressAriaLabelCheckBox.Value,
+            'suppressAriaLabelEditable': self.suppressAriaLabelEditableCheckBox.Value,
+            'suppressTreeLevel': self.suppresstreeLevelCheckBox.Value,
+            'description': self.description,
+            'version': self.versionTextCtrl.GetValue(),
         })
         return site
 
@@ -3092,6 +3340,76 @@ class EditSiteDialog(wx.Dialog):
             self.config = entryDialog.config
             mylog(f"EditSiteDialog.editBookmarks2 nb={len(self.site.bookmarks)}")
         entryDialog.Destroy()
+
+    def OnEditDescriptionClick(self,evt):
+        title = _("Edit site description")
+        dlg = wx.TextEntryDialog(gui.mainFrame, title, title, style = wx.OK | wx.CANCEL | wx.TE_MULTILINE)
+        dlg.SetValue(self.description)
+        if dlg.ShowModal() == wx.ID_OK:
+            self.description = dlg.GetValue()
+        dlg.Destroy()
+
+    def OnExportButtonClick(self,evt):
+        site = self.make()
+        if site is None:
+            return
+        if len(site.name) == 0:
+            errorMsg = _(
+                "Please enter website name in order to export it."
+            )
+            gui.messageBox(errorMsg, _("Website export Error"), wx.OK|wx.ICON_WARNING, self)
+            self.commentTextCtrl.SetFocus()
+            return
+        if len(site.version) == 0:
+            errorMsg = _(
+                "Please enter a version in order to  export this website.\n"
+                "We recommend to use date-based versions, like v2025.01.31.\n"
+            )
+            gui.messageBox(errorMsg, _("Website export Error"), wx.OK|wx.ICON_WARNING, self)
+            self.versionTextCtrl.SetFocus()
+            return
+        file_dialog = wx.FileDialog(
+            self,
+            message="Select a directory and enter a filename",
+            defaultDir="C:",
+            defaultFile=f"{site.name}",
+            wildcard="BrowserNav website (*.browsernav-website)|*.browsernav-website",
+            #style=wx.FD_SAVE | wx.FD_CREATE_DIR | wx.FD_OVERWRITE_PROMPT
+            style=wx.FD_SAVE,
+        )
+        if file_dialog.ShowModal() == wx.ID_OK:
+            fileName = file_dialog.GetPath()
+            if os.path.exists(fileName):
+                msg = _(
+                    "File {} already exists. Would you like to replace it?"
+                ).format(fileName)
+                result = gui.messageBox(msg, _("File exists"), wx.YES_NO | wx.ICON_QUESTION, self)
+                if result != wx.YES:
+                    return
+            try:
+                f = open(fileName, 'w', encoding='utf-8')
+                try:
+                    print(
+                        json.dumps(
+                            site.asDict(),
+                            indent=4,
+                            sort_keys=True
+                        ),
+                        file=f,
+                    )
+                finally:
+                    f.close()
+            except OSError as e:
+                errorMsg = _("Could not save website to {}: {}").format(
+                    fileName,
+                    str(e),
+                )
+                gui.messageBox(errorMsg, _("Site Entry Error"), wx.OK|wx.ICON_WARNING, self)
+        file_dialog.Destroy()
+
+
+
+
     def getAutoClickCombo(self):
         return self.autoClickOptions[self.autoClickComboBox.control.GetSelection()]
 
@@ -3126,6 +3444,224 @@ class EditSiteDialog(wx.Dialog):
         if site is not None:
             self.site = site
             evt.Skip()
+
+class OverwriteSiteDialog(wx.Dialog):
+    def __init__(self, parent, id=-1, title="", pos=wx.DefaultPosition,
+                 size=wx.DefaultSize, style=wx.DEFAULT_DIALOG_STYLE,
+                 name="CustomDialog", message="",
+                 callback=None,
+    ):
+        super().__init__(parent, id, title, pos, size, style, name)
+        
+        self.panel = wx.Panel(self)
+        
+        main_sizer = wx.BoxSizer(wx.VERTICAL)
+        
+        static_text = wx.StaticText(self.panel, label=message)
+        main_sizer.Add(static_text, 0, wx.ALL | wx.EXPAND, 5)
+        
+        # Buttons Sizer
+        button_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        label = _("Over&write existing website definition")
+        self.button1 = wx.Button(self.panel, label=label)
+        label = _("Keep existing website definition, but overwrite all &bookmarks")
+        self.button2 = wx.Button(self.panel, label=label)
+        label = _("Save this website under a different &name")
+        self.button3 = wx.Button(self.panel, label=label)
+        self.button4 = wx.Button(self.panel, label="Cancel")
+        
+        button_sizer.Add(self.button1)
+        button_sizer.Add(self.button2)
+        button_sizer.Add(self.button3)
+        button_sizer.Add(self.button4)
+        
+        main_sizer.Add(button_sizer, 0, wx.ALL | wx.CENTER, 5)
+        
+        self.panel.SetSizer(main_sizer)
+        self.Fit()
+        
+        self.Bind(wx.EVT_BUTTON, self.onOverwriteSite, self.button1)
+        self.Bind(wx.EVT_BUTTON, self.onOverwriteBookmarks, self.button2)
+        self.Bind(wx.EVT_BUTTON, self.onRename, self.button3)
+        self.Bind(wx.EVT_BUTTON, self.onCancel, self.button4)
+        self.SetEscapeId(self.button4.GetId())
+        self.callback = callback
+        
+    def onOverwriteSite(self, event):
+        #wx.CallAfter(self.Destroy)
+        #self.callback(option=1)
+        self.EndModal(wx.ID_YES)
+
+    def onOverwriteBookmarks(self, event):
+        #wx.CallAfter(self.Destroy)
+        #self.callback(option=2)
+        self.EndModal(wx.ID_YES + 1)
+
+    def onRename(self, event):
+        #wx.CallAfter(self.Destroy)
+        #self.callback(option=3)
+        self.EndModal(wx.ID_YES + 2)
+
+    def onCancel(self, event):
+        self.EndModal(wx.ID_CANCEL)
+        #self.Close()
+        #wx.CallAfter(self.Destroy)
+        
+    def ShowModal(self):
+        result = super().ShowModal()
+        return result
+
+def importImpl(self, sites, site):
+    if len(site.name) == 0 or len(site.version) == 0:
+        if len(site.name) == 0:
+            errorMsg = _("This website doesn't have a name. Cannot import it.")
+        else:
+            errorMsg = _("This website doesn't have a version. Cannot import it.")
+        gui.messageBox(errorMsg, _("Site Entry Error"), wx.OK|wx.ICON_ERROR)
+        return
+
+    sameNameSites = [(i, s) for i, s in enumerate(sites) if s.name == site.name]
+    if len(sameNameSites) > 1:
+        raise RuntimeError("Impossible - found multiple sites with the same name")
+    elif len(sameNameSites) == 0:
+        sites.append(site)
+        return sites
+    else: # There is exactly 1 existing site with the same name
+        existingSiteIndex, existingSite = sameNameSites[0]
+        title = _("BrowserNav website import conflict")
+        message = _(
+            "You already have website {} in your BrowserNav configuration.\n"
+            "Existing site version: {}.\n"
+            "To be imported site version: {}.\n"
+            "What would you like to do?"
+        ).format(
+            site.name,
+            existingSite.version,
+            site.version,
+        )
+        dialog = OverwriteSiteDialog(parent=self, title=title, message=message)
+        result = dialog.ShowModal()
+        if result == wx.ID_YES:
+            # overwrite the whole site
+            sites = sites[:]
+            sites[existingSiteIndex] = site
+            return sites
+        elif result == wx.ID_YES + 1:
+            # Only overwrite the bookmarks
+            d = existingSite.asDict()
+            existingBookmarks =d['bookmarks']
+            newBookmarks = site.asDict()['bookmarks']
+            for bookmark in newBookmarks:
+                uuid = bookmark['uuid']
+                ii = [i for i, bookmark in enumerate(existingBookmarks) if bookmark['uuid'] == uuid]
+                if len(ii) == 0:
+                    existingBookmarks.append(bookmark)
+                else:
+                    i = ii[0]
+                    existingBookmarks[i] = bookmark
+            newSite = QJSite(d)
+            sites[existingSiteIndex] = newSite
+            return sites
+        elif result == wx.ID_YES + 2:
+            # Rename
+            d = site.asDict()
+            oldName = site.name
+            existingNames = set([s.name for s in sites])
+            name = None
+            for i in range(2,   100):
+                name = f"{site.name} ({i})"
+                if name not in existingNames:
+                    break
+            while True:
+                dialog = wx.TextEntryDialog(
+                    self,
+                    "Please enter a new name:",
+                    "Enter New Name",
+                    name,
+                )
+                if dialog.ShowModal() == wx.ID_OK:
+                    newName = dialog.GetValue()
+                    if newName in existingNames:
+                        errorMsg = _("There is already a website with this name. Please enter a different name.")
+                        gui.messageBox(errorMsg, _("Site Entry Error"), wx.OK|wx.ICON_ERROR, self)
+                        continue
+                    d['name'] = newName
+                    newSite = QJSite(d)
+                    sites.append(newSite)
+                    return sites
+                else:
+                    return None
+
+
+def downloadAllWebsitesFromStore():
+    url = "https://raw.githubusercontent.com/mltony/nvda-browser-nav-bookmark-store/refs/heads/main/output/websites.json"
+    response = requests.get(url)
+    response.raise_for_status()
+    data = json.loads(response.text)
+    return data
+
+class WebsiteStoreDialog(
+    gui.dpiScalingHelper.DpiScalingHelperMixinWithoutInit,
+    wx.Dialog,
+):
+    def __init__(self, parent, j):
+        title=_("Available BrowserNav websites")
+        super().__init__(parent,title=title)
+        self.j = j
+        self.sites = list(j['websites'].values())
+        mainSizer=wx.BoxSizer(wx.VERTICAL)
+        sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
+      # websites table
+        label = _("&Websites")
+        self.sitesList = sHelper.addLabeledControl(
+            label,
+            nvdaControls.AutoWidthColumnListCtrl,
+            autoSizeColumn=2,
+            itemTextCallable=self.getItemTextForList,
+            style=wx.LC_REPORT | wx.LC_SINGLE_SEL | wx.LC_VIRTUAL
+        )
+
+        self.sitesList.InsertColumn(0, _("Name"), width=self.scaleSize(150))
+        self.sitesList.InsertColumn(1, _("Version"))
+        self.sitesList.InsertColumn(2, _("URL"))
+        self.sitesList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemFocused)
+        self.sitesList.ItemCount = len(self.sites)
+
+        bHelper = sHelper.addItem(guiHelper.ButtonHelper(orientation=wx.HORIZONTAL))
+      # Description edit field
+        self.textCtrl = wx.TextCtrl(self, style=wx.TE_MULTILINE|wx.TE_DONTWRAP)
+        sHelper.addItem(self.textCtrl)
+        self.textCtrl.SetValue("")
+
+      # OK/Cancel buttons
+        sHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK|wx.CANCEL))
+        self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
+        self.sitesList.SetFocus()
+
+    def getItemTextForList(self, item, column):
+        site = self.sites[item]['website']
+        if column == 0:
+            return site['name']
+        elif column == 1:
+            return site['version']
+        elif column == 2:
+            return site['domain']
+        else:
+            raise ValueError("Unknown column: %d" % column)
+
+    def onListItemFocused(self, evt):
+        if self.sitesList.GetSelectedItemCount()!=1:
+            return
+        index=self.sitesList.GetFirstSelected()
+        site = self.sites[index]['website']
+        self.textCtrl.SetValue(site['description'])
+
+    def onOk(self,evt):
+        if self.sitesList.GetSelectedItemCount()!=1:
+            return
+        index=self.sitesList.GetFirstSelected()
+        self.site = self.sites[index]['website']
+        evt.Skip()
 
 
 class SettingsDialog(SettingsPanel):
@@ -3171,6 +3707,10 @@ class SettingsDialog(SettingsPanel):
         self.moveDownButton.Bind(wx.EVT_BUTTON, lambda evt: self.OnMoveClick(evt, 1))
         self.sortButton = bHelper.addButton(self, label=_("&Sort"))
         self.sortButton.Bind(wx.EVT_BUTTON, self.OnSortClick)
+        self.importButton = bHelper.addButton(self, label=_("&Import website from file"))
+        self.importButton.Bind(wx.EVT_BUTTON, self.OnImportClick)
+        self.importFromStoreButton = bHelper.addButton(self, label=_("Import website from bookmar&k store"))
+        self.importFromStoreButton.Bind(wx.EVT_BUTTON, self.OnImportFromStoreClick)
 
     def postInit(self):
         self.sitesList.SetFocus()
@@ -3279,6 +3819,55 @@ class SettingsDialog(SettingsPanel):
         sites = list(self.config.sites)
         sites.sort(key=QJSite.getDisplayName)
         self.config = self.config.updateSites(sites)
+
+    def OnImportClick(self,evt):
+        sites = list(self.config.sites)
+        file_dialog = wx.FileDialog(
+            self,
+            message="Select a directory and enter a filename",
+            defaultDir="C:",
+            wildcard="BrowserNav website (*.browsernav-website)|*.browsernav-website",
+            #style=wx.FD_OPEN | wx.FD_CREATE_DIR | wx.FD_OVERWRITE_PROMPT
+            style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST,
+        )
+        if file_dialog.ShowModal() == wx.ID_OK:
+            fileName = file_dialog.GetPath()
+            try:
+                j = json.loads(open(fileName, 'r', encoding='utf-8').read())
+                site = QJSite(j)
+            except Exception as e:
+                errorMsg = _("Could not load website from {}: {}").format(
+                    fileName,
+                    str(e),
+                )
+                gui.messageBox(errorMsg, _("Site Entry Error"), wx.OK|wx.ICON_WARNING, self)
+                return
+        file_dialog.Destroy()
+        sites = importImpl(self, sites, site)
+        if sites is not None:
+            self.config = self.config.updateSites(sites)
+            self.sitesList.ItemCount = len(self.config.sites)
+
+    def OnImportFromStoreClick(self,evt):
+        try:
+            self.j = downloadAllWebsitesFromStore()
+        except Exception as e:
+            errorMsg = _(
+                "Error retrieving contents of BrowserNav bookmark store: {}.\n"
+                "Please check your Internet connectivity and try again.\n"
+            ).format(str(e))
+            gui.messageBox(errorMsg, _("Bookmark store communication error"), wx.OK|wx.ICON_ERROR, self)
+            return
+        dialog=WebsiteStoreDialog(self, self.j)
+        if dialog.ShowModal()!=wx.ID_OK:
+            return
+        site = QJSite(dialog.site)
+        sites = list(self.config.sites)
+        sites = importImpl(self, sites, site)
+        if sites is not None:
+            self.config = self.config.updateSites(sites)
+            self.sitesList.ItemCount = len(self.config.sites)
+
 
     def onSave(self):
         global globalConfig

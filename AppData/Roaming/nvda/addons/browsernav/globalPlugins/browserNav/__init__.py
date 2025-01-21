@@ -48,6 +48,7 @@ import types
 import ui
 from . import utils
 from virtualBuffers.gecko_ia2 import Gecko_ia2_TextInfo
+import virtualBuffers
 import wave
 import weakref
 import winUser
@@ -61,7 +62,14 @@ from . import clipboard
 from .editor import EditTextDialog
 import gc
 import garbageHandler
-
+from comtypes import COMError
+import NVDAObjects.IAccessible
+import IAccessibleHandler
+from NVDAObjects.UIA import UIA
+import UIAHandler
+import globalVars
+from gui import nvdaControls
+import extensionPoints
 
 debug = False
 if debug:
@@ -120,6 +128,7 @@ def initConfiguration():
         "skipChimeVolume" : "integer( default=25, min=0, max=100)",
         "skipRegex" : "string( default='(^Hide or report this$)')",
         "tableNavigateToCell" : "boolean( default=True)",
+        "verticalAlignmentMargin" : "integer( default=2, min=0, max=10000)",
     }
     config.conf.spec["browsernav"] = confspec
 
@@ -215,7 +224,15 @@ class SettingsDialog(SettingsPanel):
         sizer.Add(slider)
         settingsSizer.Add(sizer)
         self.skipChimeVolumeSlider = slider
-
+      # Vertical alignment margin edit box
+        label = _("Vertical alignment margin in pixels")
+        self.verticalMarginSpinControl = sHelper.addLabeledControl(
+            label,
+            nvdaControls.SelectOnFocusSpinCtrl,
+            min=0,
+            max=10000,
+            initial=getConfig("verticalAlignmentMargin"),
+        )
 
     def onSave(self):
         config.conf["browsernav"]["crackleVolume"] = self.crackleVolumeSlider.Value
@@ -228,6 +245,7 @@ class SettingsDialog(SettingsPanel):
         config.conf["browsernav"]["useBoldItalic"] = self.useBoldItalicCheckBox.Value
         config.conf["browsernav"]["tableNavigateToCell"] = self.tableNavigateToCellCheckBox.Value
         config.conf["browsernav"]["skipChimeVolume"] = self.skipChimeVolumeSlider.Value
+        config.conf["browsernav"]["verticalAlignmentMargin"] = self.verticalMarginSpinControl.GetValue()
 
 
 def getMode():
@@ -239,12 +257,16 @@ BROWSE_MODES = [
     _("font size"),
     _("font size and same style"),
 ]
-
+margin_eq = lambda x,y : abs(x-y) <= getConfig("verticalAlignmentMargin")
+margin_lt = lambda x,y : (y - x) > getConfig("verticalAlignmentMargin")
+margin_gt = lambda x,y : (x - y) > getConfig("verticalAlignmentMargin")
 PARENT_OPERATORS = [operator.lt, operator.gt, operator.gt]
 CHILD_OPERATORS = [operator.gt, operator.lt, operator.lt]
 OPERATOR_STRINGS = {
     operator.lt: _("smaller"),
+    margin_lt: _("smaller"),
     operator.gt: _("greater"),
+    margin_gt: _("greater"),
 }
 # Just some random unicode character that is not likely to appear anywhere.
 # This character is used for semi-accessible jupyter edit box automation.
@@ -318,29 +340,6 @@ kbdLeft = fromNameSmart("LeftArrow")
 kbdRight = fromNameSmart("RightArrow")
 kbdUp = fromNameSmart("UpArrow")
 kbdDown = fromNameSmart("DownArrow")
-if False:
-  def executeAsynchronously(gen):
-    """
-    This function executes a generator-function in such a manner, that allows updates from the operating system to be processed during execution.
-    For an example of such generator function, please see GlobalPlugin.script_editJupyter.
-    Specifically, every time the generator function yilds a positive number,, the rest of the generator function will be executed
-    from within wx.CallLater() call.
-    If generator function yields a value of 0, then the rest of the generator function
-    will be executed from within wx.CallAfter() call.
-    This allows clear and simple expression of the logic inside the generator function, while still allowing NVDA to process update events from the operating system.
-    Essentially the generator function will be paused every time it calls yield, then the updates will be processed by NVDA and then the remainder of generator function will continue executing.
-    """
-    if not isinstance(gen, types.GeneratorType):
-        raise Exception("Generator function required")
-    try:
-        value = gen.__next__()
-    except StopIteration:
-        return
-    l = lambda gen=gen: executeAsynchronously(gen)
-    if value == 0:
-        wx.CallAfter(l)
-    else:
-        wx.CallLater(value, l)
 
 class NoSelectionError(Exception):
     def __init__(self, *args, **kwargs):
@@ -509,13 +508,7 @@ def preCaretMovementScriptHelper(self, gesture,unit, direction=None,posConstant=
     oldSelection = self.selection
     if (
         (
-            (
-                getConfig("skipEmptyParagraphs")
-                and unit == textInfos.UNIT_PARAGRAPH
-            ) or  (
-                getConfig("skipEmptyLines")
-                and unit == textInfos.UNIT_LINE
-            )
+            quickJump.isSkipClutterEnabledForThisUnit(unit)
         )
         and direction is not None
         and posConstant==textInfos.POSITION_SELECTION
@@ -630,6 +623,90 @@ def browserNavPopup(selfself,gesture):
         wx.CallAfter(lambda: frame.PopupMenu(menu))
     finally:
         gui.mainFrame.postPopup()
+
+def getFocusedURL():
+    focus = api.getFocusObject()
+    if isinstance(focus, UIA):
+        if False:
+            # UIA Chromium or Edge
+            # Unfortunately, there appears to be no easy way to obtain URL directly from UIA. Code below for document constnat identifier just returns some numeric constant.
+            # Googling returns ways to find address bar and read URL from it.
+            # We will keep it in mind for the future if current way changes.
+            # However, we prefer falling back to IA2 since address bar is not necessarily visible.
+            # using def _get_documentConstantIdentifier from NVDAObjects/UIA/chromium.py
+            return obj.parent._getUIACacheablePropertyValue(UIAHandler.UIA_AutomationIdPropertyId)
+        # Retrieve topmost IA2 object in the window
+        obj = utils.getIA2DocumentInThread()
+        if obj is None:
+            return None
+        try:
+            return obj.IAccessibleObject.accValue(0)
+        except COMError:
+            return None
+    elif isinstance(focus, NVDAObjects.IAccessible.IAccessible):
+        document = utils.getIA2Document()
+        if document is not None:
+            # Chrome, Firefox, Thunderbird
+            # Using def _get_documentConstantIdentifier from virtualBuffers/gecko_ia2.py.
+            try:
+                return document.IAccessibleObject.accValue(0)
+            except COMError:
+                pass
+        return None
+    else:
+        return None
+
+globalUpdateUrlCounter = 0
+globalVars.currentURL = None
+def getCurrentURL():
+    return globalVars.currentURL
+
+
+api.getCurrentURL = getCurrentURL
+api.postFocusOrURLChange = extensionPoints.Action()
+updateURLLock = threading.Lock()
+def updateURLIfChanged():
+    newURL = getFocusedURL()
+    if globalVars.currentURL != newURL:
+        api.postFocusOrURLChange.notify()
+    globalVars.currentURL = newURL
+URL_WATCH_DELAYS_MS = [300, 700, 2000, 7000]
+def watchURLAsync(localUpdateUrlCounter, delays=None):
+    delays = delays or URL_WATCH_DELAYS_MS
+    for delayMs in delays:
+        yield delayMs
+        with updateURLLock:
+            global globalUpdateUrlCounter
+            if globalUpdateUrlCounter != localUpdateUrlCounter:
+                return
+            updateURLIfChanged()
+
+def watchURL(initialDelayMs=None):
+    with updateURLLock:
+        global globalUpdateUrlCounter
+        globalUpdateUrlCounter += 1
+        localUpdateUrlCounter = globalUpdateUrlCounter
+        updateURLIfChanged()
+    utils.executeAsynchronously(watchURLAsync(localUpdateUrlCounter, None))
+
+originalSetFocusObject = None
+originalVirtualBufferHandleUpdate = None
+def bnSetFocusObject(obj):
+    result = originalSetFocusObject(obj)
+    watchURL()
+    api.postFocusOrURLChange.notify()
+    return result
+
+def bnVirtualBufferHandleUpdate(self):
+    result = originalVirtualBufferHandleUpdate(self)
+    watchURL()
+    quickJump.onVirtualBufferUpdate(self)
+    return result
+
+originalSpeakTextInfo = None
+def bnSpeakTextInfo(info, *args, **kwargs):
+    return  originalSpeakTextInfo(quickJump.adjustTextInfoForSpeech(info), *args, **kwargs)
+
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
     scriptCategory = _("BrowserNav")
     beeper = Beeper()
@@ -663,15 +740,18 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
         quickJump.originalReportLiveRegion = NVDAHelper.nvdaControllerInternal_reportLiveRegion
         NVDAHelper.nvdaControllerInternal_reportLiveRegion = quickJump.newReportLiveRegion
-        quickJump.originalBrowseModeReport = browseMode.TextInfoQuickNavItem.report
-        browseMode.TextInfoQuickNavItem.report = quickJump.preBrowseModeReport
         NVDAHelper._setDllFuncPointer(NVDAHelper.localLib,"_nvdaControllerInternal_reportLiveRegion", quickJump.newReportLiveRegion)
-        self.thread = threading.Thread(name="BrowserNav browser monitor thread", target = quickJump.browseMonitorThreadFunc, args =())
-        self.thread.start()
         while len(gc.callbacks) > 0:
             del gc.callbacks[0]
         garbageHandler.terminate = lambda: None
-
+        global originalSetFocusObject, originalVirtualBufferHandleUpdate
+        originalSetFocusObject = api.setFocusObject
+        api.setFocusObject = bnSetFocusObject
+        originalVirtualBufferHandleUpdate = virtualBuffers.VirtualBuffer._handleUpdate
+        virtualBuffers.VirtualBuffer._handleUpdate = bnVirtualBufferHandleUpdate
+        global originalSpeakTextInfo
+        originalSpeakTextInfo = speech.speakTextInfo
+        speech.speakTextInfo = bnSpeakTextInfo
 
     def createMenu(self):
         gui.settingsDialogs.NVDASettingsDialog.categoryClasses.append(SettingsDialog)
@@ -691,29 +771,43 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
         browseMode.BrowseModeDocumentTreeInterceptor.event_treeInterceptor_gainFocus = quickJump.original_event_treeInterceptor_gainFocus
         NVDAHelper.nvdaControllerInternal_reportLiveRegion = quickJump.originalReportLiveRegion
         NVDAHelper._setDllFuncPointer(NVDAHelper.localLib,"_nvdaControllerInternal_reportLiveRegion", quickJump.originalReportLiveRegion)
-        quickJump.browseMonitorThreadShutdownRequested = True
-        self.thread.join()
-        tones.beep(500, 50)
+        
+        api.setFocusObject = originalSetFocusObject
+        virtualBuffers.VirtualBuffer._handleUpdate = originalVirtualBufferHandleUpdate
+        speech.speakTextInfo = originalSpeakTextInfo
+        
 
+    def maybeAdjustOperator(self, op):
+        mode = getConfig("browserMode")
+        margin = getConfig("verticalAlignmentMargin")
+        if mode != 0 or margin == 0:
+            return op
+        if op == operator.eq:
+            return margin_eq
+        elif op == operator.lt:
+            return margin_lt
+        elif op == operator.gt:
+            return margin_gt
+        else:
+            raise RuntimeError
 
     def script_moveToNextSibling(self, gesture, selfself):
         mode = getMode()
         # Translators: error message if next sibling couldn't be found
         errorMessage = _("No next paragraph with the same {mode} in the document").format(
             mode=BROWSE_MODES[mode])
-        self.moveInBrowser(1, errorMessage, operator.eq, selfself)
+        self.moveInBrowser(1, errorMessage, self.maybeAdjustOperator(operator.eq), selfself)
 
     def script_moveToPreviousSibling(self, gesture, selfself):
         mode = getMode()
         # Translators: error message if previous sibling couldn't be found
         errorMessage = _("No previous paragraph with the same {mode} in the document").format(
             mode=BROWSE_MODES[mode])
-        self.moveInBrowser(-1, errorMessage, operator.eq, selfself)
-
+        self.moveInBrowser(-1, errorMessage, self.maybeAdjustOperator(operator.eq), selfself)
 
     def script_moveToParent(self, gesture, selfself):
         mode = getMode()
-        op = PARENT_OPERATORS[mode]
+        op = self.maybeAdjustOperator(PARENT_OPERATORS[mode])
         # Translators: error message if parent could not be found
         errorMessage = _("No previous paragraph  with {qualifier} {mode} in the document").format(
             mode=BROWSE_MODES[mode],
@@ -722,7 +816,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
     def script_moveToNextParent(self, gesture, selfself):
         mode = getMode()
-        op = PARENT_OPERATORS[mode]
+        op = self.maybeAdjustOperator(PARENT_OPERATORS[mode])
         # Translators: error message if parent could not be found
         errorMessage = _("No next paragraph  with {qualifier} {mode} in the document").format(
             mode=BROWSE_MODES[mode],
@@ -732,7 +826,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
     def script_moveToChild(self, gesture, selfself):
         mode = getMode()
-        op = CHILD_OPERATORS[mode]
+        op = self.maybeAdjustOperator(CHILD_OPERATORS[mode])
         # Translators: error message if child could not be found
         errorMessage = _("No next paragraph  with {qualifier} {mode} in the document").format(
             mode=BROWSE_MODES[mode],
@@ -741,7 +835,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
     def script_moveToPreviousChild(self, gesture, selfself):
         mode = getMode()
-        op = CHILD_OPERATORS[mode]
+        op = self.maybeAdjustOperator(CHILD_OPERATORS[mode])
         # Translators: error message if child could not be found
         errorMessage = _("No previous paragraph  with {qualifier} {mode} in the document").format(
             mode=BROWSE_MODES[mode],
@@ -1657,3 +1751,18 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
                 gesture,
             ),
             doc=_("Show BrowserNav popup menu."))
+            
+    @script(description=_("Speak current URL."), gestures=['kb:NVDA+l'])
+    def script_speakCurrentURL(self, gesture):
+        #return quickJump.testOverwriteSiteDialog()
+        #url = getFocusedURL()
+        url = api.getCurrentURL()
+        if url is None:
+            ui.message(_("No URL"))
+            return
+        count=scriptHandler.getLastScriptRepeatCount()
+        if count >= 1:
+            api.copyToClip(url)
+            ui.message(_("Copied to clipboard: {}").format(url))
+        else:
+            ui.message(url)

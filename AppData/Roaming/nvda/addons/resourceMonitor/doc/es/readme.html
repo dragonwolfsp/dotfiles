@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="../style.css" media="screen">
-<title>Resource Monitor 24.06.1</title>
+<title>Resource Monitor 25.01</title>
 </head>
 <body>
 <h1>Resource Monitor</h1>
@@ -14,8 +14,7 @@
 <p>Este plugin nos da información acerca de la carga de la CPU, de la
 utilización de la memoria y de otra información de uso de recursos.</p>
 <h1>Atajos de teclado</h1>
-<p>Todas las órdenes soportan el modo de voz a petición (NVDA 2024.1 o
-posterior).</p>
+<p>Todas las órdenes soportan el modo de voz a petición.</p>
 <ul>
 <li>NVDA+Shift+E: Presenta la ram utilizada, la carga promedio del procesador,
   e información de la batería si está disponible.</li>
@@ -50,10 +49,20 @@ de información del sistema para Windows. También ten en cuenta lo siguiente:</
   grandes, podría haber retrasos al obtener información de uso de disco.</li>
 <li>Al anunciar la información de arquitectura del procesador, "x86" y "AMD64"
   se refieren a procesadores (Intel y AMD) de 32 y 64 bits, respectivamente.</li>
-<li>Este complemento necesita Windows 10 o posterior.</li>
+<li>Este complemento necesita Windows 10 22H2 (Actualización de 2022
+  /compilación 19045) o posterior.</li>
+<li>No se soporta la instalación del complemento en Windows 10/11 LTSC.</li>
 </ul>
 <p>Nota sobre licencias: este complemento usa Psutil, liberado bajo la licencia
 3-Clause BSD, que es compatible con la Licencia Pública General GNU.</p>
+<h2>Versión 24.08</h2>
+<ul>
+<li>Se requiere NVDA 2024.2 o posterior. Esto permite eliminar la dependencia
+  psutil del complemento, ya que NVDA la incluye.</li>
+<li>Actualizada la dependencia sutíl a la versión incluida en NVDA 2024.2
+  (6.0.0).</li>
+<li>Ruff sustituye a Flake8 como comprobador del código.</li>
+</ul>
 <h2>Versión 24.05</h2>
 <ul>
 <li>Se requiere NVDA 2024.1 o posterior.</li>
