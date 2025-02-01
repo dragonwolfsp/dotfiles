@@ -1,0 +1,39 @@
+Les coordonnées dans les tuples sont définies comme suit :
+point supérieur gauche, point supérieur droit, point inférieur droit, point inférieur gauche
+(bref, dans le sens des aiguilles d'une montre)
+
+Bloc "Instrument Master"
+	Bouton "Volume" 332, 77 
+		Valeur (avec en-tête) : allant de -inf à 0
+			(365, 47), (425, 47), (425, 87), (365, 87)
+	Bouton "Tune"  332, 110
+		Valeur (avec en-tête) : allant de -100 à 100
+			(365, 91), (425, 91), (425, 131), (365, 131)
+
+Bloc "Dynamique"
+	Bouton "Dynamics" 768, 28
+		Valeur (avec en-tête) : allant de 0 à 100
+			(788, 5), (838, 5), (838, 35), (788, 35)
+	Bouton "Velocity"  768, 68
+		Valeur (avec en-tête) : allant de 0 à 100
+			(788, 43), (838, 43), (838, 73), (788, 73)
+	Bouton "Range Min"  868, 28
+		Valeur (avec en-tête) : allant de 0 à 127
+			(888, 5), (938, 5), (938, 35), (888, 35)
+	Bouton "Range Max"  868, 68
+		Valeur (avec en-tête) : allant de 0 à 127
+			(888, 43), (938, 43), (938, 73), (888, 73)
+
+Bloc "Enveloppe"
+	Bouton "A" (Attaque) 700, 188
+		Valeur : allant de 0 ms à 1000 ms
+			(690, 167), (740, 167), (740, 222), (690, 222)
+	Bouton "D" (Decay) 760, 188
+		Valeur : allant de 0 ms à 1000 ms
+			(750, 207), (800, 207), (800, 222), (750, 222)
+	Bouton "S" (Sustain) 830, 188
+		Valeur : allant de 0.00 s à 10.00s
+			(810, 207), (860, 207), (860, 222), (810, 222)
+	Bouton "R" (Release) 890, 188
+		Valeur : allant de 0.00 s à 10.00s
+			(870, 207), (920, 207), (920, 222), (870, 222)

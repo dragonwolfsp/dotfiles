@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="../style.css" media="screen">
+<title>NAO 2025.1.0</title>
+</head>
+<body>
+<h1>NAO - NVDA Advanced OCR</h1>
+<ul>
+<li>Tekijät: Alessandro Albano, Davide De Carne, Simone Dal Maso</li>
+<li>Lataa <a href="https://nvda-nao.org/download">vakaa versio</a></li>
+<li>Yhteensopivuus: NVDA 2019.3 ja uudemmat</li>
+</ul>
+<p>NAO (NVDA Advanced OCR) on lisäosa, joka parantaa tavanomaisia tekstintunnistustoimintoja, joita NVDA tarjoaa uusissa Windows-versioissa.
+NVDA:n vakiokomento käyttää Windowsin tekstintunnistustoimintoa näytön tunnistamiseen, mutta NAO voi suorittaa tekstintunnistuksen kiintolevylle tai USB-laitteille tallennetuille tiedostoille, tai Microsoft Outlook -liitteistä.
+Tunnista kuva- ja PDF-tiedostoja NVDA+Vaihto+R-komentoa käyttäen.
+Siirrä kohdistus haluamasi tiedoston kohdalle ja paina NVDA+Vaihto+R.
+Kun tiedoston tunnistus on suoritettu, näkyviin tulee yksinkertainen teksti-ikkuna, joka mahdollistaa koko sisällön lukemisen, tallentamisen, tekstin etsimisen tai sisällön kopioimisen leikepöydälle.
+NAO voi  käsitellä myös monisivuisia PDF-tiedostoja, joten jos sinulla on saavuttamaton asiakirja, Windowsin tekstintunnistus voi tehdä siitä saavutettavan.</p>
+<h2>Järjestelmävaatimukset</h2>
+<p>Lisäosa toimii Windows 10- ja Windows 11 -järjestelmissä, koska niissä on sisäänrakennettu tekstintunnistusominaisuus.
+NAO on yhteensopiva NVDA 2019.3:n ja sitä uudempien kanssa, joten älä käytä vanhempia versioita.
+Huom: NAO toimii Windowsin resurssienhallinnassa, työpöydällä, Total Commanderissa tai xplorer²-tiedostonhallinnassa. Älä käytä muita ohjelmistoja kuten 7-Zipiä tai WinRARia, koska niitä ei tueta.
+Sähköpostin liitetiedostoissa se toimii myös Microsoft Outlook 2016:n tai uudemman kanssa.</p>
+<h2>Ominaisuudet ja komennot</h2>
+<ul>
+<li>NVDA+Vaihto+R: tunnista kaikenlaiset kuva- ja PDF-tiedostot.</li>
+<li>Page up / Page down: siirrä kohdistin monisivuisen dokumentin todellisten sivujen välillä.</li>
+<li>Ctrl+S: tallenna dokumentti NAO-asiakirjamuodossa. Voit avata sen uudelleen NVDA+Vaihto+R-näppäinkomentoa käyttäen.</li>
+<li>P: ilmoita sivunumero monisivuisessa dokumentissa suhteessa kohdistimen sijaintiin.</li>
+<li>L: ilmoita rivinumero kohdistimen sijainnissa suhteessa nykyiseen sivuun.</li>
+<li>Vaihto+L: ilmoita rivinumero kohdistimen sijainnissa suhteessa koko dokumenttiin.</li>
+<li>G: siirry suoraan tietylle sivulle.</li>
+<li>C: kopioi koko dokumentin teksti leikepöydälle.</li>
+<li>S: tallenna dokumentin kopio tekstimuodossa.</li>
+<li>F: etsi tekstiä ja lue muutama sana ennen ja jälkeen löytyneen merkkijonon.</li>
+<li>NVDA+Vaihto+Ctrl+R: ota koko näytön kuvakaappaus ja tunnista se.</li>
+<li>Huom: Voit käyttää tavallisia NVDA-komentoja ikkunan tutkimiseen ja siirtääksesi kohdistuksen haluamaasi elementtiin. Voit esimerkiksi liikkua nuolinäppäimillä ja painaa Enteriä painikkeen painamiseksi. Voit myös siirtää hiiren senhetkiseen sijaintiisi NVDA+Laskinnäppäimistön / -näppäinkomennolla ja napsauttaa sitten vasemmalla/oikealla näppäimellä.</li>
+<li>NVDA+Vaihto+Ctrl+W: ota kuvakaappaus senhetkisestä ikkunasta ja tunnista se (voit käyttää samoja navigointikomentoja kuin koko näytön ruutukaappausta otettaessa).</li>
+</ul>
+<p>Huom: Voit mukauttaa NAO:n näppäinkomentoja helposti NVDA:n Näppäinkomennot-valintaikkunasta. Avaa NVDA-valikko, siirry Asetukset-alivalikkoon ja valitse sieltä Näppäinkomennot-kohta. Muista, että tämä ominaisuus ei ole järjestelmänlaajuinen, vaan se toimii vain siellä, missä NAO voi suorittaa tekstintunnistuksen. Toisin sanoen näppäinkomennot näkyvät vain, jos olet työpöydällä, resurssienhallinnassa, Total Commanderissa tai Xplorerissa.</p>
+<p>Voit myös keskeyttää kauan kestävän tekstintunnistusprosessin painamalla Peruuta-painiketta tunnistuksen etenemisen ikkunassa. Tämä ikkuna antaa tietoa tekstintunnistuksen tilasta päivittäen tiedot 5 sekunnin välein. Voit määrittää edistymispalkin tilan ilmoittamista tavalliseen tapaan NVDA+U-näppäinkomennolla.</p>
+<p>NVDA-valikon Työkalut-alivalikosta löytyy NAO-kohta. Se sisältää seuraavat kohteet:
+* Valitse tiedosto: voit valita tiedoston käsiteltäväksi ilman pikanäppäintä.
+* Tee lahjoitus: se on itsestään selvää, jos siltä tuntuu, olemme erittäin iloisia!
+* Naon verkkosivusto: tuo sinut Naon kotisivulle.
+* Git: vie sinut lähdekoodiinò, jossa voit tarkistaa sen, sitoutua tai avata ongelman.
+* Tarkista päivitykset: kysyy palvelimelta uutta Naon versiota.
+* Tyhjennä välimuisti: Jos kohtaat ongelmia lisäosan kanssa, saat virheilmoituksia tai huomaat sen olevan hidas, tyhjennä välimuisti ongelman ratkaisemiseksi.</p>
+<h2>Tuki ja lahjoitukset</h2>
+<p>NAO on täysin ilmainen. Muista kuitenkin, että se on tehty kehittäjien vapaa-ajalla.
+Arvostaisimme mitä tahansa tukea, jota voit meille antaa.
+<a href="https://nvda-nao.org/donate">Harkitse lahjoittamista</a>, jos työmme on mielestäsi hyvää ja parantaa elämääsi.</p>
+<p>Haluatko ilmoittaa bugista, ehdottaa uusia ominaisuuksia tai kääntää lisäosan omalle kielellesi? Meillä on sähköpostiosoite sinua varten. Kirjoita osoitteeseen support@nvda-nao.org, niin autamme mielellämme.</p>
+<h2>Versiohistoria</h2>
+<h3>2025.1</h3>
+<ul>
+<li>Yhteensopiva NVDA-version 2025.1 kanssa</li>
+<li>Ota OCR-tunnistus käyttöön valitulle avatun Outlook-viestin liitteelle, Outlook 2016:sta ja sen jälkeen</li>
+<li>Lisätty suomenkielinen käännös</li>
+</ul>
+<h3>2024.1</h3>
+<ul>
+<li>NVDA version 2024.1 yhteensopivuus</li>
+</ul>
+<h3>2023.1.1</h3>
+<ul>
+<li>Palautettu NVDA 2023.3:n yhteensopivuus</li>
+<li>Uusi NVDA+Ctrl+Vaihto+W-näppäinkomento ottaa kuvakaappauksen senhetkisestä ikkunasta ja tunnistaa sen</li>
+<li>Lisätty brasilianportugalilainen käännös</li>
+<li>Tietoturvakorjaus suojatuissa ruuduissa</li>
+<li>NAO-työkaluvalikko poistettu suojatuissa ruuduissa</li>
+<li>Dokumenttien välimuisti poistettu suojatuissa ruuduissa</li>
+<li>NAO:n verkkosivun ja Git-koodivaraston linkit lisätty NAO-työkaluvalikkoon</li>
+</ul>
+<h3>2023.1</h3>
+<ul>
+<li>Yhteensopivuus NVDA 2023.1:lle</li>
+</ul>
+<h3>2022.1.3</h3>
+<ul>
+<li>Yhteensopivuus NVDA 2022.1:lle</li>
+<li>Päivitetty yksinkertaistetun kiinan ja ranskankieliset käännökset</li>
+<li>Espanjankielinen dokumentaatio päivitetty</li>
+</ul>
+<h3>2022.1.2</h3>
+<ul>
+<li>NAO-dokumenttimuodon tallennus- ja latausominaisuus.</li>
+<li>Tunnistuksen tulokset voidaan tallentaa dokumenttivälimuistiin, joka nopeuttaa niiden avaamista seuraavalla kerralla. Jos tiedosto löytyy välimuistista, sitä ei tunnisteta uudelleen, vaan käytetään sen sijaan välimuistissa olevaa versiota (tunnistusparametrien on oltava täsmälleen samat).</li>
+<li>Dokumentin viimeisin lukukohta tallennetaan välimuistin metatietoihin.</li>
+<li>Dokumenttivälimuistin automaattinen tyhjennys.</li>
+<li>Manuaalinen välimuistin tyhjennysvaihtoehto Työkalut-valikossa.</li>
+<li>Tiedosto voidaan nyt tunnistaa suoraan "pakatusta kansiosta" Windowsin resurssienhallinnassa.</li>
+<li>Parempi virheellisten tiedostojen tarkistus.</li>
+<li>Parempi Windowsin resurssienhallinnan yhteensopivuus erilaisia tiedostonvalintavaihtoehtoja käyttäen: ensin yritetään Shell.Application-menetelmää NVDA:ssa, sitten samaa menetelmää PowerShellissä ja viimeisenä turvaudutaan manuaaliseen selaamiseen.</li>
+<li>Tekstintunnistusmoottori säilyttää kieliasetuksen koko tunnistusprosessin ajan, vaikka sitä muutettaisiin monisivuisen tunnistuksen aikana.</li>
+<li>Tekstintunnistusjono useista lähteistä tunnistamista varten.</li>
+<li>Page down -näppäin siirtää monisivuisen dokumentin loppuun sen viimeisellä sivulla oltaessa ja ilmoittaa rivinumeron.</li>
+<li>Tiedostomuunnintyökaluja varten käytetään Windowsin väliaikaistiedostojen kansiota lisäosakansion sijaan (parempi suorituskyky NVDA:n massamuistiversioissa).</li>
+<li>Lisätty romaniankielinen käännös ja yksinkertaistetun kiinan käännös päivitetty.</li>
+</ul>
+<h3>2022.1.1</h3>
+<ul>
+<li>Tuki DjVu-tiedostomuodolle.</li>
+<li>Tuki monisivuisille TIFF-tiedostoille.</li>
+<li>PDF-koodauksen bugikorjaus kiinankielisissä käyttöjärjestelmissä.</li>
+<li>Manuaalinen lisäosan päivitystoiminto NVDA:n Työkalut-valikossa.</li>
+<li>Yhteensopivuus NVDA 2019.3:sta lähtien.</li>
+</ul>
+<h3>2022.1</h3>
+<ul>
+<li>Automaattinen lisäosan päivitys.</li>
+<li>Espanjan- ja ranskankieliset käännökset päivitetty.</li>
+</ul>
+<h3>2021.2</h3>
+<ul>
+<li>PDF- ja kuvatiedostojen tekstintunnistustulokset näytetään uudessa teksti-ikkunassa, jossa on käytettävissä joitakin pikanäppäimiä yksinkertaisia toimintoja varten.</li>
+<li>Tuki Xplorer-tiedostonhallintasovellukselle.</li>
+<li>NAO:n näppäinkomennot ovat mukautettavissa NVDA:n Näppäinkomennot-valintaikkunasta.</li>
+<li>NAO toimii vain sellaisissa ikkunoissa, jossa sitä on mahdollista käyttää, joten jos olet ei-tuetussa ikkunassa, lisäosan näppäinkomento ohitetaan. Tämä ratkaisi merkittävän ongelman, jossa Excelin ja Wordin käyttäjät eivät voineet painaa NVDA+Vaihto+R-näppäinkomentoa, koska se oli virheellisesti NAO:n käytössä.</li>
+<li>Pitkäkestoinen tekstintunnistusprosessi voidaan keskeyttää painamalla Tunnistuksen edistymisikkunassa "Peruuta"-painiketta.</li>
+<li>Lisätty turkin-, venäjän-, espanjan-, kiinan- ja ranskankieliset käännökset.</li>
+<li>Käyttäjien on mahdollista tehdä projektille lahjoituksia.</li>
+<li>Korjattu bugi, jossa tietyt merkit tiedostonimessä estivät tekstintunnistusta toimimasta kunnolla.</li>
+</ul>
+<h3>2021.1</h3>
+<ul>
+<li>Ensimmäinen julkinen versio.</li>
+</ul>
+</body>
+</html>

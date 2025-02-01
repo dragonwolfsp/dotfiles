@@ -1,0 +1,5 @@
+Diagonale contenant la note courante et la justess entre -50 et 50:
+[160, 210, 280, 250]   autrement dit une zone de 120 * 40
+
+Diagonale de la zone de texte pour la référence de la note :
+[230, 35, 280, 50]

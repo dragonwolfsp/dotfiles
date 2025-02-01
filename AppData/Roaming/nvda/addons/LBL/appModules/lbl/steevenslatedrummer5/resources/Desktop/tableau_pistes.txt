@@ -1,0 +1,57 @@
+Emplacements tableau pistes
+Les tuples des diagonales décrivent les coordonnées x et y des points supérieurs gauches et inférieurs droits.
+
+Emplacement 1 :
+	Colonne Mute (couleur) 157, 195
+	Colonne Microphone (OCR) diagonale (172, 185) (307, 205)
+	Colonne Routing (OCR) diagonale (309, 185) (444, 205)
+		Coordonnées pour le clic : (420, 195)
+		Diagonale pour le premier élément du menu (309, 206, 444, 222)
+	Colonne Potard Volume (Entrée) 458, 195
+	Colonne Valeur Volume (OCR) diagonale (478, 185) (528, 205)
+	Colonne Potard Panoramique (Entrée) 548, 195
+	Colonne Valeur Panoramique (OCR) diagonale (568, 185) (618, 205)
+
+Emplacement 2 :
+	Colonne Mute (couleur) 157, 225
+	Colonne Microphone (OCR) diagonale (172, 215) (307,235)
+	Colonne Routing (OCR) diagonale (309, 215) (444, 235)
+		Coordonnées pour le clic : (420, 225)
+		Diagonale pour le premier élément du menu (309, 236, 444, 252)
+	Colonne Potard Volume (Entrée) 458, 225
+	Colonne Valeur Volume (OCR) diagonale (478, 215) (528, 235)
+	Colonne Potard Panoramique (Entrée) 548, 225
+	Colonne Valeur Panoramique (OCR) diagonale (568, 215) (618, 235)
+
+Emplacement 3 :
+	Colonne Mute (couleur) 157, 255
+	Colonne Microphone (OCR) diagonale (172, 245) (307,265)
+	Colonne Routing (OCR) diagonale (309, 245) (444, 265)
+		Coordonnées pour le clic : (420, 255)
+		Diagonale pour le premier élément du menu (309, 266, 444, 282)
+	Colonne Potard Volume (Entrée) 458, 255
+	Colonne Valeur Volume (OCR) diagonale (478, 245) (528, 265)
+	Colonne Potard Panoramique (Entrée) 548, 255
+	Colonne Valeur Panoramique (OCR) diagonale (568, 245) (618, 265)
+
+Emplacement 4 :
+	Colonne Mute (couleur) 157, 285
+	Colonne Microphone (OCR) diagonale (172, 275) (307,295)
+	Colonne Routing (OCR) diagonale (309, 275) (444, 295)
+		Coordonnées pour le clic : (420, 285)
+		Diagonale pour le premier élément du menu (309, 296, 444, 312)
+	Colonne Potard Volume (Entrée) 458, 285
+	Colonne Valeur Volume (OCR) diagonale (478, 275) (528, 295)
+	Colonne Potard Panoramique (Entrée) 548, 285
+	Colonne Valeur Panoramique (OCR) diagonale (568, 275) (618, 295)
+
+Emplacement 5 :
+	Colonne Mute (couleur) 157, 315
+	Colonne Microphone (OCR) diagonale (172, 305) (307,325)
+	Colonne Routing (OCR) diagonale (309, 305) (444, 325)
+		Coordonnées pour le clic : (420, 315)
+		Diagonale pour le premier élément du menu (309, 326, 444, 342)
+	Colonne Potard Volume (Entrée) 458, 315
+	Colonne Valeur Volume (OCR) diagonale (478, 305) (528, 325)
+	Colonne Potard Panoramique (Entrée) 548, 315
+	Colonne Valeur Panoramique (OCR) diagonale (568, 305) (618, 325)

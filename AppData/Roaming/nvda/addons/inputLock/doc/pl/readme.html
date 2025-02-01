@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="../style.css" media="screen">
+<title>Input lock 1.18</title>
+</head>
+<body>
+<h1>Input Lock</h1>
+<ul>
+<li>Autor: Jose Manuel Delicado</li>
+<li>NVDA compatibility: 2023.3.4 and beyond</li>
+<li>Pobierz <a href="https://www.nvaccess.org/addonStore/legacy?file=inputLock">wersja stabilna</a></li>
+</ul>
+<h2>Opis</h2>
+<p>Masz w domu zwierzęta lub małe dzieci? Czy Twój kot uwielbia wspinać się na
+Twoje biurko i spacerować po klawiaturze komputera? Czy korzystając z
+laptopa, zdarza Ci się przesuwać kursor myszy w przypadkowe miejsca na
+ekranie? Jeśli tak, to Input Lock jest właśnie dla Ciebie! Teraz możesz
+pozostawić włączony komputer bez żadnego ryzyka.</p>
+<p>Once installed, you will be able to lock your keyboard, touch screen (if
+your laptop has one), touchpad, mouse and Braille display.</p>
+<h2>Jak używać</h2>
+<p>This addon adds three extra gestures to NVDA. By default they are
+unassigned, so you will have to configure them from Input gestures
+dialog. Read the NVDA User Guide for more information.</p>
+<p>Kiedy naciśniesz polecenie ustawione dla Przełączania urządzeń wejścia, NVDA
+powie"Urządzenia wejścia zablokowane". Urządzenia wejścia będą zablokowane,
+aż do ponownego naciśnięcia tego samego polecenia. NVDA powie wtedy
+"Urządzenia wejścia odblokowane" i wszystko zacznie działać tak jak zawsze.</p>
+<p>Locking the touchpad can prevent us from accidentally touching it,
+especially those who are used to using the laptop keyboard directly. When
+you press the toggle touchpad lock gesture, NVDA will say "Touchpad
+locked". Your touchpad will be blocked until you press the same gesture
+again. In that moment, NVDA will say "Touchpad unlocked" and everything will
+work as usual.</p>
+<p>Kiedy naciśniesz polecenie ustawione dla przełączania blokady myszy, mysz
+zostanie zablokowana. Aby ją odblokować, naciśnij ponownie to samo
+polecenie. Przy włączonej blokadzie myszy nadal można używać poleceń NVDA
+służących do przemieszczania myszy i klikania lewym i prawym
+przyciskiem. Nie da się jednak używać samej myszy. Kliknięcia myszy można
+też wyłączyć w kategorii ustawień Input Lock w menu ustawień NVDA (NVDA
+2018.2 i nowsze) lub w dialogu ustawień dodatków, który znajduje się w menu
+Ustawienia, w starszych wersjach NVDA. Dodatkowo, w tych ustawieniach możesz
+określić, czy mysz ma być automatycznie blokowana po starcie NVDa, czy nie.</p>
+<p>Uwaga! Jeśli kliknięcia myszy są zablokowane, polecenia NVDA dotyczące myszy
+również nie działają.</p>
+<h2>Ograniczenia i znane problemy</h2>
+<p>Blokada wejścia ma następujące znane problemy:</p>
+<ul>
+<li>Skróty control+alt+del i windows+l mogą być używane nawet wtedy, gdy
+  klawiatura jest zablokowana.</li>
+<li>For gestures used to lock the touchpad, please try to assign a small
+  number of key combination gestures. It is recommended to use NVDA+letters
+  or numbers, Ctrl+F keys etc.</li>
+</ul>
+<h2>Lista zmian</h2>
+<h3>Version 1.13</h3>
+<ul>
+<li>Now, minimum supported version is 2023.3.4.</li>
+<li>Updated translations. Starting from version 1.13, changelog won't be
+  modified when a new release only includes localization updates.</li>
+<li>Added a gesture (unassigned by default) to lock/unlock the touchpad.</li>
+</ul>
+<h3>Version 1.12</h3>
+<ul>
+<li>Dodano zgodność z najnowszymi wersjami NVDA.</li>
+<li>Zaktualizowane tłumaczenia.</li>
+</ul>
+<h3>Wersja 1.11</h3>
+<ul>
+<li>Dodano zgodność z najnowszymi wersjami NVDA.</li>
+<li>Zaktualizowane tłumaczenia.</li>
+<li>Teraz minimalna obsługiwana wersja to 2022.4.</li>
+</ul>
+<h3>Wersja 1.10</h3>
+<ul>
+<li>Dodano zgodność z najnowszymi wersjami NVDA.</li>
+<li>Zaktualizowane tłumaczenia.</li>
+<li>Zaktualizowana dokumentacja.</li>
+<li>Teraz minimalna obsługiwana wersja to 2021.3.</li>
+<li>Wejście pozostanie zablokowane po wybudzeniu z trybu
+  gotowości. Podziękowania dla Javiego Domingueza.</li>
+</ul>
+<h3>Wersja 1.9</h3>
+<ul>
+<li>Dodano zgodność z najnowszymi wersjami NVDA.</li>
+<li>Zaktualizowane tłumaczenia.</li>
+<li>Zaktualizowana dokumentacja.</li>
+</ul>
+<h3>Wersja 1.8</h3>
+<ul>
+<li>Dodano zgodność z najnowszymi wersjami NVDA.</li>
+<li>Zaktualizowane tłumaczenia.</li>
+</ul>
+<h3>Wersja 1.7</h3>
+<ul>
+<li>Dodano zgodność z najnowszymi wersjami NVDA.</li>
+<li>Zaktualizowane tłumaczenia.</li>
+</ul>
+<h3>Wersja 1.6</h3>
+<ul>
+<li>Od teraz ustawienia usuwają się tylko po odinstalowaniu dodatku. Ponadto,
+  nie resetują się już po aktualizacji.</li>
+<li>Nowe i zaktualizowane tłumaczenia.</li>
+</ul>
+<h3>Wersja 1.5</h3>
+<ul>
+<li>Dodana zgodność z ostatnimi wersjami NVDA.</li>
+<li>Nowe tłumaczenia.</li>
+</ul>
+<h3>Wersja 1.4</h3>
+<ul>
+<li>Polecenia dodatku są domyślnie nieprzypisane.</li>
+</ul>
+<h3>Wersja 1.3</h3>
+<ul>
+<li>Dodano panel ustawień w oknie dialogowym ustawień NVDA, jak również
+  element menu i okno dialogowe dla starszych wersji NVDA.</li>
+<li>Dodano możliwość blokowania myszy przy starcie NVDA.</li>
+<li>Dodano możliwość blokowania kliknięć myszy, kiedy sama mysz jest już
+  zablokowana.</li>
+<li>Naprawiono małe błędy, niektóre optymalizacje kodu i mniej zduplikowanych
+  ciągów dla tłumaczy</li>
+</ul>
+<h3>Wersja 1.2</h3>
+<ul>
+<li>Teraz mysz może być również zablokowana</li>
+<li>Nowe polecenie blokowania i odblokowywania tylko myszy</li>
+</ul>
+<h3>Wersja 1.1</h3>
+<ul>
+<li>Jeżeli inny dodatek już wcześniej dodał funkcję przechwytywania do
+  menedżera urządzeń wejścia, zostanie ona wznowiona gdy urządzenia wejścia
+  zostaną odblokowane.</li>
+</ul>
+<h3>Wersja 1.0</h3>
+<ul>
+<li>Wersja pierwotna</li>
+</ul>
+<p>[[!tag dev stable]]</p>
+</body>
+</html>

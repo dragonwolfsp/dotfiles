@@ -1,0 +1,60 @@
+Diagonales pour lignes du tableau dans la version gratuite.
+
+Kits
+Colonne LIBRARY :
+Diagonale première cellule (132, 50) (407, 72) soit une largeur de 275 et une hauteur de 22
+
+Colonne CATEGORY:
+Diagonale première cellule (412, 50) (672, 72) soit une largeur de 260 et une hauteur de 22
+
+Colonne KIT PRESET
+Diagonale première cellule (677, 50) (942, 72) soit une largeur de 265 et une hauteur de 22
+
+Instruments
+Colonne LIBRARY:
+Diagonale première cellule (132, 50) (407, 72) soit une largeur de 275 et une hauteur de 22
+
+Colonne DRUM TYPE:
+Diagonale première cellule (412, 50) (612, 72) soit une largeur de 200 et une hauteur de 22
+
+Colonne DRUM NAME:
+Diagonale première cellule (617, 50) (942, 72) soit une largeur de 325 et une hauteur de 22
+
+
+
+
+Arborescence du tableau :
+(entre parenthèses, la colonne correspondante pour la lisibilité)
+
+Instruments
+SSD 5 Deluxe 2 (Library)
+    01 Kicks (Drum Type)
+        Kick Pearl 22 MMC (Drum Name)
+    02 Snares (Drum Type)
+        Snare 01a SSD (Drum Name)
+        Snare Gth 5 GSS (Drum Name)
+    03 Toms (Drum Type)
+        Tom Lwg VCL 10 (Drum Name)
+        Tom Lwg VCL 12 (Drum Name)
+        Tom Lwg VCL 14 (Drum Name)
+        Tom Lwg VCL 16 (Drum Name)
+    04 Hats (Drum Type)
+        Hi-Hat Sbn 14 AAM (Drum Name)
+    05 Rides (Drum Type)
+        Ride Zid 21 SWR (Drum Name)
+    06 Crashes (Drum Type)
+        Crash L Zid 18 ACU (Drum Name)
+        Crash R Zid 19 ACU (Drum Name)
+    07 Splashes (Drum Type)
+        Splash L Sbn 9 MAX (Drum Name)
+    08 Chinas (Drum Type)
+        China R Sbn 19 AAX (Drum Name)
+
+Kits
+SSD 5 Deluxe 2 (Library)
+    01 Rock Kits (Category)
+        Deluxe 2 Free Dry'n'Tight (Kit Preset)
+        Deluxe 2 Free Edition (Kit Preset)
+        Deluxe 2 Free Hugo (Kit Preset)
+User (Library)
+    User (Category)

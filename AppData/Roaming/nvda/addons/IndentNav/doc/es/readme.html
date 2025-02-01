@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="../style.css" media="screen">
+<title>IndentNav 2.2.5</title>
+</head>
+<body>
+<h1>IndentNav</h1>
+<p>Este complemento permite a los usuarios de NVDA navegar por nivel de sangría
+de líneas.  Mientras se edita código fuente en muchos lenguajes de
+programación, permite saltar entre líneas con el mismo nivel de sangría, así
+como encontrar líneas con mayor o menor nivel de sangría. También
+proporciona atajos de teclado similares en las vistas en árbol.</p>
+<p>Ten en cuenta que las órdenes de navegación por árboles se han movido al
+<a href="https://github.com/mltony/nvda-tree-nav">complemento TreeNav</a>.</p>
+<h2>Descarga</h2>
+<p>Instala desde la tienda de complementos de NVDA</p>
+<h2>Nota sobre la compatibilidad con VSCode</h2>
+<p>La accesibilidad incorporada en VSCode está muy limitada: a fecha de 2024
+expone sólo 500 líneas de código mediante la API de accesibilidad, lo que
+provoca que IndentNav funcione en VSCode de manera incorrecta.</p>
+<p>Por defecto, IndentNav no funcionará con VSCode. Cuando intentes usarlo,
+deberás elegir entre dos opciones:</p>
+<ul>
+<li>Instalar extensión de VSCode (<a href="https://marketplace.visualstudio.com/items?itemName=TonyMalykh.nvda-indent-nav-accessibility">página de la
+  extensión</a>)
+  (<a href="https://github.com/mltony/vscode-nvda-indent-nav-accessibility">código
+  fuente</a>):
+  la forma recomendada. Tras instalar la extensión, NVDA podrá acceder al
+  documento completo, sin importar lo grande que sea.</li>
+<li>Continuar usando VSCode en modo heredado: activa este modo en las opciones
+  de IndentNav. No se recomienda, ya que NVDA sólo verá 500 líneas del
+  documento y e indicará erróneamente que faltan padres y hermanos.</li>
+</ul>
+<h2>Problemas de compatibilidad</h2>
+<p>IndentNav tiene problemas de compatibilidad conocidos con el <a href="https://addons.nvda-project.org/addons/charInfo.es.html">complemento
+Información del
+carácter</a>. Es
+imposible configurar IndentNav y el cursor de revisión con el bloque
+numérico mientras este complemento está en ejecución. Desinstala este
+complemento, o bien usa un mapa de atajos de teclado alternativo para
+IndentNav.</p>
+<h2>Disposiciones de atajos de teclado</h2>
+<p>IndentNav ofrece tres mapas de atajos de teclado incorporados:</p>
+<ul>
+<li>Disposición heredada o portátil: es para personas que usaban IndentNav
+  v1.x y no quieren aprender nuevas disposiciones o para teclados de
+  portátiles que no tienen bloque numérico.</li>
+<li>Disposición alt+bloque numérico.</li>
+<li>
+<p>Disposición con teclas del bloque numérico. Hay dos modos de tratar con
+  los conflictos con los atajos del cursor de revisión:</p>
+<ul>
+<li>Usar el bloque numérico para IndentNav en campos editables y el cursor
+  de revisión en todos los demás sitios. Si todavía necesitas usar el
+  cursor de revisión en campos editables, se puede desactivar IndentNav
+  temporalmente pulsando <code>alt+bloqueo numérico</code>.</li>
+<li>Reasignar órdenes del cursor de revisión a alt+bloque numérico,
+  evitando por tanto el conflicto de atajos.</li>
+</ul>
+</li>
+</ul>
+<p>Se puede seleccionar la disposición de atajos de teclado en las opciones de
+IndentNav.</p>
+<h2>Atajos de teclado</h2>
+<table>
+<thead>
+<tr>
+<th>Acción</th>
+<th>Disposición heredada</th>
+<th>Disposición de <code>alt+bloque numérico</code></th>
+<th>Disposición de bloque numérico</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conmutar IndentNav</td>
+<td><code>alt+bloqueo numérico</code></td>
+<td><code>alt+bloqueo numérico</code></td>
+<td><code>alt+bloqueo numérico</code></td>
+<td>Útil cuando tanto los gestos de IndentNav como los del cursor de revisión se asignan al bloque numérico.</td>
+</tr>
+<tr>
+<td>Saltar al hermano anterior/siguiente</td>
+<td><code>NVDA+Alt+flechas arriba o abajo</code></td>
+<td><code>alt+8 del teclado numérico/2 del teclado numérico</code></td>
+<td><code>8 / 2 del teclado numérico</code></td>
+<td>Por hermano se entiende una línea con el mismo nivel de sangría.<br>Esta orden no llevará el cursor más allá del bloque de código actual.</td>
+</tr>
+<tr>
+<td>Saltar al hermano anterior/siguiente evitando desorden</td>
+<td>N/A</td>
+<td><code>control+alt+8 del teclado numérico/2 del teclado numérico</code></td>
+<td><code>control+8 del teclado numérico/2 del teclado numérico</code></td>
+<td>Puedes configurar la expresión regular de desorden en las opciones.</td>
+</tr>
+<tr>
+<td>Saltar al primer/último hermano</td>
+<td><code>NVDA+Alt+shift+flechas arriba y abajo</code></td>
+<td><code>alt+4 del teclado numérico/6 del teclado numérico</code></td>
+<td><code>4 del teclado numérico/6 del teclado numérico</code></td>
+<td>Por hermano se entiende una línea con el mismo nivel de sangría.<br>Esta orden no llevará el cursor más allá del bloque de código actual.</td>
+</tr>
+<tr>
+<td>Saltar al anterior/último hermano potencialmente fuera del bloque actual</td>
+<td><code>NVDA+control+Alt+flechas arriba y abajo</code></td>
+<td><code>control+alt+4 del teclado numérico/6 del teclado numérico</code></td>
+<td><code>control+4 del teclado numérico/6 del teclado numérico</code></td>
+<td>Esta orden permite saltar a un hermano de otro bloque.</td>
+</tr>
+<tr>
+<td>Saltar al padre anterior/siguiente</td>
+<td><code>NVDA+Alt+flecha izquierda</code>,<br><code>NVDA+alt+control+flecha izquierda</code></td>
+<td><code>alt+7 del teclado numérico/1 del teclado numérico</code></td>
+<td><code>7 del teclado numérico/1 del teclado numérico</code></td>
+<td>Se entiende por padre una línea con nivel de sangría menor.</td>
+</tr>
+<tr>
+<td>Saltar al hijo anterior/siguiente</td>
+<td><code>NVDA+Alt+control+flecha derecha</code>,<br><code>NVDA+alt+flecha derecha</code></td>
+<td><code>alt+9 del teclado numérico/3 del teclado numérico</code></td>
+<td><code>9 del teclado numérico/3 del teclado numérico</code></td>
+<td>Por hijo se entiende una línea con mayor nivel de sangría.<br>Esta orden no llevará el cursor más allá del bloque de código actual.</td>
+</tr>
+<tr>
+<td>Seleccionar bloque actual</td>
+<td><code>NVDA+control+i</code></td>
+<td><code>control+alt+7 del teclado numérico</code></td>
+<td><code>control+7 del teclado numérico</code></td>
+<td>Selecciona la línea actual, y todas las siguientes que tengan estrictamente mayor nivel de sangría.<br>Pulsa repetidamente para seleccionar varios bloques.</td>
+</tr>
+<tr>
+<td>Seleccionar el bloque actual y todos los bloques siguientes con el mismo nivel de sangría</td>
+<td><code>NVDA+alt+i</code></td>
+<td><code>control+alt+9 del teclado numérico</code></td>
+<td><code>control+9 del teclado numérico</code></td>
+<td>Selecciona la línea actual y todas las líneas siguientes con el mismo nivel de sangría o uno superior.</td>
+</tr>
+<tr>
+<td>Pegar con sangría</td>
+<td><code>NVDA+v</code></td>
+<td><code>NVDA+v</code></td>
+<td><code>NVDA+v</code></td>
+<td>Cuando necesites pegar un bloque de código en un lugar con nivel de sangría distinto, esta orden ajustará el nivel de sangría antes de pegar.</td>
+</tr>
+<tr>
+<td>Retroceder/avanzar por el historial</td>
+<td>N/A</td>
+<td><code>control+alt+1 del teclado numérico/3 del teclado numérico</code></td>
+<td><code>control+1 del teclado numérico/3 del teclado numérico</code></td>
+<td>IndentNav conserva un historial de líneas visitadas mediante órdenes de IndentNav.</td>
+</tr>
+<tr>
+<td>Verbalizar línea actual</td>
+<td>N/A</td>
+<td><code>alt+5 del teclado numérico</code></td>
+<td><code>5 del teclado numérico</code></td>
+<td>Realmente es una orden del cursor de revisión, reasignada por conveniencia.</td>
+</tr>
+<tr>
+<td>Verbalizar línea padre</td>
+<td><code>NVDA+i</code></td>
+<td>N/A</td>
+<td>N/A</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>Otras características</h2>
+<h3>Marcadores de búsqueda rápida</h3>
+<p>IndentNav permite configurar cualquier cantidad de marcadores a los que se
+puede saltar con facilidad. Un marcador se define con una expresión regular
+y un atajo de teclado personalizado para saltar a una coincidencia. Pulsa
+<code>sift+atajo</code> para saltar a la coincidencia anterior.</p>
+<h3>Crepitación:</h3>
+<p>Al saltar por muchas líneas de código, IndentNav intentará reproducir
+rápidamente los niveles de sangría como pitidos con las líneas
+saltadas. Esta característica sólo está activada cuando se habilita indicar
+sangría con tonos en las opciones de NVDA. Se puede ajustar o desactivar el
+volumen de la crepitación en las opciones de IndentNav.</p>
+<h2>Código fuente</h2>
+<p>El código fuente está disponible en
+<a href="http://github.com/mltony/nvda-indent-nav">http://github.com/mltony/nvda-indent-nav</a>.</p>
+<p>[[!tag dev stable]]</p>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="../style.css" media="screen">
+<title>IndentNav 2.2.5</title>
+</head>
+<body>
+<h1>IndentNav</h1>
+<ul>
+<li>Autor: Tony Malykh</li>
+<li>Pobierz <a href="https://www.nvaccess.org/addonStore/legacy?file=indentnav">wersja stabilna</a></li>
+</ul>
+<p>Ten dodatek pozwala użytkownikom NVDA nawigować po poziomach wcięcia,
+częściach akapitu lub całych akapitach. W przeglądarkach, pomaga znaleźć
+akapity oddalone o tę samą odległość od lewej krawędzi ekranu, takie jak
+komentarze pierwszego poziomu w hierarchicznym drzewie komentarzy. Podczas
+edycji kodu źródłowego w wielu językach programowania, można przeskakiwać
+między wierszami o tym samym poziomie wcięcia, jak również szybko odnajdywać
+wiersze  o wyższym lub niższym poziomie wcięcia.</p>
+<h2>Używanie w przeglądarkach</h2>
+<p>IndentNav można używać do nawigowania po akapitach oddalonych o konkretną
+odległość od lewej krawędzi ekranu. Przede wszystkim, można nacisnąć
+NVDA+Alt+Strzałka w dół lub w górę, aby przeskoczyć do następnego lub
+poprzedniego akapitu oddalonego od lewej krawędzi ekranu o tę samą
+odległość. przydaje się to podczas przeglądania hierarchicznych drzew
+komentarzy (np. na reddit.com) do przeskakiwania między komentarzami
+pierwszego poziomu z pominięciem wszystkich komentarzy wyższych poziomów.</p>
+<p>Ściśle mówiąc, IndentNav można używać w każdej aplikacji, dla której NVDA
+dostarcza interceptora drzewa.</p>
+<p>Skróty klawiszowe:</p>
+<ul>
+<li>NVDA+Alt+Strzałka w górę lub w dół: przeskakuje do poprzedniego lub
+  następnego akapitu oddalonego o tę samą odległość od lewej krawędzi
+  ekranu.</li>
+<li>NVDA+alt+Strzałka w lewo: przeskakuje do poprzedniego akapitu oddalonego o
+  mniejszą odległość od lewej krawędzi ekranu.</li>
+<li>NVDA+Alt+Ssrzałka w prawo: przeskakuje do następnego akapitu oddalonego o
+  większą odległość od lewej krawędzi ekranu.</li>
+</ul>
+<h2>Używanie w edytorach tekstu</h2>
+<p>IndentNav przydaje się również podczas edycji kodu źródłowego w wielu
+językach programowania.  W językach takich jak Python, kod źródłowy
+koniecznie musi mieć odpowiednio zrobione wcięcie. W przypadku wielu innych
+języków programowania, także poleca się o to zadbać.  Używając IndentNav,
+można nacisnąć NVDA+Alt+Strzałka w dół lub w górę, aby przeskoczyć do
+następnego lub poprzedniego wiersza o tym samym poziomie wcięcia.  Można też
+nacisnąć NVDA+Alt+Strzałka w lewo, aby przeskoczyć do wiersza nadrzędnego,
+czyli poprzedniego wiersza o niższym poziomie wcięcia.  W Pythonie można
+łatwo znaleźć aktualną definicję funkcji lub definicję klasy.  Można również
+nacisnąć NVDA+Alt+Strzałka w prawo, aby przejść do pierwszego podrzędnego
+elementu danego wiersza, czyli następnego wiersza o wyższym poziomie
+wcięcia.</p>
+<p>Jeśli w NVDA ustawiono wyrażanie wcięcia wiersza za pomocą dźwięków,
+IndentNav szybko odtworzy dźwięki wszystkich pominiętych wierszy.  Jeżeli
+będzie ich dużo, dodatek odtworzy same początki dźwięków, aby tylko
+zasygnalizować liczbę pominiętych wierszy.</p>
+<p>Skróty klawiszowe:</p>
+<ul>
+<li>NVDA+Alt+Strzałka w górę lub w dół: przeskakuje do poprzedniego lub
+  następnego wiersza o tym samym poziomie wcięcia w obrębie aktualnego bloku
+  o tym samym poziomie wcięcia.</li>
+<li>NVDA+Alt+Control+Strzałka w górę lub w dół: wymusza przeskok do
+  poprzedniego lub następnego wiersza o tym samym poziomie wcięcia. W razie
+  potrzeby, używając tego polecenia można przeskoczyć do innych bloków o tym
+  samym poziomie wcięcia, takich jak inne funkcje Pythona.</li>
+<li>NVDA+alt+Strzałka w lewo: przeskakuje do nadrzędnego wiersza, czyli do
+  poprzedniego wiersza o niższym poziomie wcięcia.</li>
+<li>NVDA+Alt+Strzałka w prawo: przeskakuje do pierwszego wiersza podrzędnego,
+  czyli do następnego wiersza o wyższym poziomie wcięcia w obrębie bloku o
+  tym samym poziomie wcięcia.</li>
+</ul>
+<h2>Historia wersji</h2>
+<ul>
+<li><a href="https://github.com/mltony/nvda-indent-nav/raw/master/releases/IndentNav-1.2.nvda-addon">v1.2</a></li>
+<li>Dodano wsparcie dla użytkowania międzynarodowego.</li>
+<li>Dodano nagłówki licencji GPL w plikach źródłowych.</li>
+<li>Drobne poprawki.</li>
+<li><a href="https://github.com/mltony/nvda-indent-nav/raw/master/releases/IndentNav-1.1.nvda-addon">v1.1</a></li>
+<li>Wersja pierwotna.</li>
+</ul>
+<p>[[!tag dev stable]]</p>
+</body>
+</html>

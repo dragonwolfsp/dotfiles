@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="../style.css" media="screen">
+<title>Input lock 1.18</title>
+</head>
+<body>
+<h1>Syöttölukko</h1>
+<ul>
+<li>Tekijä: Jose Manuel Delicado</li>
+<li>Yhteensopivuus: NVDA 2023.3.4 ja uudemmat</li>
+<li>Lataa <a href="https://www.nvaccess.org/addonStore/legacy?file=inputLock">vakaa versio</a></li>
+</ul>
+<h2>Johdanto</h2>
+<p>Onko kotonasi lapsia tai lemmikkieläimiä? Onko sinulla kissa, joka pitää
+pöydällesi kiipeilystä ja näppäimistölläsi kävelystä? Tuletko vahingossa
+siirtäneeksi hiirtä näytöllä satunnaisiin paikkoihin kannettavaa
+käyttäessäsi? Ratkaisu näihin kaikkiin on Syöttölukko. Voit huoletta jättää
+tietokoneesi käyntiin vartioimattomana.</p>
+<p>Kun tämä lisäosa on asennettu, voit lukita näppäimistön, kosketusnäytön
+(mikäli kannettavassasi sellainen on), kosketuslevyn, hiiren sekä
+pistenäytön.</p>
+<h2>Käyttö</h2>
+<p>Tämä lisäosa lisää NVDA:han kolme pikanäppäintä. Niihin ei ole määritetty
+oletusarvoisesti näppäinkomentoja, joten ne on määritettävä
+Näppäinkomennot-valintaikkunasta. Katso lisätietoja NVDA:n käyttöoppaasta.</p>
+<p>Kun painat syöttölukon tilanvaihtokomentoa, NVDA sanoo "Syöttö
+lukittu". Syöttölaitteiden käyttö estetään, kunnes painat uudelleen samaa
+komentoa. Silloin NVDA sanoo "Syöttölukko avattu", ja kaikki toimii kuten
+tavallisesti.</p>
+<p>Kosketuslevyn lukitseminen voi estää sen vahinkokosketukset, erityisesti
+sellaisilla käyttäjillä, jotka ovat tottuneet käyttämään kannettavan
+tietokoneen näppäimistöä. Kun painat kosketuslevyn lukituksen
+tilanvaihtokomentoa, NVDA sanoo "Kosketuslevy lukittu". Kosketuslevyn käyttö
+estetään, kunnes painat samaa komentoa uudelleen. Silloin NVDA sanoo
+"Kosketuslevyn lukitus avattu", ja kaikki toimii kuten tavallisesti.</p>
+<p>Jos painat hiiren käytön estävää tilanvaihtokomentoa, hiiri lukitaan. Paina
+samaa komentoa uudelleen avataksesi lukituksen. Kun hiiri on lukittuna, voit
+käyttää NVDA-komentoja sen siirtämiseen sekä vasenta ja oikeaa painiketta
+napsauttamiseen, mutta itse hiirtä ei voi siirtää. Myös hiiren napsautukset
+voidaan poistaa käytöstä NVDA:n asetusvalintaikkunan
+Syöttölukko-kategoriasta (NVDA 2018.2 ja uudemmat) tai vanhemmissa
+versioissa lisäosan asetusikkunasta, johon pääsee
+Asetukset-valikosta. Asetuksista voi lisäksi määrittää, lukitaanko hiiri
+NVDA:n käynnistyessä vai ei.</p>
+<p>Huom: Kun hiiren napsautukset on estetty, mitkään NVDA:n hiirikomennot eivät
+toimi.</p>
+<h2>Rajoitukset ja tunnetut ongelmat</h2>
+<p>Syöttölukossa on seuraavia tunnettuja ongelmia:</p>
+<ul>
+<li>Ctrl+Alt+Del- ja Win+L-näppäinkomennot toimivat, vaikka näppäimistö on
+  lukittu.</li>
+<li>Käytä kosketuslevyn lukitsevan pikanäppäimen määrittämiseen vain
+  muutamasta näppäimestä koostuvaa näppäinkomentoa. Suositeltavaa on käyttää
+  NVDA+kirjaimia tai numeroita, Ctrl+F-näppäimiä jne.</li>
+</ul>
+<h2>Muutosloki</h2>
+<h3>Versio 1.13</h3>
+<ul>
+<li>Vanhin tuettu versio on nyt 2023.3.4.</li>
+<li>Käännöksiä päivitetty. Versiosta 1.13 lähtien muutoslokia ei enää muokata,
+  jos uusi versio sisältää vain käännöspäivityksiä.</li>
+<li>Lisätty pikanäppäin kosketuslevyn lukitsemiselle/lukituksen avaamiselle
+  (oletusnäppäinkomentoa ei määritetty).</li>
+</ul>
+<h3>Versio 1.12</h3>
+<ul>
+<li>Yhteensopivuusliput päivitetty uusimmille NVDA-versioille.</li>
+<li>Käännöksiä päivitetty.</li>
+</ul>
+<h3>Versio 1.11</h3>
+<ul>
+<li>Yhteensopivuusliput päivitetty uusimmille NVDA-versioille.</li>
+<li>Käännöksiä päivitetty.</li>
+<li>Vanhin tuettu versio on nyt 2022.4.</li>
+</ul>
+<h3>Versio 1.10</h3>
+<ul>
+<li>Yhteensopivuusliput päivitetty uusimmille NVDA-versioille.</li>
+<li>Käännöksiä päivitetty.</li>
+<li>Dokumentaatiota päivitetty.</li>
+<li>Vanhin tuettu versio on nyt 2021.3.</li>
+<li>Syöte pysyy estettynä valmiustilasta heräämisen jälkeen. Kiitos Javi
+  Dominguezille.</li>
+</ul>
+<h3>Versio 1.9</h3>
+<ul>
+<li>Yhteensopivuusliput päivitetty uusimmille NVDA-versioille.</li>
+<li>Käännöksiä päivitetty.</li>
+<li>Dokumentaatiota päivitetty.</li>
+</ul>
+<h3>Versio 1.8</h3>
+<ul>
+<li>Yhteensopivuusliput päivitetty uusimmille NVDA-versioille.</li>
+<li>Käännöksiä päivitetty.</li>
+</ul>
+<h3>Versio 1.7</h3>
+<ul>
+<li>Yhteensopivuusliput päivitetty uusimmille NVDA-versioille.</li>
+<li>Käännöksiä päivitetty.</li>
+</ul>
+<h3>Versio 1.6</h3>
+<ul>
+<li>Asetukset poistetaan nyt vain, kun lisäosa poistetaan. Asetusten
+  oletusarvoja ei palauteta päivitettäessä.</li>
+<li>Uusia ja päivitettyjä käännöksiä.</li>
+</ul>
+<h3>Versio 1.5</h3>
+<ul>
+<li>Lisätty yhteensopivuus viimeisimpien NVDA-versioiden kanssa.</li>
+<li>Uusia käännöksiä.</li>
+</ul>
+<h3>Versio 1.4</h3>
+<ul>
+<li>Lisäosan komentoihin ei ole määritelty oletusarvoisesti näppäinkomentoja.</li>
+</ul>
+<h3>Versio 1.3</h3>
+<ul>
+<li>Lisätty asetuspaneeli Asetukset-valintaikkunaan. Vanhoja NVDA-versioita
+  varten on lisätty valintaikkuna ja sen avaava valikkokohde.</li>
+<li>Lisätty asetus hiiren lukitsemiseksi NVDA:n käynnistyessä.</li>
+<li>Lisätty asetus napsautusten estämiseksi hiiren ollessa lukittuna.</li>
+<li>Pieniä bugeja korjattu, koodia optimoitu ja vähemmän merkkijonojen
+  kaksoiskappaleita kääntäjille.</li>
+</ul>
+<h3>Versio 1.2</h3>
+<ul>
+<li>Nyt myös hiiri voidaan lukita.</li>
+<li>Uusi komento pelkän hiiren lukitsemiseen ja lukituksen avaamiseen.</li>
+</ul>
+<h3>Versio 1.1</h3>
+<ul>
+<li>Jos toinen lisäosa on aiemmin lisännyt kaappaustoiminnon syötönhallintaan,
+  se palautetaan, kun syötön lukitus avataan.</li>
+</ul>
+<h3>Versio 1.0</h3>
+<ul>
+<li>Ensimmäinen versio.</li>
+</ul>
+<p>[[!tag dev stable]]</p>
+</body>
+</html>

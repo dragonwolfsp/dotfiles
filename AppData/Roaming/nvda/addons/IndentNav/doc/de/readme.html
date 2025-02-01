@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="../style.css" media="screen">
+<title>IndentNav 2.2.5</title>
+</head>
+<body>
+<h1>IndentNav</h1>
+<p>Mit dieser NVDA-Erweiterung können Benutzer nach der Einrückungsebene von
+Zeilen navigieren.  Bei der Bearbeitung von Quellcode in vielen
+Programmiersprachen ermöglicht es, zwischen den Zeilen der gleichen
+Einrückungsebene zu springen und schnell Zeilen mit größerer oder kleinerer
+Einrückungsebene zu finden.  Ähnliche Tastenkombinationen sind auch in
+Baumansichten möglich.</p>
+<p>Bitte beachten Sie, dass die Befehle zur Baumnavigation in die
+NVDA-Erweiterung <a href="https://github.com/mltony/nvda-tree-nav">TreeNav</a>
+verschoben wurden.</p>
+<h2>Download</h2>
+<p>Bitte aus dem Store für NVDA-Erweiterungen  installieren</p>
+<h2>Hinweis zur Kompatibilität mit VSCode</h2>
+<p>Die in VSCode eingebaute Barrierefreiheit ist sehr begrenzt: Seit 2024
+werden nur 500 Zeilen Code über die API der Barrierefreiheit zugänglich
+gemacht, was dazu führt, dass IndentNav in VSCode nicht korrekt
+funktioniert.</p>
+<p>Standardmäßig funktioniert IndentNav nicht mit VSCode und wenn Sie
+versuchen, es zu verwenden, müssen Sie zwischen zwei Optionen wählen:</p>
+<ul>
+<li>Installieren Sie die VSCode-Erweiterung (<a href="https://marketplace.visualstudio.com/items?itemName=TonyMalykh.nvda-indent-nav-accessibility">von der
+  Seite</a>)(<a href="https://github.com/mltony/vscode-nvda-indent-nav-accessibility">Quellcode</a>)</li>
+<li>empfohlener Weg. Nach der Installation der Erweiterung ist NVDA in der
+  Lage, auf das gesamte Dokument zuzugreifen, egal wie groß es ist.</li>
+<li>Verwenden Sie VSCode weiterhin im Legacy-Modus - aktivieren Sie diesen
+  Modus in den IndentNav-Einstellungen. Dies wird nicht empfohlen, da NVDA
+  nur 500 Zeilen des Dokuments sieht und fälschlicherweise fehlende Einträge
+  in der Hierarchie mitteilt.</li>
+</ul>
+<h2>Kompatibilitätsprobleme</h2>
+<p>IndentNav hat bekannte Kompatibilitätsprobleme mit der NVDA-Erweiterung
+<a href="https://addons.nvda-project.org/addons/charInfo.en.html">Zeichen-Informationen</a>.
+Es ist derzeit nicht möglich, sowohl IndentNav als auch den Prüfcursor auf
+dem Ziffernblock zu konfigurieren, während dieser NVDA-Erweiterung
+läuft. Bitte deinstallieren Sie entweder sie es oder verwenden Sie eine
+alternative Tastaturbelegung in IndentNav.</p>
+<h2>Layouts der Tastenbefehle</h2>
+<p>IndentNav bietet drei eingebaute Tastenzuordnungen:</p>
+<ul>
+<li>Legacy- oder Laptop-Layout: Dies ist für diejenigen, die IndentNav V1.x
+  benutzt haben und keine neuen Layouts lernen wollen oder für
+  Laptop-Tastaturen, die keine Zifferntasten haben.</li>
+<li>Alt+Nummernblock-Layout.</li>
+<li>
+<p>Layout der Nummernblock-Tasten. Es gibt zwei Möglichkeiten, mit Konflikten
+  bei der Überprüfung der Cursor-Tasten umzugehen:</p>
+<ul>
+<li>Verwenden Sie den Nummernblock für IndentNav in Eingabefeldern und den
+  NVDA-Cursor überall sonst. Wenn Sie ihn in Dateien zum Bearbeiten
+  trotzdem verwenden müssen, können Sie IndentNav vorübergehend
+  deaktivieren, indem Sie die Tastenkombination <code>Alt+Nummernblock-Taste</code>
+  drücken.</li>
+<li>Die Befehle für den Cursor werden auf Alt+Nummernblock umgestellt,
+  wodurch Tastenkonflikte vermieden werden.</li>
+</ul>
+</li>
+</ul>
+<p>Das Tasten-Layout kann in den IndentNav-Einstellungen ausgewählt werden.</p>
+<h2>Tastenbefehle</h2>
+<table>
+<thead>
+<tr>
+<th>Aktion</th>
+<th>Legacy-Layout</th>
+<th><code>Alt+Nummernblock</code>-Layout</th>
+<th>Nummernblock-Layout</th>
+<th>Beschreibung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IndentNav umschalten</td>
+<td><code>Alt+Nummernblock</code></td>
+<td><code>Alt+Nummernblock</code></td>
+<td><code>Alt+Nummernblock</code></td>
+<td>Dies ist nützlich, wenn sowohl NVDA- als auch Tastenbefehle für Cursor dem Nummernblock zugewiesen sind.</td>
+</tr>
+<tr>
+<td>Jump to previous/next sibling</td>
+<td><code>NVDA+Alt+Pfeiltasten nach oben/unten</code></td>
+<td><code>Alt+Nummernblock-Taste 8/2</code></td>
+<td><code>Nummernblock-Taste 8/2</code></td>
+<td>Sibling is defined as a line with the same indentation level.<br>This command will not take cursor beyond current code block.</td>
+</tr>
+<tr>
+<td>Jump to previous/next sibling skipping over clutter</td>
+<td>Keine</td>
+<td><code>Strg+Alt+Nummernblock-Taste 8/2</code></td>
+<td><code>Strg+Nummernblock-Taste 8/2</code></td>
+<td>You can configure clutter regular expression in settings.</td>
+</tr>
+<tr>
+<td>Jump to first/last sibling</td>
+<td><code>NVDA+Alt+Umschalt+Pfeiltasten nach oben/unten</code></td>
+<td><code>Alt+Nummernblock-Taste 4/6</code></td>
+<td><code>Nummernblock-Taste 4/6</code></td>
+<td>Sibling is defined as a line with the same indentation level.<br>This command will not take cursor beyond current code block.</td>
+</tr>
+<tr>
+<td>Jump to previous/last sibling potentially outside of current block</td>
+<td><code>NVDA+Strg+Alt+Pfeiltasten nach oben/unten</code></td>
+<td><code>Strg+Alt+Nummernblock-Taste 4/6</code></td>
+<td><code>Strg+Nummernblock-Taste 4/6</code></td>
+<td>This command allows you to jump to a sibling in another block.</td>
+</tr>
+<tr>
+<td>Jump to previous/next parent</td>
+<td><code>NVDA+Alt+Pfeiltaste nach links</code>,<br><code>NVDA+Alt+Strg+Pfeiltaste nach links</code></td>
+<td><code>Alt+Nummernblock-Taste 7/1</code></td>
+<td><code>Nummernblock-Taste 7/1</code></td>
+<td>Parent is defined as a line with lower indentation level.</td>
+</tr>
+<tr>
+<td>Jump to previous/next child</td>
+<td><code>NVDA+Alt+Strg+Pfeiltaste nach rechts</code>,<br><code>NVDA+Alt+Pfeiltaste nach rechts</code></td>
+<td><code>Alt+Nummernblock-Taste 9/3</code></td>
+<td><code>Nummernblock-Taste 9/3</code></td>
+<td>Child is defined as a line with greater indentation level.<br>This command will not take cursor beyond current code block.</td>
+</tr>
+<tr>
+<td>Select current block</td>
+<td><code>NVDA+Strg+I</code></td>
+<td><code>Strg+Alt+Nummernblock-Taste 7</code></td>
+<td><code>Strg+Nummernblock-Taste 7</code></td>
+<td>Selects current line plus all following lines having strictly greater indentation level.<br>Press repeatedly to select multiple blocks.</td>
+</tr>
+<tr>
+<td>Select current block and all following blocks on the same indentation level</td>
+<td><code>NVDA+Alt+I</code></td>
+<td><code>Strg+Alt+Nummernblock-Taste 9</code></td>
+<td><code>Strg+Nummernblock-Taste 9</code></td>
+<td>Selects current line plus all following lines having  greater or equal indentation level.</td>
+</tr>
+<tr>
+<td>Indent-paste</td>
+<td><code>NVDA+V</code></td>
+<td><code>NVDA+V</code></td>
+<td><code>NVDA+V</code></td>
+<td>When you need to paste a block of code to a place with different indentation level, this command will adjust indentation level before pasting.</td>
+</tr>
+<tr>
+<td>Weiter/Zurück im Verlauf</td>
+<td>N/A</td>
+<td><code>Strg+Alt+Nummernblock-Taste 1/3</code></td>
+<td><code>Strg+Nummernblock-Taste 1/3</code></td>
+<td>IndentNav speichert einen Verlauf der Zeilen, die Sie mit IndentNav-Befehlen besucht haben.</td>
+</tr>
+<tr>
+<td>Aktuelle Zeile mitteilen</td>
+<td>Keine</td>
+<td><code>Alt+Nummernblock-Taste 5</code></td>
+<td><code>Nummernblock-Taste 5</code></td>
+<td>Dies ist in Wirklichkeit ein Cursor-Befehl, der der Einfachheit halber neu zugeordnet wurde.</td>
+</tr>
+<tr>
+<td>Übergeordnete Zeile mitteilen</td>
+<td><code>NVDA+I</code></td>
+<td>Keine</td>
+<td>Keine</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>Weitere Features</h2>
+<h3>Lesezeichen für die Schnellsuche</h3>
+<p>Mit IndentNav können Sie eine beliebige Anzahl von Lesezeichen
+konfigurieren, zu denen Sie einfach springen können. Ein Lesezeichen wird
+durch einen regulären Ausdruck und eine benutzerdefinierte Tastenkombination
+definiert, um zu einer Übereinstimmung zu springen. Drücken Sie die
+Tastenkombination "Umschalt+", um das vorherige Vorkommen zu finden.</p>
+<h3>Knack-Geräusche:</h3>
+<p>Beim Überspringen vieler Code-Zeilen versucht IndentNav, die
+Einrückungsebenen schnell als Töne der übersprungenen Zeilen
+wiederzugeben. Diese Funktion ist nur aktiviert, wenn in den
+NVDA-Einstellungen die Option Einrückung als Töne wiedergeben aktiviert
+ist. Die Lautstärke des Knackens kann in den IndentNav-Einstellungen
+angepasst oder deaktiviert werden.</p>
+<h2>Quellcode</h2>
+<p>Der Quellcode ist verfügbar unter
+<a href="http://github.com/mltony/nvda-indent-nav">http://github.com/mltony/nvda-indent-nav</a>.</p>
+<p>[[!tag dev stable]]</p>
+</body>
+</html>

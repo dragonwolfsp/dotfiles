@@ -1,0 +1,4 @@
+mapObject = [
+    "loadMap",
+    "resetMap",
+]

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="../style.css" media="screen">
+<title>IndentNav 2.2.5</title>
+</head>
+<body>
+<h1>IndentNav</h1>
+<p>Cette extension permet aux utilisateurs de NVDA de naviguer par niveau
+d'indentation  des lignes. Lors de l'édition du code source dans de nombreux
+langages de programmation, elle permet de sauter entre les lignes du même
+niveau d'indentation, ainsi que de trouver rapidement des lignes avec un
+niveau d'indentation plus ou moins élevé. Elle fournit également des touches
+de commandes similaires dans les arborescences.</p>
+<p>Veuillez noter que les commandes de navigation dans l'arborescence ont été
+déplacées vers <a href="https://github.com/mltony/nvda-tree-nav">l'extension
+TreeNav</a>.</p>
+<h2>Télécharger</h2>
+<p>Veuillez installer à partir de l'add-on store de NVDA</p>
+<h2>Remarque sur la compatibilité avec VSCode</h2>
+<p>L'accessibilité VSCode intégrée est très limitée : à partir de 2024, il
+n'expose que 500 lignes de code via l'API d'accessibilité, ce qui fait
+qu'IndentNav ne fonctionne pas correctement dans VSCode.</p>
+<p>Par défaut, IndentNav ne fonctionnera pas avec VSCode et lorsque vous
+essayez de l'utiliser, vous devrez choisir parmi deux options :</p>
+<ul>
+<li>Installez l'extension VSCode (<a href="https://marketplace.visualstudio.com/items?itemName=TonyMalykh.nvda-indent-nav-accessibility">page de
+  l'extension</a>)(<a href="https://github.com/mltony/vscode-nvda-indent-nav-accessibility">code
+  source</a>) -
+  méthode recommandée. Après avoir installé l'extension, NVDA pourra accéder
+  à l'intégralité du document, quelle que soit sa taille.</li>
+<li>Continuez à utiliser VSCode en mode hérité - activez ce mode dans les
+  paramètres IndentNav. Ceci n'est pas recommandé puisque NVDA ne verra que
+  500 lignes de document et signalera par erreur les enfants/parents
+  manquants.</li>
+</ul>
+<h2>Problèmes de compatibilité</h2>
+<p>IndentNav a des problèmes de compatibilité connus avec <a href="https://addons.nvda-project.org/addons/charInfo.fr.html">l'extension
+Information
+caractère</a>. Il est
+actuellement impossible de configurer à la fois IndentNav et le curseur de
+revue sur le pavé numérique pendant que cette extension est en cours
+d'exécution. Veuillez soit désinstaller cette extension, soit utiliser une
+autre carte de touche de commande dans IndentNav.</p>
+<h2>Dispositions des touches de commandes</h2>
+<p>IndentNav propose 3 mappages de touches de commandes intégrés :</p>
+<ul>
+<li>Disposition héritée ou pour ordinateur portable : ceci est destiné aux
+  personnes qui utilisaient IndentNav v1.x et ne souhaitent pas apprendre de
+  nouvelles dispositions ou aux claviers d'ordinateurs portables qui n'ont
+  pas de pavé numérique.</li>
+<li>Disposition Alt+pavé numérique.</li>
+<li>
+<p>Disposition des touches du pavé numérique. Il existe deux modes de gérer
+  le conflit de touche de commande du curseur de revue :</p>
+<ul>
+<li>Utilisez le pavé numérique pour IndentNav dans les éléments
+  modifiables et le curseur de revue partout ailleurs. Si vous devez
+  toujours utiliser le curseur de revue dans les éléments modifiables,
+  vous pouvez désactiver temporairement IndentNav en appuyant sur
+  <code>alt+verrouillage numérique</code>.</li>
+<li>Remappez les commandes du curseur de revue sur alt+pavé numérique,
+  évitant ainsi les conflits de touche de commande.</li>
+</ul>
+</li>
+</ul>
+<p>La disposition des touches de commandes peut être sélectionnée dans les
+paramètres d'IndentNav.</p>
+<h2>Touches de commandes</h2>
+<table>
+<thead>
+<tr>
+<th>Actions</th>
+<th>Disposition héritée</th>
+<th>Disposition <code>Alt+pavé numérique</code></th>
+<th>Disposition du pavé numérique</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Basculer IndentNav</td>
+<td><code>alt+verrouillage numérique</code></td>
+<td><code>alt+verrouillage numérique</code></td>
+<td><code>alt+verrouillage numérique</code></td>
+<td>Ceci est utile lorsque les gestes NVDA et du curseur de revue sont attribués au pavé numérique.</td>
+</tr>
+<tr>
+<td>Aller à l'enfant précédent/suivant</td>
+<td><code>NVDA+Alt+flèche haut/bas</code></td>
+<td><code>alt+PavNum8/PavNum2</code></td>
+<td><code>PavNum8/PavNum2</code></td>
+<td>L'enfant est défini comme une ligne avec le même niveau d'indentation.<br>Cette commande ne déplacera pas le curseur au-delà du bloc de code actuel.</td>
+</tr>
+<tr>
+<td>Aller à l'enfant précédent/suivant en ignorant le désordre</td>
+<td>N/A</td>
+<td><code>contrôle+alt+PavNum8/PavNum2</code></td>
+<td><code>contrôle+PavNum8/PavNum2</code></td>
+<td>Vous pouvez configurer l'expression régulière en désordre dans les paramètres.</td>
+</tr>
+<tr>
+<td>Aller au premier/dernier enfant</td>
+<td><code>NVDA+Alt+maj+flèche haut/bas</code></td>
+<td><code>alt+PavNum4/PavNum6</code></td>
+<td><code>PavNum4/PavNum6</code></td>
+<td>L'enfant est défini comme une ligne avec le même niveau d'indentation.<br>Cette commande ne déplacera pas le curseur au-delà du bloc de code actuel.</td>
+</tr>
+<tr>
+<td>Aller à l'enfant précédent/dernier potentiellement en dehors du bloc actuel</td>
+<td><code>NVDA+contrôle+Alt+flèche haut/bas</code></td>
+<td><code>contrôle+alt+PavNum4/PaVNum6</code></td>
+<td><code>contrôle+PaVNum4/PaVNum6</code></td>
+<td>Cette commande vous permet de Aller à un enfant dans un autre bloc.</td>
+</tr>
+<tr>
+<td>Aller au parent précédent/suivant</td>
+<td><code>NVDA+Alt+Flèche gauche</code>,<br><code>NVDA+alt+contrôle+Flèche gauche</code></td>
+<td><code>alt+PavNum7/PavNum1</code></td>
+<td><code>PavNum7/PavNum1</code></td>
+<td>Le parent est défini comme une ligne avec un niveau d'indentation inférieur.</td>
+</tr>
+<tr>
+<td>Aller à l'enfant précédent/suivant</td>
+<td><code>NVDA+Alt+contrôle+Flèche droite</code>,<br><code>NVDA+alt+Flèche droite</code></td>
+<td><code>alt+PavNum9/PavNum3</code></td>
+<td><code>PavNum9/PavNum3</code></td>
+<td>L'enfant est défini comme une ligne avec un niveau d'indentation plus élevé.<br>Cette commande ne déplacera pas le curseur au-delà du bloc de code actuel.</td>
+</tr>
+<tr>
+<td>Sélectionner le bloc actuel</td>
+<td><code>NVDA+contrôle+i</code></td>
+<td><code>contrôle+alt+PavNum7</code></td>
+<td><code>contrôle+PavNum7</code></td>
+<td>Sélectionne la ligne actuelle ainsi que toutes les lignes suivantes ayant un niveau d'indentation strictement supérieur.<br>Appuyez à plusieurs reprises pour sélectionner plusieurs blocs.</td>
+</tr>
+<tr>
+<td>Sélectionnez le bloc actuel et tous les blocs suivants sur le même niveau d'indentation</td>
+<td><code>NVDA+alt+i</code></td>
+<td><code>contrôle+alt+PavNum9</code></td>
+<td><code>contrôle+PavNum9</code></td>
+<td>Sélectionne la ligne actuelle ainsi que toutes les lignes suivantes ayant un niveau d'indentation supérieur ou égal.</td>
+</tr>
+<tr>
+<td>Coller l'indentation</td>
+<td><code>NVDA+v</code></td>
+<td><code>NVDA+v</code></td>
+<td><code>NVDA+v</code></td>
+<td>Lorsque vous devez coller un bloc de code à un endroit avec un niveau d'indentation différent, cette commande ajustera le niveau d'indentation avant de le coller.</td>
+</tr>
+<tr>
+<td>Aller en arrière/en avance dans l'historique</td>
+<td>N/A</td>
+<td><code>contrôle+alt+PavNum1/PavNum3</code></td>
+<td><code>contrôle+PavNum1/PavNum3</code></td>
+<td>IndentNav conserve un historique des lignes que vous avez visitées via les commandes IndentNav.</td>
+</tr>
+<tr>
+<td>Annoncer la ligne actuelle</td>
+<td>N/A</td>
+<td><code>alt+PavNum5</code></td>
+<td><code>PavNum5</code></td>
+<td>Il s’agit en réalité d’une commande du curseur de revue remappée pour plus de commodité.</td>
+</tr>
+<tr>
+<td>Annoncer la ligne parent</td>
+<td><code>NVDA+i</code></td>
+<td>N/A</td>
+<td>N/A</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>Autres caractéristiques</h2>
+<h3>Recherche rapide de signets</h3>
+<p>IndentNav vous permet de configurer n'importe quel nombre de signets
+auxquels vous pouvez facilement accéder. Un signet est défini par une
+expression régulière et une touche de commande personnalisée pour accéder à
+une correspondance. Appuyez sur la touche de commande <code>maj+</code> pour rechercher
+l'occurrence précédente.</p>
+<h3>Crépitement :</h3>
+<p>Lorsque vous sautez sur plusieurs lignes de code, IndentNav essaiera de lire
+rapidement les niveaux d'indentation au fur et à mesure des tonalités des
+lignes sautées. Cette fonctionnalité n'est activée que lorsque l'annonce
+d'indentation par des tonalités est activée dans les paramètres NVDA. Le
+volume des crépitements peut être ajusté ou désactivé dans les paramètres
+d'IndentNav.</p>
+<h2>Code source</h2>
+<p>Le code source est disponible sur
+<a href="http://github.com/mltony/nvda-indent-nav">http://github.com/mltony/nvda-indent-nav</a>.</p>
+<p>[[!tag dev stable]]</p>
+</body>
+</html>

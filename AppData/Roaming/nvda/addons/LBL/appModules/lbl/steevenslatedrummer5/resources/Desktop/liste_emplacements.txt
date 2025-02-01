@@ -1,0 +1,50 @@
+Liste des micros et routings possibles pour chaque pièce du kit Free Dry'n'Tight pour le plugn StevenSlateDrummer 5
+
+NB: toutes les pistes ont au minimum 32 routings différents possibles, allant de "out 1 st" à "out 16 st" puis de "out 17 mn" à "out 32 mn"
+(ce qui correspond très certainement à 32 sorties stereo/mono)
+Les pistes qui ne correspondent pas à des pièces ont tous 4 routings en plus :OH, Room, Room B, SLR.
+Et pour ces pistes la valeur par défaut du routing est toujours la valeur de la piste courante (ex: Room)
+
+KICK :
+1. Kick In
+2. Kick Out
+3. OH
+4. Room
+5. Room B
+6. SLR
+
+SNARE GTH 5 :
+1. Snare Top
+2. Snare Btm
+3. Snare Rng
+4. OH
+5. Room
+6. Room B
+
+SNARE 01a : (pas la Snare par défaut mais on peut la mettre dans la batterie via le menu Create)
+1. Snare Dir 2
+2. Room
+
+TOM :
+1. Tom (suivi du diamètre : 10, 12, 14 ou 16 en fonction de la pièce sélectionnée)
+2. OH
+3. Room
+4. Room B
+5. SLR
+
+HI-HAT :
+1. Hi-Hat
+2. OH
+3. Room
+4. Room B
+
+SPLASH, CRASH, et CHINA :
+1. OH
+2. Room
+3. Room B
+
+RIDE :
+1. Ride
+2. OH
+3. Room
+4. Room B

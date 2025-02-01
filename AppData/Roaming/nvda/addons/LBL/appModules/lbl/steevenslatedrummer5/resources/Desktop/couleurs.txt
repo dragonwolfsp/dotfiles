@@ -1,0 +1,6 @@
+Mixer :
+	Piste non-mutée : #59caf5
+	Piste mutée : #143650
+
+	Menu déroulant : item surbrillance #285369
+	Menu déroulant : item défaut       #555555

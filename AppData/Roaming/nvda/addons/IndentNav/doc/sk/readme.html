@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="../style.css" media="screen">
+<title>IndentNav 2.2.5</title>
+</head>
+<body>
+<h1>Navigácia po odsadeniach</h1>
+<ul>
+<li>Autor: Tony Malykh</li>
+<li>Stiahnuť <a href="https://www.nvaccess.org/addonStore/legacy?file=indentnav">stabilnú verziu</a></li>
+</ul>
+<p>Umožňuje rýchlo nájsť odseky s rovnakým odsadením. V prehliadačoch umožňuje
+vyhľadať odseky s rovnakým, prípadne menším alebo väčším odsadením. Takto je
+možné rýchlo sa orientovať v strome s komentármi. Pri programovaní môže byť
+doplnok užitočný pri hľadaní kódu s rovnakým, prípadne menším alebo väčším
+odsadením.</p>
+<h2>Použitie v režime prehliadania</h2>
+<p>Skratkou nvda+alt+šípka dole preskočíte na odsek s rovnakým odsadením, ako
+má aktuálny odsek. NVDA+alt+šípka hore vyhľadá predchádzajúci odsek s
+rovnakým odsadením. Takto môžere napríkald rýchlo vyhľadať kkomentáre prvej
+úrovne (napríklad na reddit.com).</p>
+<p>Jednoducho povedané, doplnok funguje všade tam, kde je dostupný objekt so
+stromovou štruktúrou.</p>
+<p>Klávesové skratky:</p>
+<ul>
+<li>NVDA+alt+šípky hore a dole: preskočí na predchádzajúci alebo nasledujúci
+  odsek s rovnakým odsadením.</li>
+<li>NVDA+alt+ľavá šípka: Prejdi na predchádzajúci odsek s menším odsadením.</li>
+<li>NVDA+alt+pravá šípka: Prejdi na nasledujúci odsek s väčším odsadením.</li>
+</ul>
+<h2>Použitie v textových editoroch</h2>
+<p>Doplnok môže byť užitočný pri programovaní. Jazyky ako napríklad Python
+vyžadujú odsadenie kódu, mnohé ďalšie to tiež a odporúčajú. Nvda+alt+šípky
+hore a dole prejdú na predchádzajúci alebo nasledujúci riadok s rovnakým
+odsadením. Nvda+alt+ľavá šípka prejde na rodičovský riadok, teda
+predchádzajúci riadok s menším odsadením. V Pythone takto môžete rýchlo
+skočiť na definíciu funkcie alebo triedy. NVDA+alt+pravá šípka prejde na
+potomka aktuálneho riadka, teda nasledujúci riadok s väčším odsadením.</p>
+<p>Ak máte zapnuté oznamovanie odsadenia pípaním, NVDA pri preskakovaní zapípa
+riadky, ktoré boli preskočené. Ak máte toto oznamovanie vypnuté, budete
+počuť len prasknutie indikujúce, že boli preskočené riadky.</p>
+<p>Klávesové skratky:</p>
+<ul>
+<li>Nvda+alt+šípky hore a dole: Prejde na predchádzajúci alebo nasledujúci
+  riadok s tým istým odsadením, a,o má aktuálny riadok.</li>
+<li>NVDA+Alt+Ctrl+šípky hore a dole: Vynútiť skočenie na predchádzajúci alebo
+  nasledujúci riadok s rovnakým odsadením. Ak je to potrebné, Skočí na iné
+  bloky s rovnakým odsadením.</li>
+<li>NVDA+alt+ľavá šípka: Prejdi na rodiča: Predchádzajúci riadok s menším
+  odsadením.</li>
+<li>NVDA+alt+pravá šípka: Prejdi na potomka - nasledujúci riadok s väčším
+  odsadením.</li>
+</ul>
+<h2>Zmeny</h2>
+<ul>
+<li><a href="https://github.com/mltony/nvda-indent-nav/raw/master/releases/IndentNav-1.2.nvda-addon">v1.2</a></li>
+<li>Pridaná podpora lokalizácie do iných jazykov.</li>
+<li>Do zdrojových súborov doplnená GPL hlavička.</li>
+<li>Malé úpravy.</li>
+<li><a href="https://github.com/mltony/nvda-indent-nav/raw/master/releases/IndentNav-1.1.nvda-addon">v1.1</a></li>
+<li>Prvé vydadnie.</li>
+</ul>
+<p>[[!tag dev stable]]</p>
+</body>
+</html>

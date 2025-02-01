@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="../style.css" media="screen">
+<title>Input lock 1.18</title>
+</head>
+<body>
+<h1>Заключване на входа (Input Lock)</h1>
+<ul>
+<li>Автор: Jose Manuel Delicado</li>
+<li>NVDA compatibility: 2023.3.4 and beyond</li>
+<li>Изтегляне на <a href="https://www.nvaccess.org/addonStore/legacy?file=inputLock">стабилна версия</a></li>
+</ul>
+<h2>Представяне</h2>
+<p>Имате ли деца или домашни любимци у дома? Имате ли котка, която много обича
+да се качва на масата и да стъпва по клавиатурата ви? Премествате ли неволно
+мишката на произволни части от екрана, докато използвате лаптопа си? Тогава
+"Input Lock" е за вас! Ще можете да оставяте компютъра си включен и без
+наблюдение, без каквито и да било рискове.</p>
+<p>Once installed, you will be able to lock your keyboard, touch screen (if
+your laptop has one), touchpad, mouse and Braille display.</p>
+<h2>Начин на употреба</h2>
+<p>This addon adds three extra gestures to NVDA. By default they are
+unassigned, so you will have to configure them from Input gestures
+dialog. Read the NVDA User Guide for more information.</p>
+<p>Когато изпълните жеста за превключване на заключването на входа, NVDA ще
+съобщи, че входът е заключен. Вашите входни устройства ще бъдат блокирани,
+докато не изпълните отново същия жест. В този момент NVDA ще съобщи, че
+входът е отключен и всичко ще работи както обикновено.</p>
+<p>Locking the touchpad can prevent us from accidentally touching it,
+especially those who are used to using the laptop keyboard directly. When
+you press the toggle touchpad lock gesture, NVDA will say "Touchpad
+locked". Your touchpad will be blocked until you press the same gesture
+again. In that moment, NVDA will say "Touchpad unlocked" and everything will
+work as usual.</p>
+<p>Ако изпълните жеста за превключване заключването на мишката, мишката ще бъде
+заключена. Изпълнете отново същия жест, за да я отключите. Докато мишката е
+заключена, можете да използвате жестовете на NVDA, за да я местите и да
+симулирате щракване с левия или десния й бутон, но не можете да местите
+самата мишка. Щракванията с мишката могат да бъдат деактивирани и от панела
+с настройките за добавката в диалога за настройки на NVDA (за NVDA 2018.2 и
+по-нови версии) или от диалоговия прозорец с настройките за добавката (за
+по-стари версии на NVDA), наличен в менюто "Настройки" на NVDA. Освен това,
+от тези настройки можете да управлявате дали мишката да се заключва или не,
+когато NVDA се стартира.</p>
+<p>Забележка: Когато щракванията на мишката са блокирани, не можете да
+използвате жестовете на NVDA, за да работите с мишката.</p>
+<h2>Ограничения и известни проблеми</h2>
+<p>Добавката "Заключване на входа" има следните известни проблеми:</p>
+<ul>
+<li>Клавишните комбинации Control+Alt+Delete и Windows+L изпълняват
+  предназначението си, дори клавиатурата да е заключена.</li>
+<li>For gestures used to lock the touchpad, please try to assign a small
+  number of key combination gestures. It is recommended to use NVDA+letters
+  or numbers, Ctrl+F keys etc.</li>
+</ul>
+<h2>Списък на промените</h2>
+<h3>Version 1.13</h3>
+<ul>
+<li>Now, minimum supported version is 2023.3.4.</li>
+<li>Updated translations. Starting from version 1.13, changelog won't be
+  modified when a new release only includes localization updates.</li>
+<li>Added a gesture (unassigned by default) to lock/unlock the touchpad.</li>
+</ul>
+<h3>Version 1.12</h3>
+<ul>
+<li>Добавена е съвместимост с последните издания на NVDA.</li>
+<li>Обновени преводи.</li>
+</ul>
+<h3>Версия 1.11</h3>
+<ul>
+<li>Добавена е съвместимост с последните издания на NVDA.</li>
+<li>Обновени преводи.</li>
+<li>Сега минималната поддържана версия е 2022.4.</li>
+</ul>
+<h3>Версия 1.10</h3>
+<ul>
+<li>Добавена е съвместимост с последните издания на NVDA.</li>
+<li>Обновени преводи.</li>
+<li>Обновена документация.</li>
+<li>Сега минималната поддържана версия е 2021.3.</li>
+<li>Входът ще остане блокиран след събуждане от режим на
+  готовност. Благодарности на Javi Dominguez.</li>
+</ul>
+<h3>Версия 1.9</h3>
+<ul>
+<li>Добавена е съвместимост с последните издания на NVDA.</li>
+<li>Обновени преводи.</li>
+<li>Обновена документация.</li>
+</ul>
+<h3>Версия 1.8</h3>
+<ul>
+<li>Добавена е съвместимост с последните издания на NVDA.</li>
+<li>Обновени преводи.</li>
+</ul>
+<h3>Версия 1.7</h3>
+<ul>
+<li>Добавена е съвместимост с последните издания на NVDA.</li>
+<li>Обновени преводи.</li>
+</ul>
+<h3>Версия 1.6</h3>
+<ul>
+<li>Сега настройките се премахват, само когато добавката бъде
+  деинсталирана. Конфигурацията вече не се нулира при обновяване.</li>
+<li>Нови и обновени преводи.</li>
+</ul>
+<h3>Версия 1.5</h3>
+<ul>
+<li>Добавена е съвместимост с последните издания на NVDA.</li>
+<li>Нови преводи.</li>
+</ul>
+<h3>Версия 1.4</h3>
+<ul>
+<li>По подразбиране жестовете за добавката не са зададени.</li>
+</ul>
+<h3>Версия 1.3</h3>
+<ul>
+<li>Добавен е панел за настройване на добавката в диалоговия прозорец за
+  настройки. За старите версии на NVDA са добавени и елемент в менюто и
+  диалогов прозорец.</li>
+<li>Добавена е настройка за заключване на мишката при стартиране на NVDA.</li>
+<li>Добавена е настройка за блокиране и на щракванията с мишката, докато
+  мишката е заключена.</li>
+<li>Отстранени са малки грешки, има оптимизации на кода и по-малко дублирани
+  низове за преводачите</li>
+</ul>
+<h3>Версия 1.2</h3>
+<ul>
+<li>Сега и мишката може също да бъде заключвана</li>
+<li>Нова команда за заключване и отключване само на мишката</li>
+</ul>
+<h3>Версия 1.1</h3>
+<ul>
+<li>Ако друга добавка вече е добавила функция за прихващане към inputManager,
+  тя се възстановява, когато входът е отключен.</li>
+</ul>
+<h3>Версия 1.0</h3>
+<ul>
+<li>Първо издание</li>
+</ul>
+<p>[[!tag dev stable]]</p>
+</body>
+</html>

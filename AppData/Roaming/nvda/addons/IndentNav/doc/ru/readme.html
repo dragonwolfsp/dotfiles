@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="../style.css" media="screen">
+<title>IndentNav 2.2.5</title>
+</head>
+<body>
+<h1>IndentNav</h1>
+<p>Это дополнение позволяет пользователям NVDA перемещаться по уровню отступа
+строк.  При редактировании исходного кода во многих языках программирования
+оно позволяет переключаться между строками с одинаковым уровнем отступа, а
+также быстро находить строки с большим или меньшим уровнем отступа.  Оно
+также обеспечивает аналогичные нажатия клавиш в древовидных представлениях.</p>
+<p>Пожалуйста, обратите внимание, что команды древовидной навигации были
+перенесены в <a href="https://github.com/mltony/nvda-tree-nav">дополнение TreeNav</a>.</p>
+<h2>Загрузить</h2>
+<p>Пожалуйста, установите из магазина дополнений NVDA</p>
+<h2>Примечание о совместимости с VSCode</h2>
+<p>Встроенная доступность VSCode очень ограничена: по состоянию на 2024 год она
+предоставляет только 500 строк кода через accessibility API, что приводит к
+неправильной работе IndentNav в VSCode.</p>
+<p>По умолчанию IndentNav не будет работать с VSCode, и когда вы попытаетесь
+его использовать, вам нужно будет выбрать один из двух вариантов:</p>
+<ul>
+<li>Установите расширение VSCode (<a href="https://marketplace.visualstudio.com/items?itemName=TonyMalykh.nvda-indent-nav-accessibility">страница
+  расширения</a>)(<a href="https://github.com/mltony/vscode-nvda-indent-nav-accessibility">исходный
+  код</a>) -
+  рекомендуемый способ. После установки расширения NVDA сможет получить
+  доступ ко всему документу, независимо от его размера.</li>
+<li>Продолжайте использовать VSCode в устаревшем режиме - включите этот режим
+  в настройках IndentNav. Это не рекомендуется, поскольку NVDA увидит только
+  500 строк документа и ошибочно сообщит о пропавших братьях и
+  сестрах/родителях.</li>
+</ul>
+<h2>Проблемы с совместимостью</h2>
+<p>Известны проблемы с совместимостью IndentNav с <a href="https://addons.nvda-project.org/addons/charInfo.ru.html">дополнением информации о
+символах</a>. В
+настоящее время невозможно настроить как IndentNav, так и просмотровый
+курсор на цифровой клавиатуре во время работы этого дополнения. Пожалуйста,
+либо удалите это дополнение, либо используйте альтернативную раскладку
+комбинаций клавиш в IndentNav.</p>
+<h2>Раскладки комбинаций клавиш</h2>
+<p>IndentNav предлагает 3 встроенных раскладки комбинаций клавиш:</p>
+<ul>
+<li>Устаревшая или раскладка для ноутбука: это для тех, кто использовал
+  IndentNav v1.x и не хочет изучать новые раскладки, или для клавиатур
+  ноутбуков, у которых нет цифровых блоков.</li>
+<li>Раскладка Alt+цифровая клавиатура.</li>
+<li>
+<p>Раскладка клавиш цифровой клавиатуры. Существует два способа устранения
+  конфликта при нажатии клавиш просмотрового курсора:</p>
+<ul>
+<li>Используйте цифровую клавиатуру для ввода отступов в редактируемых
+  файлах и просмотровый курсор в других местах. Если вам всё ещё нужно
+  использовать просмотровый курсор в редактируемых файлах, вы можете
+  временно отключить ввод отступов, нажав <code>alt+NumLock</code>.</li>
+<li>Переназначьте команды просмотрового курсора на сочетание клавиш
+  alt+numpad, чтобы избежать конфликт нажатий клавиш.</li>
+</ul>
+</li>
+</ul>
+<p>Раскладку комбинаций клавиш можно выбрать в настройках IndentNav.</p>
+<h2>Комбинации клавиш</h2>
+<table>
+<thead>
+<tr>
+<th>Действие</th>
+<th>Устаревшая раскладка</th>
+<th>Раскладка <code>Alt+цифровая клавиатура</code></th>
+<th>Раскладка цифровой клавиатуры</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Toggle IndentNav</td>
+<td><code>alt+numLock</code></td>
+<td><code>alt+numLock</code></td>
+<td><code>alt+numLock</code></td>
+<td>This is useful when both NVDA and review cursor gestures are assigned to numPad.</td>
+</tr>
+<tr>
+<td>Jump to previous/next sibling</td>
+<td><code>NVDA+Alt+up/downArrow</code></td>
+<td><code>alt+numPad8/numPad2</code></td>
+<td><code>numPad8/numPad2</code></td>
+<td>Sibling is defined as a line with the same indentation level.<br>This command will not take cursor beyond current code block.</td>
+</tr>
+<tr>
+<td>Jump to previous/next sibling skipping over clutter</td>
+<td>N/A</td>
+<td><code>control+alt+numPad8/numPad2</code></td>
+<td><code>control+numPad8/numPad2</code></td>
+<td>You can configure clutter regular expression in settings.</td>
+</tr>
+<tr>
+<td>Jump to first/last sibling</td>
+<td><code>NVDA+Alt+shift+up/downArrow</code></td>
+<td><code>alt+numPad4/numPad6</code></td>
+<td><code>numPad4/numPad6</code></td>
+<td>Sibling is defined as a line with the same indentation level.<br>This command will not take cursor beyond current code block.</td>
+</tr>
+<tr>
+<td>Jump to previous/last sibling potentially outside of current block</td>
+<td><code>NVDA+control+Alt+up/downArrow</code></td>
+<td><code>control+alt+numPad4/numPad6</code></td>
+<td><code>control+numPad4/numPad6</code></td>
+<td>This command allows you to jump to a sibling in another block.</td>
+</tr>
+<tr>
+<td>Jump to previous/next parent</td>
+<td><code>NVDA+Alt+leftArrow</code>,<br><code>NVDA+alt+control+leftArrow</code></td>
+<td><code>alt+numPad7/numPad1</code></td>
+<td><code>numPad7/numPad1</code></td>
+<td>Parent is defined as a line with lower indentation level.</td>
+</tr>
+<tr>
+<td>Jump to previous/next child</td>
+<td><code>NVDA+Alt+control+rightArrow</code>,<br><code>NVDA+alt+rightArrow</code></td>
+<td><code>alt+numPad9/numPad3</code></td>
+<td><code>numPad9/numPad3</code></td>
+<td>Child is defined as a line with greater indentation level.<br>This command will not take cursor beyond current code block.</td>
+</tr>
+<tr>
+<td>Select current block</td>
+<td><code>NVDA+control+i</code></td>
+<td><code>control+alt+numPad7</code></td>
+<td><code>control+numPad7</code></td>
+<td>Selects current line plus all following lines having strictly greater indentation level.<br>Press repeatedly to select multiple blocks.</td>
+</tr>
+<tr>
+<td>Select current block and all following blocks on the same indentation level</td>
+<td><code>NVDA+alt+i</code></td>
+<td><code>control+alt+numPad9</code></td>
+<td><code>control+numPad9</code></td>
+<td>Selects current line plus all following lines having  greater or equal indentation level.</td>
+</tr>
+<tr>
+<td>Indent-paste</td>
+<td><code>NVDA+v</code></td>
+<td><code>NVDA+v</code></td>
+<td><code>NVDA+v</code></td>
+<td>When you need to paste a block of code to a place with different indentation level, this command will adjust indentation level before pasting.</td>
+</tr>
+<tr>
+<td>Go back/forward in history</td>
+<td>N/A</td>
+<td><code>control+alt+numPad1/numPad3</code></td>
+<td><code>control+numPad1/numPad3</code></td>
+<td>IndentNav keeps a history of lines which you visited via IndentNav commands.</td>
+</tr>
+<tr>
+<td>Speak current line</td>
+<td>N/A</td>
+<td><code>alt+numPad5</code></td>
+<td><code>numPad5</code></td>
+<td>This is really a review cursor command remapped for convenience.</td>
+</tr>
+<tr>
+<td>Speak parent line</td>
+<td><code>NVDA+i</code></td>
+<td>N/A</td>
+<td>N/A</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>Другие особенности</h2>
+<h3>Быстрый поиск закладок</h3>
+<p>IndentNav позволяет настроить любое количество закладок, к которым вы можете
+легко перейти. Закладка определяется с помощью регулярного выражения и
+пользовательского нажатия клавиши для перехода к совпадению. Нажмите клавишу
+"shift", чтобы найти предыдущее появление.</p>
+<h3>Потрескивание:</h3>
+<p>При переходе по нескольким строкам кода IndentNav попытается быстро
+воспроизвести уровни отступов в виде тонов пропущенных строк. Эта функция
+включена только в том случае, если в настройках NVDA включена функция
+отображения отступов в виде тонов. Громкость треска можно регулировать или
+отключать в настройках IndentNav.</p>
+<h2>Исходный код</h2>
+<p>Исходный код доступен по адресу <a href="http://github.com/mltony/nvda-indent-nav">http://github.com/mltony/nvda-indent-nav</a>.</p>
+<p>[[!tag dev stable]]</p>
+</body>
+</html>

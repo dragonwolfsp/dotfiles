@@ -1,0 +1,5 @@
+Coordonnées pour bouton "Factory Reset" (réinitialisation de la config) :
+x = 190, y = 620
+
+Coordonnées pour bouton "Load Preset" (chargement de preset via l'explorateur de fichiers) :
+x = 880, y = 620

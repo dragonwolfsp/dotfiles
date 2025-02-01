@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="../style.css" media="screen">
+<title>Input lock 1.18</title>
+</head>
+<body>
+<h1>قفل ورودی‌ها (Input Lock)</h1>
+<ul>
+<li>نویسنده: Jose Manuel Delicado</li>
+<li>NVDA compatibility: 2022.4 and beyond</li>
+<li>دانلود <a href="https://www.nvaccess.org/addonStore/legacy?file=inputLock">نسخه‌ی پایدار</a></li>
+</ul>
+<h2>مقدمه</h2>
+<p>آیا توو خونتون بچه کوچولو دارین؟ آیا کوچولوتون دوست داره دستاشو بکوبه رو
+صفحه‌کلید؟ آیا وقتی با لپتاپتون کار میکنید، دستتون تصادفی میخوره به صفحه‌ی
+موس و بدون اینکه خواسته باشید موس جابجا میشه؟ دیگه تموم شد! این افزونه برای
+خودِ خودِ شماست! میتونید با خیال راحت کامپیوترتونو روشن، بدون اینکه خطری
+نرم‌افزاری تهدیدش کنه، تنها بذارین!</p>
+<p>به محض اینکه افزونه‌ی Input Lock را نصب کنید، میتوانید صفحه‌کلید، صفحه‌ی
+لمسی لپتاپ (در صورتی که داشته باشد)، موس و نمایشگر بریلتان را قفل کنید.</p>
+<h2>نحوه استفاده</h2>
+<p>این افزونه، دو فرمان به NVDA اضافه میکند. بطور پیشفرض، کلیدی برای این
+فرمان‌ها اختصاص نیافته است؛ لذا باید از پنجره‌ی مدیریت فرمان‌های ورودی،
+کلیدهایی به این فرمان‌ها اختصاص دهید. برای کسب اطلاعات بیشتر، راهنمای کاربر
+را بخوانید.</p>
+<p>وقتی کلیدی را که به فرمان قفل ورودی‌ها اختصاص دادید بزنید، NVDA خواهد گفت:
+Input locked. دستگاه‌های ورودی قفل میشوند تا زمانی که دوباره آن کلید را
+بزنید. این بار NVDA خواهد گفت: Input unlocked، و همه چیز بطور معمول کار
+خواهد کرد.</p>
+<p>چنانچه شما کلیدی را که به فرمان قفل موس اختصاص داده بودید بزنید، موس قفل
+خواهد شد. فرمان را دوباره اجرا کرده، تا قفل موس را باز کنید. وقتی که موس قفل
+است، میتوانید از فرمان‌های NVDA برای حرکت دادن مکان‌نمای موس استفاده کنید و
+با دکمه‌های راست و چپ موس کلیک کنید، ولی خود موس را نمیتوانید حرکت
+دهید. کلیک‌های موس را هم میتوانید با استفاده از دسته‌ی Input Lock در پنجره‌ی
+تنظیمات NVDA (در NVDA 2018.2 به بعد) یا پنجره‌ی تنظیمات افزونه در منوی
+تنظیمات (در نسخه‌های قدیمیتر NVDA) غیر فعال کنید. افزون بر این، میتوانید با
+استفاده از این تنظیمات، تعیین کنید که موس از ابتدای کار NVDA قفل شود یا نه.</p>
+<p>توجه: هنگامی که کلیک‌های موس قفل باشد، نمیتوانید از فرمان‌های NVDA برای کار
+با موس استفاده کنید.</p>
+<h2>Limitations and known problems</h2>
+<p>Input Lock has the following known problems:</p>
+<ul>
+<li>The shortcuts control+alt+del and windows+l can be used even when the
+  keyboard is locked.</li>
+<li>On some laptops, the touchpad still accepts user input after mouse is
+  blocked.</li>
+</ul>
+<h2>فهرست تغییرات</h2>
+<h3>Version 1.11</h3>
+<ul>
+<li>Updated compatibility flags for recent NVDA versions.</li>
+<li>Updated translations.</li>
+<li>Now, minimum supported version is 2022.4.</li>
+</ul>
+<h3>Version 1.10</h3>
+<ul>
+<li>Updated compatibility flags for recent NVDA versions.</li>
+<li>Updated translations.</li>
+<li>Updated documentation.</li>
+<li>Now, minimum supported version is 2021.3.</li>
+<li>The input will remain blocked after waking up from standby mode. Thanks to
+  Javi Dominguez.</li>
+</ul>
+<h3>Version 1.9</h3>
+<ul>
+<li>Updated compatibility flags for recent NVDA versions.</li>
+<li>Updated translations.</li>
+<li>Updated documentation.</li>
+</ul>
+<h3>Version 1.8</h3>
+<ul>
+<li>Updated compatibility flags for recent NVDA versions.</li>
+<li>Updated translations.</li>
+</ul>
+<h3>Version 1.7</h3>
+<ul>
+<li>Updated compatibility flags for recent NVDA versions.</li>
+<li>Updated translations.</li>
+</ul>
+<h3>Version 1.6</h3>
+<ul>
+<li>Now, settings are removed only when the add-on is
+  uninstalled. Configuration is nolonger reset when upgrading.</li>
+<li>New and updated translations.</li>
+</ul>
+<h3>Version 1.5</h3>
+<ul>
+<li>Added compatibility with recent NVDA releases.</li>
+<li>New translations.</li>
+</ul>
+<h3>نسخه‌ی ۱.۴</h3>
+<ul>
+<li>بطور پیش‌فرض، کلیدی به فرمان‌های افزونه اختصاص داده نمیشود.</li>
+</ul>
+<h3>نسخه‌ی ۱.۳</h3>
+<ul>
+<li>برای این افزونه، یک پنل تنظیمات به تنظیمات NVDA افزوده شد. برای نسخه‌های
+  قدیمی NVDA، یک مورد منو و یک پنجره‌ی محاوره‌ای هم افزوده شده است.</li>
+<li>تنظیمی برای قفل کردن موس هنگام آغاز کار NVDA اضافه شد.</li>
+<li>تنظیمی هم برای مسدود کردن کلیک‌های موس هنگامی که موس قفل میشود افزوده شد.</li>
+<li>مشکلات کوچکی برطرف شد. اندکی بهینه‌سازی در کد افزونه و رشته های کمتر
+  تکراری برای مترجم‌ها.</li>
+</ul>
+<h3>نسخه‌ی ۱.۲</h3>
+<ul>
+<li>حالا موس را هم میتوانید قفل کنید.</li>
+<li>فرمان جدید برای قفل کردن و باز کردن فقط موس</li>
+</ul>
+<h3>نسخه‌ی ۱.۱</h3>
+<ul>
+<li>اگر افزونه‌ی دیگری از پیش یک کارکرد Capture به مدیریت ورودی‌ها اضافه کرده
+  باشد، هنگامی که قفل ورودی‌ها را باز میکنید، دوباره به وضعیت قبلی خود
+  برمیگردد.</li>
+</ul>
+<h3>نسخه‌ی ۱.۰</h3>
+<ul>
+<li>انتشار نخست</li>
+</ul>
+<p>[[!tag dev stable]]</p>
+</body>
+</html>

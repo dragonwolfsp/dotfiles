@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="gl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="../style.css" media="screen">
+<title>Input lock 1.18</title>
+</head>
+<body>
+<h1>Input Lock</h1>
+<ul>
+<li>Autor: Jose Manuel Delicado</li>
+<li>NVDA compatibility: 2023.3.4 and beyond</li>
+<li>Descargar <a href="https://www.nvaccess.org/addonStore/legacy?file=inputLock">versión estable</a></li>
+</ul>
+<h2>Introdución</h2>
+<p>Tes nenos ou mascotas na casa? Tes un gato ao que lle gusta moito subirse á
+túa mesa e pasear sobre o teu teclado? Moves accidentalmente o rato a partes
+aleatorias da pantalla mentras usas o teu portátil? Entón Input Lock é para
+ti! Poderás deixar o teu computador só e acendido sen risco.</p>
+<p>Once installed, you will be able to lock your keyboard, touch screen (if
+your laptop has one), touchpad, mouse and Braille display.</p>
+<h2>Uso</h2>
+<p>This addon adds three extra gestures to NVDA. By default they are
+unassigned, so you will have to configure them from Input gestures
+dialog. Read the NVDA User Guide for more information.</p>
+<p>Cando premas o xesto toggle input lock (alternar bloqueo de entrada), NVDA
+dirá "Input locked" ("entrada bloqueada"). Os teus dispositivos de entrada
+bloquearanse ata que premas o mesmo xesto de novo. Nese momento, NVDA dirá
+"Input unlocked" ("Entrada desbloqueada") e todo funcionará como de costume.</p>
+<p>Locking the touchpad can prevent us from accidentally touching it,
+especially those who are used to using the laptop keyboard directly. When
+you press the toggle touchpad lock gesture, NVDA will say "Touchpad
+locked". Your touchpad will be blocked until you press the same gesture
+again. In that moment, NVDA will say "Touchpad unlocked" and everything will
+work as usual.</p>
+<p>Se premes o xesto toggle mouse lock (alternar bloqueo do rato), bloquearase
+o teu rato. Preme este comando novamente para desbloquealo. Mentres o rato
+está bloqueado, podes utilizar xestos do NVDA para movelo, e facer click cos
+botóns esquerdo e dereito, pero non podes mover o propio rato. Os clicks do
+rato tamén poden deshabilitarse dende a categoría Input lock ("Bloqueo de
+entrada") no diálogo de axustes do NVDA (NVDA 2018.2 e superior) ou dende o
+diálogo de preferencias do complemento en versións máis antigas, dispoñible
+baixo o menú de preferencias. Ademais, con estes axustes podes controlar se
+o rato se bloqueará ou non cando NVDA se inicie.</p>
+<p>Nota: cando os clicks do rato están bloqueados, non podes utilizar ningún
+xesto de NVDA para traballar co rato.</p>
+<h2>Limitacións e problemas coñecidos</h2>
+<p>Input Lock ten os seguintes problemas coñecidos:</p>
+<ul>
+<li>Os atallo control+alt+supr e windows+l pódense utilizar mesmo cando o
+  teclado está bloqueado.</li>
+<li>For gestures used to lock the touchpad, please try to assign a small
+  number of key combination gestures. It is recommended to use NVDA+letters
+  or numbers, Ctrl+F keys etc.</li>
+</ul>
+<h2>Rexistro de trocos</h2>
+<h3>Version 1.13</h3>
+<ul>
+<li>Now, minimum supported version is 2023.3.4.</li>
+<li>Updated translations. Starting from version 1.13, changelog won't be
+  modified when a new release only includes localization updates.</li>
+<li>Added a gesture (unassigned by default) to lock/unlock the touchpad.</li>
+</ul>
+<h3>Version 1.12</h3>
+<ul>
+<li>Actualizadas as marcas de compatibilidade para versións recentes de NVDA.</li>
+<li>Traducións actualizadas.</li>
+</ul>
+<h3>Versión 1.11</h3>
+<ul>
+<li>Actualizadas as marcas de compatibilidade para versións recentes de NVDA.</li>
+<li>Traducións actualizadas.</li>
+<li>Agora, a versión mínima soportada é a 2022.4.</li>
+</ul>
+<h3>Versión 1.10</h3>
+<ul>
+<li>Actualizadas as marcas de compatibilidade para versións recentes de NVDA.</li>
+<li>Traducións actualizadas.</li>
+<li>Documentación actualizada.</li>
+<li>Agora, a versión mínima soportada é a 2021.3.</li>
+<li>A entrada seguirá bloqueada tras volver do modo de suspensión. Grazas a
+  Javi Dominguez.</li>
+</ul>
+<h3>Versión 1.9</h3>
+<ul>
+<li>Actualizadas as marcas de compatibilidade para versións recentes de NVDA.</li>
+<li>Traducións actualizadas.</li>
+<li>Documentación actualizada.</li>
+</ul>
+<h3>Versión 1.8</h3>
+<ul>
+<li>Actualizadas as marcas de compatibilidade para versións recentes de NVDA.</li>
+<li>Traducións actualizadas.</li>
+</ul>
+<h3>Versión 1.7</h3>
+<ul>
+<li>Actualizadas as marcas de compatibilidade para versións recentes de NVDA.</li>
+<li>Traducións actualizadas.</li>
+</ul>
+<h3>Versión 1.6</h3>
+<ul>
+<li>Agora a configuración só se borra ao desinstalar o complemento, non ao
+  actualizalo.</li>
+<li>Traducións novas e actualizadas.</li>
+</ul>
+<h3>Versión 1.5</h3>
+<ul>
+<li>Engadida compatibilidade con versións recentes de NVDA.</li>
+<li>Novas traducións.</li>
+</ul>
+<h3>Versión 1.4</h3>
+<ul>
+<li>Os xestos do complemento están sen asignar por defecto.</li>
+</ul>
+<h3>Versión 1.3</h3>
+<ul>
+<li>Engadido un panel de configuración no diálogo de opcións do NVDA. Para
+  versións antigas de NVDA, engadíronse tamén un elemento de menú e un
+  diálogo.</li>
+<li>Engadido unha opción para bloquear o rato cando NVDA se inicie.</li>
+<li>Engadida unha opción para bloquear tamén clicks do rato mentres o rato
+  estea bloqueado.</li>
+<li>Aranxados pequenos erros, algunhas optimizacións de código e menos cadeas
+  duplicadas para tradutores</li>
+</ul>
+<h3>Versión 1.2</h3>
+<ul>
+<li>Agora o rato tamén pode bloquearse</li>
+<li>Novo atallo para bloquear e desbloquear só o rato</li>
+</ul>
+<h3>Versión 1.1</h3>
+<ul>
+<li>Se outro complemento xa engadiu una función capture ao inputManager,
+  restáurase cando se desbloquea a entrada.</li>
+</ul>
+<h3>Versión 1.0</h3>
+<ul>
+<li>Liberación inicial</li>
+</ul>
+<p>[[!tag dev stable]]</p>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="../style.css" media="screen">
+<title>IndentNav 2.2.5</title>
+</head>
+<body>
+<h1>GirintiDolaşımı</h1>
+<p>Bu eklenti, NVDA kullanıcılarının satırların girinti düzeyine göre
+gezinmesine olanak tanır. Birçok programlama dilinde kaynak kodu
+düzenlerken, aynı girinti seviyesindeki satırlar arasında geçiş yapılmasına
+olanak sağladığı gibi, daha fazla veya daha az girinti seviyesine sahip
+satırları hızlı bir şekilde bulmayı da sağlar. Ağaç görünümlerinde de benzer
+tuş vuruşlarını sağlar.</p>
+<p>Ağaçta dolaşma komutlarının <a href="https://github.com/mltony/nvda-tree-nav">Ağaç Dolaşımı
+eklentisine</a> taşındığını lütfen
+unutmayın.</p>
+<h2>İndirmek</h2>
+<p>Lütfen NVDA eklenti mağazasından yükleyin</p>
+<h2>VSCode ile uyumluluk hakkında not</h2>
+<p>Yerleşik VSCode erişilebilirliği çok sınırlıdır: 2024 itibariyle
+erişilebilirlik API'si aracılığıyla yalnızca 500 satır kod açığa çıkarır ve
+bu da Girinti Dolaşımı eklentisinin VSCode'da hatalı çalışmasına neden olur.</p>
+<p>Varsayılan olarak Girinti Dolaşımı, VSCode ile çalışmaz ve onu kullanmaya
+çalıştığınızda iki seçenek arasından seçim yapmanız gerekir:</p>
+<ul>
+<li>VSCode eklentisini yükleyin (<a href="https://marketplace.visualstudio.com/items?itemName=TonyMalykh.nvda-indent-nav-accessibility">Eklenti
+  sayfası</a>)
+  (<a href="https://github.com/mltony/
+  vscode-nvda-indent-nav-accessibility">kaynak kodu</a>) - önerilen yol. eklentiyi
+  yükledikten sonra NVDA, ne kadar büyük olursa olsun belgenin tamamına
+  erişebilecektir.</li>
+<li>VSCode'u eski modda kullanmaya devam edin - Girinti Dolaşımı ayarlarında
+  bu modu etkinleştirin. NVDA yalnızca 500 satırlık belge göreceği ve kayıp
+  kardeşleri/ebeveynleri yanlışlıkla bildireceği için bu önerilmez.</li>
+</ul>
+<h2>Uyumluluk sorunları</h2>
+<p>Girinti Dolaşımı eklentisinin <a href="https://addons.nvda-project.org/addons/charInfo.en.html">Karakter Bilgisi
+Eklentisiyle</a>
+uyumluluk sorunları olduğu bilinmektedir. Bu eklenti çalışırken hem Girinti
+Dolaşımı eklentisini hem de sayısal tuş takımında inceleme imlecini
+yapılandırmak şu anda mümkün değildir. Lütfen bu eklentiyi kaldırın veya
+Girinti Dolaşımı'nda alternatif bir tuş vuruşu haritası kullanın.</p>
+<h2>Tuş vuruşu düzenleri</h2>
+<p>Girinti Dolaşımı 3 yerleşik tuş vuruşu eşlemesi sunar:</p>
+<ul>
+<li>Eski veya dizüstü bilgisayar düzeni: Bu, Girinti Dolaşımı v1.x kullanan,
+  yeni düzenler öğrenmek istemeyen kişiler veya sayısal tuş takımı olmayan
+  dizüstü bilgisayar klavyeleri içindir.</li>
+<li>Alt+sayısal tuş takımı düzeni.</li>
+<li>
+<p>Sayısal tuş takımı düzeni. İnceleme imleci tuş vuruşu çakışmasını
+  gidermenin iki yolu vardır:</p>
+<ul>
+<li>Düzenlenebilir öğelerde Girinti Dolaşımı için sayısal tuş takımını
+  kullanın ve imleci diğer her yerde inceleyin. Düzenlenebilir öğelerde
+  hâlâ inceleme imlecini kullanmanız gerekiyorsa, 'alt+Numara kilidi'
+  tuşlarına basarak Girinti Dolaşımı'nı geçici olarak devre dışı
+  bırakabilirsiniz.</li>
+<li>İnceleme imleci komutlarını alt+Sayısal tuş takımı'na yeniden eşleyin,
+  böylece tuş vuruşu çakışması önlenir.</li>
+</ul>
+</li>
+</ul>
+<p>Tuş vuruşu düzeni Girinti Dolaşımı ayarlarında seçilebilir.</p>
+<h2>Tuş vuruşları</h2>
+<table>
+<thead>
+<tr>
+<th>Eylem</th>
+<th>Eski Düzen</th>
+<th><code>Alt+sayısal tuş takımı</code> Düzeni</th>
+<th>Sayısal tuş takımı düzeni</th>
+<th>Tanım</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Girinti Dolaşımı'nı aç/kapat</td>
+<td><code>alt+Numara Kilidi</code></td>
+<td><code>alt+Numara Kilidi</code></td>
+<td><code>alt+Numara Kilidi</code></td>
+<td>Bu, hem NVDA hem de gözden geçirme imleç hareketleri sayısal tuş takımı'na atandığında kullanışlıdır.</td>
+</tr>
+<tr>
+<td>Önceki/sonraki kardeşe atla</td>
+<td><code>NVDA+Alt+yukarı/aşağı Ok</code></td>
+<td><code>alt+sayısal tuş takımı8/sayısal tuş takımı2</code></td>
+<td><code>sayısal tuş takımı8/sayısal tuş takımı2</code></td>
+<td>Kardeş, aynı girinti seviyesine sahip bir satır olarak tanımlanır.<br>Bu komut, imleci geçerli kod bloğunun ötesine götürmez.</td>
+</tr>
+<tr>
+<td>Dağınıklığı atlayarak önceki/sonraki kardeşe atla</td>
+<td>N/A</td>
+<td><code>CTRL+alt+sayısal tuş takımı8/sayısal tuş takımı2</code></td>
+<td><code>CTRL+sayısal tuş takımı8/sayısal tuş takımı2</code></td>
+<td>Dağınıklık normal ifadesini ayarlarda yapılandırabilirsiniz.</td>
+</tr>
+<tr>
+<td>İlk/son kardeşe atla</td>
+<td><code>NVDA+Alt+shift+yukarı/aşağı Ok</code></td>
+<td><code>alt+sayısal tuş takımı4/sayısal tuş takımı6</code></td>
+<td><code>sayısal tuş takımı4/sayısal tuş takımı6</code></td>
+<td>Kardeş, aynı girinti seviyesine sahip bir satır olarak tanımlanır.<br>Bu komut, imleci geçerli kod bloğunun ötesine götürmez.</td>
+</tr>
+<tr>
+<td>Potansiyel olarak geçerli bloğun dışındaki önceki/son kardeşe atla</td>
+<td><code>NVDA+control+Alt+yukarı/aşağı Ok</code></td>
+<td><code>CTRL+alt+sayısal tuş takımı4/sayısal tuş takımı6</code></td>
+<td><code>CTRL+sayısal tuş takımı4/sayısal tuş takımı6</code></td>
+<td>Bu komut başka bir bloktaki kardeşe atlamanızı sağlar.</td>
+</tr>
+<tr>
+<td>Önceki/sonraki ebeveyne atla</td>
+<td><code>NVDA+Alt+sol ok</code>,<br><code>NVDA+alt+CTRL+sol ok</code></td>
+<td><code>alt+sayısal tuş takımı7/sayısal tuş takımı1</code></td>
+<td><code>sayısal tuş takımı7/sayısal tuş takımı1</code></td>
+<td>Ebeveyn, daha düşük girinti seviyesine sahip bir satır olarak tanımlanır.</td>
+</tr>
+<tr>
+<td>Önceki/sonraki çocuğa atla</td>
+<td><code>NVDA+Alt+CTRL+sağ ok</code>,<br><code>NVDA+alt+sağ ok</code></td>
+<td><code>alt+sayısal tuş takımı9/sayısal tuş takımı3</code></td>
+<td><code>sayısal tuş takımı9/sayısal tuş takımı3</code></td>
+<td>Çocuk, girinti düzeyi daha yüksek olan bir satır olarak tanımlanır.<br>Bu komut, imleci geçerli kod bloğunun ötesine götürmez.</td>
+</tr>
+<tr>
+<td>Geçerli bloğu seç</td>
+<td><code>NVDA+CTRL+i</code></td>
+<td><code>CTRL+alt+sayısal tuş takımı7</code></td>
+<td><code>CTRL+sayısal tuş takımı7</code></td>
+<td>Geçerli satırı ve kesinlikle daha yüksek girinti düzeyine sahip olan tüm sonraki satırları seçer.<br>Birden fazla blok seçmek için art arda basın.</td>
+</tr>
+<tr>
+<td>Geçerli bloğu ve aynı girinti düzeyindeki tüm sonraki blokları seç</td>
+<td><code>NVDA+alt+i</code></td>
+<td><code>CTRL+alt+sayısal tuş takımı9</code></td>
+<td><code>CTRL+sayısal tuş takımı9</code></td>
+<td>Geçerli satırı ve daha büyük veya eşit girinti düzeyine sahip sonraki tüm satırları seçer.</td>
+</tr>
+<tr>
+<td>Girinti-yapıştır</td>
+<td><code>NVDA+v</code></td>
+<td><code>NVDA+v</code></td>
+<td><code>NVDA+v</code></td>
+<td>Bir kod bloğunu farklı girinti düzeyine sahip bir yere yapıştırmanız gerektiğinde, bu komut yapıştırmadan önce girinti düzeyini ayarlayacaktır.</td>
+</tr>
+<tr>
+<td>Geçmişte geri/ileri git</td>
+<td>N/A</td>
+<td><code>CTRL+alt+sayısal tuş takımı1/sayısal tuş takımı3</code></td>
+<td><code>CTRL+1/sayısal tuş takımı3</code></td>
+<td>Girinti Dolaşımı, Girinti Dolaşımı komutları aracılığıyla ziyaret ettiğiniz satırların geçmişini tutar.</td>
+</tr>
+<tr>
+<td>Geçerli satırı konuş</td>
+<td>N/A</td>
+<td><code>alt+sayısal tuş takımı5</code></td>
+<td><code>sayısal tuş takımı5</code></td>
+<td>Bu gerçekten kolaylık sağlamak için yeniden eşlenen bir inceleme imleci komutudur.</td>
+</tr>
+<tr>
+<td>Ebeveyn satırını konuş</td>
+<td><code>NVDA+i</code></td>
+<td>N/A</td>
+<td>N/A</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>Diğer özellikler</h2>
+<h3>Hızlı Bul yer imleri</h3>
+<p>Girinti Dolaşımı, kolayca atlayabileceğiniz istediğiniz sayıda yer imini
+yapılandırmanıza olanak tanır. Yer imi, normal bir ifadeyle ve bir eşleşmeye
+atlamak için özel bir tuş vuruşuyla tanımlanır. Önceki oluşumu bulmak için
+'shift+' tuş vuruşuna basın.</p>
+<h3>Çıtırtı:</h3>
+<p>Birçok kod satırının üzerinden atlarken, Girinti Dolaşımı, satırların
+tonları atlandıkça girinti seviyelerini hızlı bir şekilde oynatmaya
+çalışacaktır. Bu özellik yalnızca NVDA ayarlarında ton olarak rapor
+girintisi açıkken etkinleştirilir. çıtırtı sesi Girinti Dolaşımı ayarlarında
+ayarlanabilir veya devre dışı bırakılabilir.</p>
+<h2>Kaynak kodu</h2>
+<p>Kaynak kodu şu adreste mevcuttur:
+<a href="http://github.com/mltony/nvda-indent-nav">http://github.com/mltony/nvda-indent-nav</a>.</p>
+<p>[[!tag dev stable]]</p>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="../style.css" media="screen">
+<title>Input lock 1.18</title>
+</head>
+<body>
+<h1>Blokovanie vstupu</h1>
+<ul>
+<li>Autor: Jose Manuel Delicado</li>
+<li>NVDA compatibility: 2023.3.4 and beyond</li>
+<li>Stiahnuť <a href="https://www.nvaccess.org/addonStore/legacy?file=inputLock">stabilnú verziu</a></li>
+</ul>
+<h2>Úvod</h2>
+<p>Máte doma deti alebo domácich miláčikov? Často si náhodne presuniete myš a
+potom píšete na nesprávne miesto? Doplnok blokovanie vstupu je práve pre
+vás. Môžete bez obáv nechať váš počítač bez dozoru.</p>
+<p>Once installed, you will be able to lock your keyboard, touch screen (if
+your laptop has one), touchpad, mouse and Braille display.</p>
+<h2>Použitie</h2>
+<p>This addon adds three extra gestures to NVDA. By default they are
+unassigned, so you will have to configure them from Input gestures
+dialog. Read the NVDA User Guide for more information.</p>
+<p>Ak stlačíte skratku na blokovanie vstupu, NVDA povie "vstup zamknutý" a
+automaticky zablokuje vstup zo všetkých zariadení. Odblokovať ho môžete tou
+istou klávesovou skratkou.</p>
+<p>Locking the touchpad can prevent us from accidentally touching it,
+especially those who are used to using the laptop keyboard directly. When
+you press the toggle touchpad lock gesture, NVDA will say "Touchpad
+locked". Your touchpad will be blocked until you press the same gesture
+again. In that moment, NVDA will say "Touchpad unlocked" and everything will
+work as usual.</p>
+<p>Druhá klávesová skratka umožňuje zamknúť len myš. Po zamknutí myši môžete s
+kurzorom myši pracovať cez príkazy NVDA, nebudete ale môcť použiť fyzickú
+myš. V nastaveniach doplnku môžete tiež aktivovať zamknutie klikania myši a
+aktivovať °°automatické zamknutie myši po štarte NVDA.</p>
+<p>Upozorňujeme, že ak povolíte zamknutie myši vrátane klikania, niektoré
+funkcie NVDA nebudú fungovať.</p>
+<h2>Limitations and known problems</h2>
+<p>Input Lock has the following known problems:</p>
+<ul>
+<li>The shortcuts control+alt+del and windows+l can be used even when the
+  keyboard is locked.</li>
+<li>For gestures used to lock the touchpad, please try to assign a small
+  number of key combination gestures. It is recommended to use NVDA+letters
+  or numbers, Ctrl+F keys etc.</li>
+</ul>
+<h2>Zmeny</h2>
+<h3>Version 1.13</h3>
+<ul>
+<li>Now, minimum supported version is 2023.3.4.</li>
+<li>Updated translations. Starting from version 1.13, changelog won't be
+  modified when a new release only includes localization updates.</li>
+<li>Added a gesture (unassigned by default) to lock/unlock the touchpad.</li>
+</ul>
+<h3>Version 1.12</h3>
+<ul>
+<li>Upravené požiadavky kompatibility pre aktuálne verzie NVDA.</li>
+<li>Aktualizované preklady.</li>
+</ul>
+<h3>Version 1.11</h3>
+<ul>
+<li>Upravené požiadavky kompatibility pre aktuálne verzie NVDA.</li>
+<li>Aktualizované preklady.</li>
+<li>Now, minimum supported version is 2022.4.</li>
+</ul>
+<h3>Version 1.10</h3>
+<ul>
+<li>Upravené požiadavky kompatibility pre aktuálne verzie NVDA.</li>
+<li>Aktualizované preklady.</li>
+<li>Updated documentation.</li>
+<li>Now, minimum supported version is 2021.3.</li>
+<li>The input will remain blocked after waking up from standby mode. Thanks to
+  Javi Dominguez.</li>
+</ul>
+<h3>Version 1.9</h3>
+<ul>
+<li>Upravené požiadavky kompatibility pre aktuálne verzie NVDA.</li>
+<li>Aktualizované preklady.</li>
+<li>Updated documentation.</li>
+</ul>
+<h3>Verzia 1.8</h3>
+<ul>
+<li>Upravené požiadavky kompatibility pre aktuálne verzie NVDA.</li>
+<li>Aktualizované preklady.</li>
+</ul>
+<h3>Verzia 1.7</h3>
+<ul>
+<li>Upravené požiadavky kompatibility pre aktuálne verzie NVDA.</li>
+<li>Aktualizované preklady.</li>
+</ul>
+<h3>Verzia 1.6</h3>
+<ul>
+<li>Nastavenia sa odteraz odstránia len po odinštalovaní doplnku. Pri
+  aktualizácii doplnku ostanú zachované.</li>
+<li>Nové a aktualizované preklady.</li>
+</ul>
+<h3>Verzia 1.5</h3>
+<ul>
+<li>Upravené pre aktuálne verzie NVDA.</li>
+<li>Nové preklady.</li>
+</ul>
+<h3>Verzia 1.4</h3>
+<ul>
+<li>Klávesové skratky nie sú pridelené.</li>
+</ul>
+<h3>Verzia 1.3</h3>
+<ul>
+<li>Pridaný dialóg s nastaveniami v starších verziách NVDA a príslušná vetva
+  do stromu s nastaveniami pre novšie verzie NVDA.</li>
+<li>Pridaná možnosť zablokovať myš automaticky po štarte NVDA.</li>
+<li>Pridaná možnosť zablokovať aj klikanie myšou.</li>
+<li>Drobné úpravy v kóde vrátane odstránených nadbytočných fráz na prekladanie</li>
+</ul>
+<h3>Verzia 1.2</h3>
+<ul>
+<li>Pridaná možnosť zamknúť myš</li>
+<li>Pridaná skratka na zamknutie a odomknutie myši</li>
+</ul>
+<h3>Verzia 1.1</h3>
+<ul>
+<li>Ak iný doplnok sleduje stav zariadenia, sledovanie sa obnoví po
+  odblokovaní vstupu.</li>
+</ul>
+<h3>Verzia 1.0</h3>
+<ul>
+<li>Prvé vydanie</li>
+</ul>
+<p>[[!tag dev stable]]</p>
+</body>
+</html>
