@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="../style.css" media="screen">
-<title>IBMTTS driver 23.12.1</title>
+<title>IBMTTS driver 25.1.1</title>
 </head>
 <body>
 <h1>IBMTTS-Treiber, Erweiterung fürNVDA</h1>
@@ -30,7 +30,10 @@
 <ul>
 <li>Abkürzungswörterbuch verwenden: Schaltet das Aussprechen von Abkürzungen um. Bitte beachten Sie, dass durch Ausschalten dieser Funktion auch die im Benutzerwörterbuch hinterlegten Abkürzungen nicht mehr ausgesprochen werden.</li>
 <li>Satzvorhersage einschalten: Ist diese Funktion eingeschaltet, versucht die Sprachausgabe die Satzstruktur zum Einfügen von Sprechpausen zu analysieren, beispielsweise durch die Verwendung der Worte "und" oder "oder" zur Begrenzung von Nebensätzen. Bei ausgeschalteter Funktion werden Pausen ausschließlich bei einem vorhandenem Komma oder anderen Satzzeichen eingefügt.</li>
-<li>Pausen verkürzen: Schalten Sie diese Option ein, um die Pausen zwischen Satzzeichen zu verkürzen.</li>
+<li>Pausen: Dies ist ein Kombinationsfeld mit drei Optionen.</li>
+<li>Pausen nicht kürzen: Pausen werden überhaupt nicht gekürzt, es werden immer die originalen IBMTTS-Pausen verwendet.</li>
+<li>Nur am Textende kürzen: Pausen mit Satzzeichen wie Punkt und Komma werden nicht gekürzt, aber sie werden gekürzt, wenn der Text endet, z.B. wenn Sie zweimal schnell NVDA+t drücken, um die Titelleiste einer Anwendung Zeichen für Zeichen zu buchstabieren.</li>
+<li>Alle Pausen kürzen: Alle Pausen, einschließlich Interpunktionspausen und Pausen am Ende des Textes, werden gekürzt.</li>
 <li>Aktuelle Sprachausgabeneinstellungen immer senden: Ein Fehler in der Sprachausgabe bewirkt, dass hin und wieder die Einstellungen für Sprache und Geschwindigkeit kurzzeitig auf ihre Standardwerte zurückgesetzt werden. Die Ursache ist nicht bekannt, jedoch wird dieses Verhalten durch kontinuierliches Senden der Sprachausgabeneinstellungen vermieden. Generell sollte diese Funktion eingeschaltet sein, muss jedoch bei der Verwendung von Backquote-Sprachtags ausgeschaltet werden.</li>
 <li>Sample-Rate: Ändert die Klangqualität der Sprachausgabe. Diese Einstellung kann am sinnvollsten mit IBM TTS verwendet werden, bei welcher eine Sample-Rate von 8 kHz den Zugriff auf einen neuen Satz von Stimmen erlaubt.</li>
 </ul>
@@ -51,16 +54,16 @@
 <h3>IBMTTS-Sprachausgabenbibliotheken.</h3>
 <p>Dies ist nur der Treiber, Sie müssen sich die Bibliotheken selbst besorgen.<br />
   Dieser Treiber unterstützt die etwas neueren Bibliotheken, in denen ostasiatische Sprachen sowie spezifische Fehlerkorrekturen für bessere Textkodierung enthalten sind. Ältere Bibliotheken sollten jedoch auch funktionieren.<br />
-  Seit Version 21.03A1 wird neben den SpeechWorks-Binärdateien auch die Integration der noch etwas neueren IBM-Binärdateien unterstützt. Ein Satz unabhängiger korrekturen ist enthalten, und die zusätzlichen Sprachen und anderen Unterschiede werden berücksichtigt. Concatenative Stimmen werden unterstützt und sind zugänglich, indem die Sample-Rate auf 8 kHz eingestellt wird. Verwenden Sie für die besten Ergebnisse ibmeci.dll Version 6.6.1.0 oder älter, da neuere Versionen bei der schnellen Verarbeitung von Text instabil sein können, beispielsweise beim schnellen Scrollen durch Listeneinträge.</p>
+  Seit Version 21.03A1 wird neben den SpeechWorks-Binärdateien auch die Integration der noch etwas neueren IBM-Binärdateien unterstützt. Ein Satz unabhängiger korrekturen ist enthalten, und die zusätzlichen Sprachen und anderen Unterschiede werden berücksichtigt. Concatenative Stimmen werden unterstützt und sind zugänglich, indem die Sample-Rate auf 8 kHz eingestellt wird. Die besten Ergebnisse erzielen Sie, wenn Sie die Version 7.0.0.0 der ibmeci.dll vom Juni 2005 verwenden, da ältere Versionen instabil sein können, wenn Text schnell empfangen wird, z. B. durch schnelles Scrollen durch Elemente in einer Liste. Wenn Sie die IBMTTS-Bibliotheken für Hongkong-Kantonesisch oder Chinesisch verwenden, sollten Sie die Option "Buchstabierfunktion verwenden, falls verfügbar" deaktivieren, um zu verhindern, dass einige Zeichen in diesen Sprachen mit dem Pinyin geschrieben werden, in das sie intern konvertiert werden.</p>
 <h2>Installation.</h2>
 <p>Sie können die Erweiterung wie jede normale NVDA-Erweiterung installieren. Öffnen Sie danach die NVDA-Einstellungen und wählen die IBMTTS-Dateien in der Kategorie IBMTTS.
   Hier besteht auch die Möglichkeit, die IBMTTS-Dateien in eine Erweiterung zu kopieren, um sie lokal zu verwenden.</p>
 <h2>Zur Übersetzung beitragen.</h2>
+<p>Um Ihnen die Arbeit zu erleichtern, habe ich eine<br />
+<a href="https://raw.githubusercontent.com/davidacm/NVDA-IBMTTS-Driver/master/IBMTTS.pot">Übersetzungsvorlage im Master-Zweig hinterlegt.</a></p>
 <p>Für die Dokumentation habe ich eine Datei namens <a href="https://raw.githubusercontent.com/davidacm/NVDA-IBMTTS-Driver/master/docChangelog-for-translators.md">"docChangelog-for-translators.md".</a> erstellt.
 Sie können diese Datei verwenden, um zu sehen, was in der Dokumentation geändert wurde, und die Dokumentation für Ihre Sprache aktualisieren.</p>
-<p>Zur Erleichterung der Arbeit ist eine 
-<a href="https://raw.githubusercontent.com/davidacm/NVDA-IBMTTS-Driver/master/IBMTTS.pot">Übersetzungsvorlage im Master-Branch enthalten.</a>
-Falls Sie eine neue Übersetzung erstellen möchten, jedoch auf die Verwendung von GitHub und die notwendigen Python-Werkzeuge verzichten wollen, führen Sie bitte die folgenden Schritte aus:</p>
+<p>Falls Sie eine neue Übersetzung erstellen möchten, jedoch auf die Verwendung von GitHub und die notwendigen Python-Werkzeuge verzichten wollen, führen Sie bitte die folgenden Schritte aus:</p>
 <ol>
 <li>Verwenden Sie
 <a href="https://raw.githubusercontent.com/davidacm/NVDA-IBMTTS-Driver/master/IBMTTS.pot">diese Vorlage</a>
@@ -88,14 +91,17 @@ herunter. Diese Software hilft Ihnen bei der Verwaltung der Übersetzung.</li>
 </ol>
 <p>Sobald Sie die Konsole schließen, wird die virtuelle Umgebung deaktiviert.</p>
 <h3>Bibliotheken als unabhängige Erweiterung paketieren.</h3>
-<p>Es ist nicht empfehlenswert die Sprachausgaben-Bibliotheken direkt mit dem Treiber zu bündeln, da sie entfernt werden, wenn man die Erweiterung aus dem <a href="https://github.com/davidacm/NVDA-IBMTTS-Driver">offiziellem Repo</a> aktualisiert. 
+<p>Es ist nicht empfehlenswert die Sprachausgaben-Bibliotheken direkt mit dem Treiber zu bündeln, da sie entfernt werden, wenn man die Erweiterung aus dem <a href="https://github.com/davidacm/NVDA-IBMTTS-Driver">offiziellen Repo</a> 
+bei Verwendung der Erweiterungsinstallation von NVDA aktualisiert. 
 Zur Lösung dieses Problems können die Bibliotheken als separate Erweiterung installiert werden. 
 <a href="https://github.com/davidacm/ECILibrariesTemplate">Folgen Sie diesem Link</a>, 
 um mehr über die Installation als separate Erweiterung zu erfahren.</p>
 <h3>Hinweise:</h3>
 <ul>
 <li>Wenn Sie die interne Aktualisierung verwenden (manuell oder automatisch), werden die Bibliotheken nicht gelöscht, sogar wenn sie sich in der Erweiterung befinden.</li>
-<li>Wenn sich die Sprachausgabe in der Erweiterung oder der <a href="https://github.com/davidacm/ECILibrariesTemplate">"eciLibraries"-Erweiterung</a> befindet, aktualisiert der Treiber automatisch die Pfade in den Ini-Dateien, sodass Sie sie in einer portablen NVDA-Kopie verwenden können.</li>
+<li>Wenn sich die Sprachausgabe in der Erweiterung oder der 
+<a href="https://github.com/davidacm/ECILibrariesTemplate">"eciLibraries"-Erweiterung</a> 
+befindet, aktualisiert der Treiber automatisch die Pfade in den Ini-Dateien, sodass Sie sie in einer portablen NVDA-Kopie verwenden können.</li>
 <li>Beim Verwenden der Schaltfläche zum Kopieren der IBMTTS-Dateien wird eine neue Erweiterung erstellt. Wenn Sie IBMTTS wieder deinstallieren möchten, müssen zwei Erweiterungen deinstalliert werden, nämlich "IBMTTS-Treiber" und "Eci libraries".</li>
 <li>Die Scons und Gettext-Werkzeuge in diesem Projekt sind nur mit Python 3 kompatibel. Python 2.7 funktioniert nicht.</li>
 <li>Sie können die benötigten IBMTTS-Dateien auch direkt in der Erweiterung ablegen (nur für persönliche Nutzung). Kopieren Sie sie einfach in das Verzeichnis "addon\synthDrivers\ibmtts". Der Standard-Bibliotheksname kann falls notwendig in der Datei "settingsDB.py" angepasst werden.</li>
@@ -105,12 +111,13 @@ um mehr über die Installation als separate Erweiterung zu erfahren.</p>
 <p>Wenn Sie ein Sicherheitsproblem mit einigen der Bibliotheken finden, die mit diesem Treiber kompatibel sind, öffnen Sie bitte kein Github-Issue und kommentieren Sie es nicht in Foren, bevor das Problem gelöst ist. Bitte melden Sie das Problem über <a href="https://docs.google.com/forms/d/123gSqayOAsIQLx1NiI98fEqr46oiJRZ9nNq0_KIF9WU/edit">dieses Formular.</a></p>
 <p>Wenn das Problem den Treiber oder den Bildschirmleser nicht zum Absturz bringt, öffne hier ein <a href="https://github.com/davidacm/NVDA-IBMTTS-Driver/issues">Github-Issue.</a></p>
 <h2>Referenzen.</h2>
-<p>Dieser Treiber basiert auf dem IBM-TTS-SDK, dessen Dokumentation unter <a href="http://web.archive.org/web/20191125091344/http://www.wizzardsoftware.com/docs/tts.pdf">diesem Link</a> verfügbar ist.</p>
+<p>Dieser Treiber basiert auf dem IBM-TTS-SDK, dessen Dokumentation unter 
+<a href="http://web.archive.org/web/20191125091344/http://www.wizzardsoftware.com/docs/tts.pdf">diesem Link</a> verfügbar ist.</p>
 <p>Auch zu bekommen bei der Universität von Columbia 
 <a href="http://www1.cs.columbia.edu/~hgs/research/projects/simvoice/simvoice/docs/tts.pdf">unter diesem Link</a></p>
 <p>Eine Kopie ist auch in <a href="https://github.com/david-acm/NVDA-IBMTTS-Driver">diesem Repository</a> erhältlich.</p>
 <p><a href="https://sourceforge.net/projects/ibmtts-sdk/">Pyibmtts: Python-Wrapper für IBM TTS, entwickelt von Peter Parente</a></p>
-<p>Siehe die Dateien</p>
+<p>Siehe die Backup-Dateien</p>
 <p><a href="https://cdn.jsdelivr.net/gh/davidacm/NVDA-IBMTTS-Driver/apiReference/tts.pdf">tts.pdf</a>
 oder <a href="https://cdn.jsdelivr.net/gh/davidacm/NVDA-IBMTTS-Driver/apiReference/tts.txt">tts.txt.</a></p>
 </body>

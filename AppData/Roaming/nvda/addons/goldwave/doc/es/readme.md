@@ -1,8 +1,6 @@
 # GoldWave #
 
 * Autores: Joseph Lee, colaboradores de NVDA.
-* Descargar [Versión estable][1]
-* Compatibilidad con NVDA: de 2022.4 en adelante
 
 Este módulo de aplicación mejora el acceso y el uso del editor  de audio
 Goldwave.
@@ -24,6 +22,18 @@ Para obtener más información acerca de Goldwave y de las órdenes de teclado,
 remítete al manual de Goldwave.
 
 Nota: se requiere GoldWave 6 o posterior.
+
+## Versión 25.01
+
+* Soporte para GoldWave 7 (requiere Windows 10 de 64 bits o posterior).
+* Ya no se incluyen enlaces de descarga de versiones del complemento en su
+  documentación. Puedes descargar el complemento desde la tienda de
+  complementos de NVDA.
+* Se cambia la herramienta de calidad del código de Flake8 a Ruff y se
+  reformatean los módulos del complemento para alinearse mejor con los
+  estándares de codificación de NVDA.
+* Se elimina el soporte de actualizaciones automáticas del complemento
+  Add-on Updater.
 
 ## Versión 23.02
 

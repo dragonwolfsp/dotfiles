@@ -35,7 +35,7 @@ addonHandler.initTranslation()
 MODULE_DIR = os.path.dirname(__file__)
 
 
-def message(text, fileName):
+def message(text: str, fileName: str) -> None:
 	ui.message(text)
 	path = os.path.join(MODULE_DIR, fileName)
 	if os.path.exists(path):
@@ -191,7 +191,7 @@ def tryTrunk(n: float) -> int | float:
 
 
 # Moved from battery module to the main module in 2019 (code provided by Alex Hall)
-def _batteryInfo(verbose: bool = False) -> str:
+def _batteryInfo(verbose: bool = False) -> str | None:
 	# Returns current battery status provided that the computer has a detectable battery.
 	# The verbose argument will force this function to return something if there is no battery.
 	info = None
@@ -262,48 +262,31 @@ serverReleaseNames = {
 
 @functools.lru_cache(maxsize=1)
 def getWinVer() -> str:
-	# Obtain winversion using NVDA 2021.1 API, later extended to use 2021.2 API.
+	# Obtain current Windows version.
 	# Windows version info (major.minor.build.servicePack.productType) comes from winVersion.getWinVer.
 	currentWinVer = winVersion.getWinVer()
 	# Announce actual machine architecture (x86/32-bit, AMD64, ARM64).
 	arch = currentWinVer.processorArchitecture
-	isClient = currentWinVer.productType == "workstation"
 	# All publicly released Windows releases are represented by a winVersion.WinVersion instance.
 	# NVDA uses client release names for "releaseName" attribute.
-	# Specifically, NVDA 2021.2 obtains Windows 10/11 release names from Windows Registry.
+	# Specifically, NVDA obtains Windows 10/11 release names from Windows Registry.
 	winverName = currentWinVer.releaseName
-	# All server release names are housed inside a dedicated map.
-	serverReleaseNameRecorded = not isClient and currentWinVer.build in serverReleaseNames
-	if serverReleaseNameRecorded:
-		winverName = serverReleaseNames[currentWinVer.build]
-	# On Windows 10 and later, NVDA uses a three-part string (Windows name releaseId).
-	# Use reverse partition (str.rpartition) to obtain just the release Id (last part).
-	# Skip all this if server release name was already obtained.
-	if not serverReleaseNameRecorded:
-		releaseId = winverName.rpartition(" ")[-1]
-		# From 2020, Windows Insider Preview (client and server) release name includes "Dev" suffix.
-		isInsiderPreview = releaseId == "Dev"
-		if isInsiderPreview:
-			winverName = "Windows Insider" if isClient else "Windows Server Insider"
-		elif not isInsiderPreview and not isClient:
-			winverName = f"Windows Server {releaseId}"
+	# Report "Windows Server version" on servers.
+	if currentWinVer.productType != "workstation":
+		winverName = serverReleaseNames.get(
+			# All publicly available server release names are housed inside a dedicated map.
+			currentWinVer.build,
+			# On Windows 10 and later, NVDA uses a three-part string (Windows name releaseId).
+			# Use reverse partition (str.rpartition) to obtain just the release Id (last part).
+			f"Windows Server {winverName.rpartition(' ')[-1]}",
+		)
 	# Announce build.revision.
-	# Just like retail OS check for Insider Preview builds, 64-bit systems require a different access token.
-	if arch in ("AMD64", "ARM64"):
-		currentVersion = winreg.OpenKey(
-			winreg.HKEY_LOCAL_MACHINE,
-			r"Software\Microsoft\Windows NT\CurrentVersion",
-			access=winreg.KEY_READ | winreg.KEY_WOW64_64KEY,
-		)
-	else:
-		currentVersion = winreg.OpenKey(
-			winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion"
-		)
-	ubr = winreg.QueryValueEx(currentVersion, "UBR")[0]  # UBR = Update Build Revision
-	winreg.CloseKey(currentVersion)
+	with winreg.OpenKey(
+		winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion"
+	) as currentVersion:
+		ubr = winreg.QueryValueEx(currentVersion, "UBR")[0]  # UBR = Update Build Revision
 	buildRevision = f"{currentWinVer.build}.{ubr}"
-	# Translators: Presents Windows version
-	# (example output: "Windows 10 (32-bit)").
+	# Translators: Presents Windows version (example output: "Windows 10 22H2 (AMD64) build 19045.5247").
 	info = _("{winVersion} ({cpuBit}) build {build}").format(
 		winVersion=winverName, cpuBit=arch, build=buildRevision
 	)
@@ -428,31 +411,22 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		speakOnDemand=True,
 	)
 	def script_announceRamInfo(self, gesture):
-		ram = psutil.virtual_memory()
+		memory = psutil.virtual_memory()
+		physicalRamUsed, physicalRamTotal = memory.used, memory.total
 		# Translators: Shows RAM (physical memory) usage.
 		info = _("Physical: {physicalUsed} of {physicalTotal} used ({physicalPercent}%). ").format(
-			physicalUsed=size(ram[3], alternative),
-			physicalTotal=size(ram[0], alternative),
-			physicalPercent=tryTrunk(ram[2]),
+			physicalUsed=size(physicalRamUsed, alternative),
+			physicalTotal=size(physicalRamTotal, alternative),
+			physicalPercent=tryTrunk(round(physicalRamUsed / physicalRamTotal * 100, 1)),
 		)
-		# psutil 5.9.0 returns size of the swap file when swap_memory function is called.
-		# Therefore, combine swap file and RAM capacities for backward compatibility.
-		# psutil 5.9.5 causes virtual memory to not be reported on some systems
-		# due to disabled performance counters reported by an API function.
-		try:
-			virtualRam = list(psutil.swap_memory())
-			virtualRam[1] += ram[3]
-			virtualRam[0] += ram[0]
-			virtualRam[3] = round((virtualRam[1] / virtualRam[0]) * 100, 1)
-			# Translators: Shows virtual memory usage.
-			info += _("Virtual: {virtualUsed} of {virtualTotal} used ({virtualPercent}%).").format(
-				virtualUsed=size(virtualRam[1], alternative),
-				virtualTotal=size(virtualRam[0], alternative),
-				virtualPercent=tryTrunk(virtualRam[3]),
-			)
-		except RuntimeError:
-			# Translators: Reported when virtual memory information cannot be obtained.
-			info += _("Virtual memory information unavailable")
+		virtualMemory = psutil._psutil_windows.virtual_mem()
+		virtualRamUsed, virtualRamTotal = virtualMemory[2] - virtualMemory[3], virtualMemory[2]
+		# Translators: Shows virtual memory usage.
+		info += _("Virtual: {virtualUsed} of {virtualTotal} used ({virtualPercent}%).").format(
+			virtualUsed=size(virtualRamUsed, alternative),
+			virtualTotal=size(virtualRamTotal, alternative),
+			virtualPercent=tryTrunk(round(virtualRamUsed / virtualRamTotal * 100, 1)),
+		)
 		if scriptHandler.getLastScriptRepeatCount() == 0:
 			ui.message(info)
 		else:

@@ -1,8 +1,6 @@
 # GoldWave #
 
 * Autores: Joseph Lee, colaboradores do NVDA.
-* Baixe a [versão estável][1]
-* NVDA compatibility: 2022.4 and later
 
 Este módulo de aplicativo melhora o acesso e o uso do editor de áudio
 GoldWave.
@@ -22,22 +20,34 @@ Manual do GoldWave.
 
 Nota: GoldWave 6 ou posterior é necessário.
 
-## Version 23.02
+## Version 25.01
 
-* NVDA 2022.4 or later is required.
-* Windows 10 21H2 (November 2021 Update/build 19044) or later is required.
+* Support for GoldWave 7 (requires 64-bit Windows 10 or later).
+* Download links for add-on releases are no longer included in add-on
+  documentation. You can download the add-on from NV Access add-on store.
+* Switched linting tool from Flake8 to Ruff and reformatted add-on modules
+  to better align with NVDA coding standards.
+* Removed support for automatic add-on updates feature from Add-on Updater
+  add-on.
 
-## Version 23.01
+## Versão 23.02
 
-* NVDA 2022.3 or later is required.
-* Windows 10 or later is required as Windows 7, 8, and 8.1 are no longer
-  supported by Microsoft as of January 2023.
+* É necessário o NVDA 2022.4 ou posterior.
+* É necessário o Windows 10 21H2 (atualização/compilação 19044 de novembro
+  de 2021) ou posterior.É necessário o Windows 7 SP1, GoldWave 6.x, e NVDA
+  2019.1 ou posterior.
 
-## Version 22.03
+## Versão 23.01
 
-* NVDA 2021.3 or later is required.
-* A warning message will be displayed when attempting to install the add-on
-  on Windows 7, 8, and 8.1.
+* É necessário o NVDA 2022.3 ou posterior.
+* É necessário ter o Windows 10 ou posterior, pois o Windows 7, 8 e 8.1 não
+  serão mais suportados pela Microsoft a partir de janeiro de 2023.
+
+## Versão 22.03
+
+* É necessário o NVDA 2021.3 ou posterior.
+* Uma mensagem de aviso será exibida ao tentar instalar o complemento no
+  Windows 7, 8 e 8.1.
 
 ## Versão 21.10
 
